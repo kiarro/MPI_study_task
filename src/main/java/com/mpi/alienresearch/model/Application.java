@@ -22,6 +22,8 @@ public abstract class Application {
     AppStatus status;
     LocalDateTime lastStatusTransitionDate;
 
+    Report report;
+
     public Application CreateApp(AppType type){
         Application a = null;
         switch (type){
