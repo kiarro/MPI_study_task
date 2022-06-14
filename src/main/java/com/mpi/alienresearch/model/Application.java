@@ -1,9 +1,9 @@
-package com.mpi.demo.core;
+package com.mpi.alienresearch.model;
 
 import java.time.LocalDateTime;
 
-import com.mpi.demo.core.enums.AppStatus;
-import com.mpi.demo.core.enums.AppType;
+import com.mpi.alienresearch.model.enums.AppStatus;
+import com.mpi.alienresearch.model.enums.AppType;
 
 /**
  * Заявка

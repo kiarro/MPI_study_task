@@ -1,4 +1,4 @@
-package com.mpi.demo.core;
+package com.mpi.alienresearch.model;
 
 public class ArtifactLandingPoint {
     Coordinates coordinates;

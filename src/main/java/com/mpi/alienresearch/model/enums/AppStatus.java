@@ -1,4 +1,4 @@
-package com.mpi.demo.core.enums;
+package com.mpi.alienresearch.model.enums;
 
 /**
  * Status of Application

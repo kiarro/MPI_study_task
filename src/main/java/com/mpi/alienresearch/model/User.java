@@ -1,8 +1,8 @@
-package com.mpi.demo.core;
+package com.mpi.alienresearch.model;
 
 import java.util.Date;
 
-import com.mpi.demo.core.enums.UserRole;
+import com.mpi.alienresearch.model.enums.UserRole;
 
 /**
  * Пользователь
