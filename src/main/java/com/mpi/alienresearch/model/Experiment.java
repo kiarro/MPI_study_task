@@ -6,7 +6,17 @@ import java.util.List;
  * Эксперимент
  */
 public class Experiment {
-    String id;
+    Long id;
+
+    String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     String researcherGroup;
 
@@ -16,10 +26,10 @@ public class Experiment {
     public Experiment() {
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public List<Report> getReports() {

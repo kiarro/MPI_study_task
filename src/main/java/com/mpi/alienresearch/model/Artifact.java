@@ -4,7 +4,7 @@ package com.mpi.alienresearch.model;
  * Артефакт
 */
 public class Artifact {
-    String id;
+    Integer id;
     String name;
     String description;
 
@@ -12,10 +12,10 @@ public class Artifact {
     public Artifact() {
     }
     
-    public String getId() {
+    public Integer getId() {
         return id;
     }
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     public String getName() {

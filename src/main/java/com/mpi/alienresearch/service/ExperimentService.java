@@ -8,14 +8,14 @@ import com.mpi.alienresearch.model.Experiment;
 import com.mpi.alienresearch.model.Report;
 
 public interface ExperimentService {
-    public Experiment get(String id);
+    public Experiment get(long id);
     public Collection<Experiment> getPage(Long offset, Long limit, String[] sortvalues, ExperimentFilter filter);
-    public String add(Experiment experiment);
-    public void update(String id, Experiment experiment);
+    public Long add(Experiment experiment);
+    public void update(long id, Experiment experiment);
 
     public void madeArchive(String id);
-    public String addApplication(Application app);
-    public String addReport(Report report);
+    public Long addApplication(Application app);
+    public Long addReport(Report report);
     
     public Collection<Experiment> getPage();
 

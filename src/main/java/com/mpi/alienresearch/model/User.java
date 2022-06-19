@@ -1,40 +1,76 @@
 package com.mpi.alienresearch.model;
 
-import java.util.Date;
+import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.mpi.alienresearch.model.enums.UserRole;
 
 /**
  * Пользователь
  */
+@Entity
+@Table(name = "users")
 public class User {
-    String id;
-    String jobAgreementNumber;
-    String username;
-    String group;
-    
-    UserRole role;
 
-    String firstName;
-    String lastName;
-    String patronymicName;
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
 
-    String jobPosition;
+    private String jobAgreementNumber = null;
+    private String username = null;
+    private String password = null;
 
-    Date birthDate;
+    public String getPassword() {
+        return password;
+    }
 
-    String email;
-    String phone;
-    String aboutYourself;
+    private Long userGroup = null;
+
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+
+    private String firstName = null;
+    private String lastName = null;
+    @Column(columnDefinition = "DATE")
+    private LocalDate birthDate;
+    private String email = null;
+    private String phoneNumber = null;
+    private String aboutYourself = null;
 
     public User() {
     }
 
-    public String getId() {
+    public User(String jobAgreementNumber, String username, String password, UserRole role, String firstName,
+            String lastName, LocalDate birthDate) {
+        this.jobAgreementNumber = jobAgreementNumber;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "User[id=%d, firstName='%s', lastName='%s', role='%s']",
+                id, firstName, lastName, role);
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -54,12 +90,12 @@ public class User {
         this.username = username;
     }
 
-    public String getGroup() {
-        return group;
+    public Long getGroup() {
+        return userGroup;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setGroup(Long group) {
+        this.userGroup = group;
     }
 
     public UserRole getRole() {
@@ -86,27 +122,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getPatronymicName() {
-        return patronymicName;
-    }
-
-    public void setPatronymicName(String patronymicName) {
-        this.patronymicName = patronymicName;
-    }
-
-    public String getJobPosition() {
-        return jobPosition;
-    }
-
-    public void setJobPosition(String jobPosition) {
-        this.jobPosition = jobPosition;
-    }
-
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -119,11 +139,11 @@ public class User {
     }
 
     public String getPhone() {
-        return phone;
+        return phoneNumber;
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.phoneNumber = phone;
     }
 
     public String getAboutYourself() {
@@ -133,5 +153,16 @@ public class User {
     public void setAboutYourself(String aboutYourself) {
         this.aboutYourself = aboutYourself;
     }
-    
+
+    public void updateWith(User user) {
+        setFirstName(user.getFirstName());
+        setLastName(user.getLastName());
+        setBirthDate(user.getBirthDate());
+        setEmail(user.getEmail());
+        setGroup(user.getGroup());
+        setJobAgreementNumber(user.getJobAgreementNumber());
+        setPhone(user.getPhone());
+        setRole(user.getRole());
+    }
+
 }

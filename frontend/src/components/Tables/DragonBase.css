@@ -1,0 +1,36 @@
+table
+{
+    width: 100%;
+    border-collapse: collapse;
+	  overflow: hidden;
+    font-family: Mason Sans OT,serif;
+	  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+
+th,
+td {
+  border-collapse: collapse;
+  padding: 0.75rem;
+	color: #fff;
+    text-align: center;
+}
+
+.Arrow {
+    height: 20px;
+    width: 20px;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 0;
+    cursor: pointer;
+  }
+
+  tfoot
+  {
+    position: absolute;
+    right: 0;
+    margin-right: 0px;
+    font-style: normal;
+  }
+
+

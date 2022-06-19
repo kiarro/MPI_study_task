@@ -11,9 +11,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class GuiController {
 
-  @GetMapping("/index")
+  @GetMapping("/login")
+  public ModelAndView login() {
+    return new ModelAndView("login");
+  }
+
+  @GetMapping("/user")
   public ModelAndView index() {
-    return new ModelAndView("index");
+    return new ModelAndView("user_profile");
   }
 
 }

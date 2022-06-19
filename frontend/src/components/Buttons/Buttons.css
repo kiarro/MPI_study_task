@@ -1,0 +1,17 @@
+.HeaderButton 
+{
+    border: unset;
+    cursor: pointer;
+    font-family: Sofia Pro,serif;
+    font-size: 12px;
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    background: #6b63b5;
+    color: #f9f4f2;
+    border-radius: 3px;
+    padding: 6px 20px 7px;
+    transition: .3s ease-in-out;
+}

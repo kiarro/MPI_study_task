@@ -6,7 +6,7 @@ import java.util.Date;
  * Подопытный
  */
 public class Subject {
-    String id;
+    Integer id;
     String name;
     
     String hairColor;
@@ -19,10 +19,10 @@ public class Subject {
     Date birthDate;
 
     
-    public String getId() {
+    public Integer getId() {
         return id;
     }
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     public String getName() {

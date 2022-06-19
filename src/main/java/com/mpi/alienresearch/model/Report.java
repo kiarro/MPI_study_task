@@ -3,7 +3,7 @@ package com.mpi.alienresearch.model;
 import java.time.LocalDateTime;
 
 public class Report {
-    String id;
+    Integer id;
     LocalDateTime creationDate;
 
     String title;
@@ -13,11 +13,11 @@ public class Report {
     public Report() {
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

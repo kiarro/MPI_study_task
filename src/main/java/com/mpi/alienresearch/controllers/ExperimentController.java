@@ -33,7 +33,7 @@ public class ExperimentController {
 
     @PostMapping
     public ResponseEntity<String> addExperiment(@RequestBody Experiment experiment) {
-        Optional<String> id = Optional.ofNullable(experimentService.add(experiment));
+        Optional<Long> id = Optional.ofNullable(experimentService.add(experiment));
         if (id.isPresent()) {
             URI uri = URI.create("/experiments/" + id);
             // System.out.println(uri.toString());
@@ -54,12 +54,12 @@ public class ExperimentController {
     }
 
     @GetMapping("/{id}")
-    public Experiment getExperiment(@PathVariable("id") String id) {
+    public Experiment getExperiment(@PathVariable("id") Long id) {
         return experimentService.get(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> putExperiment(@PathVariable("id") String id, @RequestBody Experiment experiment) {
+    public ResponseEntity<Void> putExperiment(@PathVariable("id") Long id, @RequestBody Experiment experiment) {
         Experiment currentExperiment = experimentService.get(id);
         if (currentExperiment == null) { // experiment not found
             return ResponseEntity.notFound().build();
@@ -75,8 +75,8 @@ public class ExperimentController {
     }
 
     @PostMapping("/{id}/applications")
-    public ResponseEntity<String> addApplication(@PathVariable("id") String id, @RequestBody Application app) {
-        Optional<String> appId = Optional.ofNullable(experimentService.addApplication(app));
+    public ResponseEntity<String> addApplication(@PathVariable("id") Long id, @RequestBody Application app) {
+        Optional<Long> appId = Optional.ofNullable(experimentService.addApplication(app));
         if (appId.isPresent()) {
             URI uri = URI.create("/applications/" + appId);
             // System.out.println(uri.toString());
@@ -87,8 +87,8 @@ public class ExperimentController {
     }
 
     @PostMapping("/{id}/reports")
-    public ResponseEntity<String> addReport(@PathVariable("id") String id, @RequestBody Report report) {
-        Optional<String> appId = Optional.ofNullable(experimentService.addReport(report));
+    public ResponseEntity<String> addReport(@PathVariable("id") Long id, @RequestBody Report report) {
+        Optional<Long> appId = Optional.ofNullable(experimentService.addReport(report));
         if (appId.isPresent()) {
             URI uri = URI.create("/reports/" + appId);
             // System.out.println(uri.toString());
@@ -98,6 +98,4 @@ public class ExperimentController {
         }
     }
 
-    
-    
 }

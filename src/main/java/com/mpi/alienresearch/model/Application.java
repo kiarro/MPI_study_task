@@ -9,7 +9,7 @@ import com.mpi.alienresearch.model.enums.AppType;
  * Заявка
  */
 public abstract class Application {
-    String id;
+    Integer id;
     AppType type;
 
     User creator;
@@ -40,11 +40,11 @@ public abstract class Application {
         return a;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
