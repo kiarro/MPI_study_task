@@ -6,17 +6,21 @@ import com.mpi.alienresearch.filters.ExperimentFilter;
 import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Experiment;
 import com.mpi.alienresearch.model.Report;
+import com.mpi.alienresearch.model.enums.ExperimentStatus;
 
 public interface ExperimentService {
     public Experiment get(long id);
     public Collection<Experiment> getPage(Long offset, Long limit, String[] sortvalues, ExperimentFilter filter);
+
+    public Collection<Experiment> getByGroup(Long groupId);
+
     public Long add(Experiment experiment);
     public void update(long id, Experiment experiment);
 
-    public void madeArchive(String id);
-    public Long addApplication(Application app);
-    public Long addReport(Report report);
+    public Long addApplication(long id, Application app);
+    public Long addReport(long id, Report report);
+
+    public void setState(long id, ExperimentStatus state);
     
-    public Collection<Experiment> getPage();
 
 }

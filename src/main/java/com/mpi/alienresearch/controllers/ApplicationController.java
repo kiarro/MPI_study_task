@@ -42,12 +42,12 @@ public class ApplicationController {
     }
 
     @GetMapping("/{id}")
-    public Application getExperiment(@PathVariable("id") String id) {
+    public Application getExperiment(@PathVariable("id") Long id) {
         return applicationService.get(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> putExperiment(@PathVariable("id") String id, @RequestBody Application experiment) {
+    public ResponseEntity<Void> putExperiment(@PathVariable("id") Long id, @RequestBody Application experiment) {
         Application currentApplication = applicationService.get(id);
         if (currentApplication == null) { // experiment not found
             return ResponseEntity.notFound().build();
@@ -58,19 +58,19 @@ public class ApplicationController {
     }
 
     @PostMapping("/{id}/set-decision")
-    public void decisionApplication(@PathVariable("id") String id, @RequestParam(name = "decision") Decision decision) {
+    public void decisionApplication(@PathVariable("id") Long id, @RequestParam(name = "decision") Decision decision) {
         decision = Optional.ofNullable(decision).orElse(Decision.UNDECIDED);
 
         applicationService.setDecision(id, decision);
     }
 
     @PostMapping("/{id}/set-accepted")
-    public void acceptedApplication(@PathVariable("id") String id, @RequestParam(name = "accepted", required = true) Boolean accepted) {
+    public void acceptedApplication(@PathVariable("id") Long id, @RequestParam(name = "accepted", required = true) Boolean accepted) {
         applicationService.setAccepted(id, accepted);
     }
 
     @PostMapping("/{id}/set-done")
-    public void doneApplication(@PathVariable("id") String id, @RequestBody Report report) {
+    public void doneApplication(@PathVariable("id") Long id, @RequestBody Report report) {
         applicationService.setDone(id, report);
     }
 }

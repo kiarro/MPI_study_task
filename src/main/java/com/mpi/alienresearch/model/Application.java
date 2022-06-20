@@ -2,49 +2,48 @@ package com.mpi.alienresearch.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.*;
+
 import com.mpi.alienresearch.model.enums.AppStatus;
 import com.mpi.alienresearch.model.enums.AppType;
 
 /**
  * Заявка
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name="type")
+@Table(name = "applications")
 public abstract class Application {
-    Integer id;
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    Long id;
+    
+    @Enumerated(EnumType.STRING)
     AppType type;
 
     User creator;
     
-    String executionGroup;
+    Long executionGroup;
 
     String description;
 
+    @Column(columnDefinition = "DATE")
     LocalDateTime creationDate;
+
+    @Enumerated(EnumType.STRING)
     AppStatus status;
+    
+    @Column(columnDefinition = "DATE")
     LocalDateTime lastStatusTransitionDate;
 
     Report report;
 
-    public Application CreateApp(AppType type){
-        Application a = null;
-        switch (type){
-            case ArtifactLanding: {
-                a = new AppArtifactLanding();
-            }
-            case HumanAnalysis: {
-                a = new AppHumanAnalysis();
-            }
-            case EngineeringWorks: {
-                a = new AppEngineeringWork();
-            }
-        }
-        return a;
-    }
-
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -64,11 +63,11 @@ public abstract class Application {
         this.creator = creator;
     }
 
-    public String getExecutionGroup() {
+    public Long getExecutionGroup() {
         return executionGroup;
     }
 
-    public void setExecutionGroup(String executionGroup) {
+    public void setExecutionGroup(Long executionGroup) {
         this.executionGroup = executionGroup;
     }
 

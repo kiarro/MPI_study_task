@@ -18,6 +18,7 @@ import com.mpi.alienresearch.service.UserService;
 import com.mpi.alienresearch.service.UserServiceImpl;
 import com.mpi.alienresearch.state.Credentials;
 import com.mpi.alienresearch.state.PersonalInfo;
+import com.mpi.alienresearch.state.SingleData;
 
 @RestController
 @RequestMapping("/users")
@@ -53,7 +54,19 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateUser(@PathVariable("id") long id, @RequestBody User user) {
+    public ResponseEntity<Void> updateUser(@PathVariable("id") long id, @RequestBody SingleData<Long> group) {
+        User user = userService.get(id);
+        if (user == null) { // dragon not found
+            return ResponseEntity.notFound().build();
+        }
+        user.setGroup(group.getValue());
+
+        userService.update(id, user);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/update_group")
+    public ResponseEntity<Void> updateUserGroup(@PathVariable("id") long id, @RequestBody User user) {
         User currentUser = userService.get(id);
         if (currentUser == null) { // dragon not found
             return ResponseEntity.notFound().build();

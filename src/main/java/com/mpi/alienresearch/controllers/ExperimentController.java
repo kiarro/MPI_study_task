@@ -69,14 +69,9 @@ public class ExperimentController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{id}/archive")
-    public void postArchive(@PathVariable("id") String id) {
-        experimentService.madeArchive(id);
-    }
-
     @PostMapping("/{id}/applications")
     public ResponseEntity<String> addApplication(@PathVariable("id") Long id, @RequestBody Application app) {
-        Optional<Long> appId = Optional.ofNullable(experimentService.addApplication(app));
+        Optional<Long> appId = Optional.ofNullable(experimentService.addApplication(id, app));
         if (appId.isPresent()) {
             URI uri = URI.create("/applications/" + appId);
             // System.out.println(uri.toString());
@@ -88,7 +83,7 @@ public class ExperimentController {
 
     @PostMapping("/{id}/reports")
     public ResponseEntity<String> addReport(@PathVariable("id") Long id, @RequestBody Report report) {
-        Optional<Long> appId = Optional.ofNullable(experimentService.addReport(report));
+        Optional<Long> appId = Optional.ofNullable(experimentService.addReport(id, report));
         if (appId.isPresent()) {
             URI uri = URI.create("/reports/" + appId);
             // System.out.println(uri.toString());

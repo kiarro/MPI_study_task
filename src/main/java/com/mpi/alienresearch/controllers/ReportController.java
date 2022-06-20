@@ -37,12 +37,12 @@ public class ReportController {
     }
 
     @GetMapping("/{id}")
-    public Report getExperiment(@PathVariable("id") String id) {
+    public Report getExperiment(@PathVariable("id") Long id) {
         return reportService.get(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> putExperiment(@PathVariable("id") String id, @RequestBody Report report) {
+    public ResponseEntity<Void> putExperiment(@PathVariable("id") Long id, @RequestBody Report report) {
         Report currentReport = reportService.get(id);
         if (currentReport == null) { // experiment not found
             return ResponseEntity.notFound().build();

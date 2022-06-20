@@ -1,12 +1,45 @@
 package com.mpi.alienresearch.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import javax.persistence.Entity;
+
+import com.mpi.alienresearch.model.enums.ExperimentStatus;
+
+import javax.persistence.*;
 
 /**
  * Эксперимент
  */
+@Entity
+@Table(name = "experiments")
 public class Experiment {
+    
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     Long id;
+
+    @Enumerated(EnumType.STRING)
+    ExperimentStatus state;
+
+    String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public ExperimentStatus getState() {
+        return state;
+    }
+
+    public void setState(ExperimentStatus state) {
+        this.state = state;
+    }
 
     String title;
 
@@ -18,10 +51,21 @@ public class Experiment {
         this.title = title;
     }
 
-    String researcherGroup;
+    Long researcherGroup;
 
     List<Report> reports;
     List<Application> applications;
+
+    @Column(columnDefinition = "DATE")
+    LocalDateTime creationDate;
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
 
     public Experiment() {
     }
@@ -45,11 +89,17 @@ public class Experiment {
         this.applications = applications;
     }
     
-    public String getResearcherGroup() {
+    public Long getResearcherGroup() {
         return researcherGroup;
     }
 
-    public void setResearcherGroup(String researcherGroup) {
+    public void setResearcherGroup(Long researcherGroup) {
         this.researcherGroup = researcherGroup;
+    }
+
+    public void updateWith(Experiment experiment) {
+        setResearcherGroup(experiment.getResearcherGroup());
+        setTitle(experiment.getTitle());
+        setDescription(experiment.getDescription());
     }
 }
