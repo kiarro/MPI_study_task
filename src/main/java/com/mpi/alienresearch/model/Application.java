@@ -28,6 +28,16 @@ public abstract class Application {
 
     String description;
 
+    Long experimentId;
+
+    public Long getExperimentId() {
+        return experimentId;
+    }
+
+    public void setExperimentId(Long experiment_id) {
+        this.experimentId = experiment_id;
+    }
+
     @Column(columnDefinition = "DATE")
     LocalDateTime creationDate;
 

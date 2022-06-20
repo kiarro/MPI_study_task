@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mpi.alienresearch.filters.ApplicationFilter;
 import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Report;
+import com.mpi.alienresearch.model.enums.AppStatus;
 import com.mpi.alienresearch.model.enums.Decision;
 import com.mpi.alienresearch.service.ApplicationService;
 
@@ -57,20 +58,9 @@ public class ApplicationController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{id}/set-decision")
-    public void decisionApplication(@PathVariable("id") Long id, @RequestParam(name = "decision") Decision decision) {
-        decision = Optional.ofNullable(decision).orElse(Decision.UNDECIDED);
-
-        applicationService.setDecision(id, decision);
+    @PostMapping("/{id}/set-status")
+    public void decisionApplication(@PathVariable("id") Long id, @RequestParam(name = "status") AppStatus status) {
+        applicationService.setState(id, status);
     }
 
-    @PostMapping("/{id}/set-accepted")
-    public void acceptedApplication(@PathVariable("id") Long id, @RequestParam(name = "accepted", required = true) Boolean accepted) {
-        applicationService.setAccepted(id, accepted);
-    }
-
-    @PostMapping("/{id}/set-done")
-    public void doneApplication(@PathVariable("id") Long id, @RequestBody Report report) {
-        applicationService.setDone(id, report);
-    }
 }

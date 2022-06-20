@@ -10,6 +10,7 @@ import com.mpi.alienresearch.dao.ApplicationRepository;
 import com.mpi.alienresearch.filters.ApplicationFilter;
 import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Report;
+import com.mpi.alienresearch.model.enums.AppStatus;
 import com.mpi.alienresearch.model.enums.Decision;
 
 public class ApplicationServiceImpl implements ApplicationService {
@@ -34,8 +35,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public Long add(Application application) {
-        // TODO Auto-generated method stub
-        return null;
+        return applicationRepository.save(application).getId();
     }
 
     @Override
@@ -45,27 +45,15 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public void setDecision(Long id, Decision decision) {
-        // TODO Auto-generated method stub
-
+    public void setState(Long id, AppStatus status) {
+        Application app = applicationRepository.findById(id.longValue());
+        app.setStatus(status);
+        applicationRepository.save(app);
     }
 
     @Override
-    public void setAccepted(Long id, Boolean decision) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void setDone(Long id, Report report) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public Collection<Application> getByExperiment(Long experimentId) {
-        // TODO Auto-generated method stub
-        return null;
+    public List<Application> getByExperiment(Long experimentId) {
+        return applicationRepository.findByExperimentId(experimentId);
     }
 
 }
