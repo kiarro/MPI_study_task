@@ -6,6 +6,8 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { Button, TextField, List } from "@mui/material";
 
+import { useNavigate } from "react-router-dom";
+
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
 
@@ -15,16 +17,19 @@ const Item = styled(Button)(({ theme }) => ({
 }));
 
 export default function App() {
+
+    const history = useNavigate();
+
     const newUserClick = async () => {
-        window.open("/users/new");
+        history("/users/new");
     };
 
     const exitClick = async () => {
         try {
-            const response = await fetch('/users/logout', {
+            const response = await fetch('http://localhost:8080/users/logout', {
                 method: 'POST',
                 body: JSON.stringify({
-                    exit: "exit"
+                    value: "exit"
                 }),
                 headers: {
                     'Content-Type': 'application/json',
@@ -35,11 +40,11 @@ export default function App() {
                 throw new Error(`Error! status: ${response.status}`);
             }
 
-            const result = await response.json();
+            // const result = await response.json();
 
-            console.log('result is: ', JSON.stringify(result, null, 4));
+            // console.log('result is: ', JSON.stringify(result, null, 4));
 
-            window.open("/login");
+            history("/login");
         } catch (err) {
         } finally {
         }

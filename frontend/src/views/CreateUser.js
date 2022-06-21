@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import { Button, TextField, List } from "@mui/material";
 
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 
 const Item = styled(Button)(({ theme }) => ({
@@ -14,6 +15,7 @@ const Item = styled(Button)(({ theme }) => ({
 }));
 
 export default function App() {
+    const history = useNavigate();
 
     const [role, setRole] = useState('');
     const [last_name, setLastName] = useState('');
@@ -22,19 +24,19 @@ export default function App() {
     const [job_agreement_number, setJobAgreementNumber] = useState('');
 
     const backClick = async () => {
-        window.open("/admin");
+        history("/admin");
     };
 
     const sendClick = async () => {
         try {
-            const response = await fetch('/users/', {
+            const response = await fetch('http://localhost:8080/users/', {
                 method: 'POST',
                 body: JSON.stringify({
                     role: role,
-                    last_name: last_name,
-                    first_name: first_name,
-                    birth_date: birth_date,
-                    job_agreement_number: job_agreement_number,
+                    lastName: last_name,
+                    firstName: first_name,
+                    birthDate: birth_date,
+                    jobAgreementNumber: job_agreement_number,
                 }),
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,11 +47,11 @@ export default function App() {
                 throw new Error(`Error! status: ${response.status}`);
             }
 
-            const result = await response.json();
+            // const result = await response.json();
 
-            console.log('result is: ', JSON.stringify(result, null, 4));
+            // console.log('result is: ', JSON.stringify(result, null, 4));
 
-            window.open("/admin");
+            history("/admin");
         } catch (err) {
         } finally {
         }

@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mpi.alienresearch.model.enums.UserRole;
 
 /**
@@ -21,12 +22,16 @@ import com.mpi.alienresearch.model.enums.UserRole;
 public class User {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     private String jobAgreementNumber = null;
     private String username = null;
     private String password = null;
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getPassword() {
         return password;
@@ -40,6 +45,7 @@ public class User {
     private String firstName = null;
     private String lastName = null;
     @Column(columnDefinition = "DATE")
+    @JsonFormat(pattern = "dd.MM.yyyy")
     private LocalDate birthDate;
     private String email = null;
     private String phoneNumber = null;

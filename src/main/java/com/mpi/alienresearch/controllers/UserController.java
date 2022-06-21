@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-    public void Logout() {
+    public void Logout(@RequestBody SingleData<String> credentials) {
         userService.logout();
     }
 

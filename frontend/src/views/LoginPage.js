@@ -8,6 +8,8 @@ import { Button, TextField, List } from "@mui/material";
 
 import { useState } from 'react';
 
+import { useNavigate } from "react-router-dom";
+
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
 
@@ -29,9 +31,11 @@ function App() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    const history = useNavigate();
 
     const handleClick = async () => {
         setIsLoading(true);
+
         try {
             const response = await fetch('http://localhost:8080/users/login', {
                 method: 'POST',
@@ -53,7 +57,8 @@ function App() {
             console.log('result is: ', JSON.stringify(result, null, 4));
 
             if (result.role == "ADMIN") {
-                window.open("/admin")
+                // window.open("/admin")
+                history("/admin");
             }
 
             setData(result);

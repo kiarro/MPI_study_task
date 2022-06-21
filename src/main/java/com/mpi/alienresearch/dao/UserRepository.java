@@ -16,6 +16,7 @@ import org.springframework.data.repository.query.Param;
 public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByUsername(String username);
     User findById(long id);
+    
 
     @Query(value = "SELECT * FROM users u WHERE u.password = :password AND u.username = :username", nativeQuery=true)
     User findByCredentials(@Param("username") String username, @Param("password") String password);

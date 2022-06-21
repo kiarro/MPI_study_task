@@ -3,11 +3,13 @@ package com.mpi.alienresearch.service;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.mpi.alienresearch.dao.ReportRepository;
 import com.mpi.alienresearch.filters.ReportFilter;
 import com.mpi.alienresearch.model.Report;
 
+@Service
 public class ReportServiceImpl implements ReportService {
 
     final ReportRepository reportRepository;

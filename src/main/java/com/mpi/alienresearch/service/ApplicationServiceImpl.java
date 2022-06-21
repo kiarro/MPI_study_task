@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.mpi.alienresearch.dao.ApplicationRepository;
 import com.mpi.alienresearch.dao.ApplicationRepository;
@@ -13,6 +14,7 @@ import com.mpi.alienresearch.model.Report;
 import com.mpi.alienresearch.model.enums.AppStatus;
 import com.mpi.alienresearch.model.enums.Decision;
 
+@Service
 public class ApplicationServiceImpl implements ApplicationService {
 
     final ApplicationRepository applicationRepository;

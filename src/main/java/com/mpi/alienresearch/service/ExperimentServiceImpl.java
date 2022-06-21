@@ -3,6 +3,7 @@ package com.mpi.alienresearch.service;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.mpi.alienresearch.dao.ApplicationRepository;
 import com.mpi.alienresearch.dao.ExperimentRepository;
@@ -15,6 +16,7 @@ import com.mpi.alienresearch.model.Report;
 import com.mpi.alienresearch.model.enums.AppType;
 import com.mpi.alienresearch.model.enums.ExperimentStatus;
 
+@Service
 public class ExperimentServiceImpl implements ExperimentService{
 
     final ExperimentRepository experimentRepository;

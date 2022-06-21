@@ -29,6 +29,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public long add(User user) {
+        user.setUsername(user.getLastName().toLowerCase());
+        user.setPassword(user.getUsername());
         user = userRepository.save(user);
         return user.getId();
     }
