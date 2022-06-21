@@ -12,7 +12,6 @@ import com.mpi.alienresearch.model.enums.AppType;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name="type")
 @Table(name = "applications")
 public abstract class Application {
     @Id
@@ -22,6 +21,7 @@ public abstract class Application {
     @Enumerated(EnumType.STRING)
     AppType type;
 
+    @ManyToOne
     User creator;
     
     Long executionGroup;
@@ -47,6 +47,7 @@ public abstract class Application {
     @Column(columnDefinition = "DATE")
     LocalDateTime lastStatusTransitionDate;
 
+    @OneToOne
     Report report;
 
     public Long getId() {

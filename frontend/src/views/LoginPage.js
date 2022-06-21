@@ -33,7 +33,7 @@ function App() {
     const handleClick = async () => {
         setIsLoading(true);
         try {
-            const response = await fetch('/users/login', {
+            const response = await fetch('http://localhost:8080/users/login', {
                 method: 'POST',
                 body: JSON.stringify({
                     username: username,

@@ -3,6 +3,7 @@ package com.mpi.alienresearch.controllers;
 import java.util.Collection;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,14 +17,17 @@ import com.mpi.alienresearch.filters.ReportFilter;
 import com.mpi.alienresearch.model.Report;
 import com.mpi.alienresearch.service.ReportService;
 
+@RestController
+@CrossOrigin
+@RequestMapping("/reports")
 public class ReportController {
     
-    private ReportService reportService;
+    private final ReportService reportService;
 
-    public ReportController() {
-        super();
-
+    public ReportController(ReportService reportService) {
+        this.reportService = reportService;
     }
+
 
     @GetMapping
     public Collection<Report> getAll(@RequestParam(name = "offset", defaultValue = "0") Long offset,

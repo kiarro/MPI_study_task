@@ -26,8 +26,8 @@ public class ApplicationController {
     
     private ApplicationService applicationService;
 
-    public ApplicationController() {
-        super();
+    public ApplicationController(ApplicationService applicationService) {
+        this.applicationService = applicationService;
 
     }
 

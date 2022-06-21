@@ -26,8 +26,8 @@ public class ExperimentController {
 
     private ExperimentService experimentService;
 
-    public ExperimentController() {
-        super();
+    public ExperimentController(ExperimentService experimentService) {
+        this.experimentService = experimentService;
 
     }
 

@@ -53,7 +53,9 @@ public class Experiment {
 
     Long researcherGroup;
 
+    @OneToMany
     List<Report> reports;
+    @OneToMany
     List<Application> applications;
 
     @Column(columnDefinition = "DATE")

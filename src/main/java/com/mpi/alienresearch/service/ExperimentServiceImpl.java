@@ -17,14 +17,18 @@ import com.mpi.alienresearch.model.enums.ExperimentStatus;
 
 public class ExperimentServiceImpl implements ExperimentService{
 
-    @Autowired
-    ExperimentRepository experimentRepository;
+    final ExperimentRepository experimentRepository;
     
-    @Autowired
-    ReportRepository reportRepository;
+    final ReportRepository reportRepository;
     
-    @Autowired
-    ApplicationRepository appTechnicRepository;
+    final ApplicationRepository appTechnicRepository;
+
+    public ExperimentServiceImpl(ExperimentRepository experimentRepository, ReportRepository reportRepository,
+            ApplicationRepository appTechnicRepository) {
+        this.experimentRepository = experimentRepository;
+        this.reportRepository = reportRepository;
+        this.appTechnicRepository = appTechnicRepository;
+    }
 
     @Override
     public Experiment get(long id) {

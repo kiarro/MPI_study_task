@@ -13,6 +13,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
@@ -21,6 +23,8 @@ import com.mpi.alienresearch.model.User;
 import com.mpi.alienresearch.model.enums.UserRole;
 
 @SpringBootApplication
+@EnableJpaRepositories(basePackages = "com.mpi")
+@ComponentScan("com.mpi.alienresearch")
 public class DemoApplication {
 	private static final Logger log = LoggerFactory.getLogger(DemoApplication.class);
 	public static void main(String[] args) {

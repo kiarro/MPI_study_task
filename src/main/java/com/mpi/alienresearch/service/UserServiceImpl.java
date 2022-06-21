@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.mpi.alienresearch.dao.UserRepository;
@@ -12,10 +13,14 @@ import com.mpi.alienresearch.model.User;
 import com.mpi.alienresearch.state.PersonalInfo;
 import com.mpi.alienresearch.state.State;
 
+@Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    UserRepository userRepository;
+    final UserRepository userRepository;
+
+    public UserServiceImpl(UserRepository repository){
+        userRepository = repository;
+    }
 
     @Override
     public User get(long id) {
@@ -46,7 +51,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(String username, String password) {
-        Optional<User> user = userRepository.findByCredentials(username, password);
+        Optional<User> user = Optional.ofNullable(userRepository.findByCredentials(username, password));
         if (user.isPresent()) {
             State.setCurrentUser(user.get());
             return user.get();

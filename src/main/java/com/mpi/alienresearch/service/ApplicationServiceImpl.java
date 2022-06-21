@@ -15,8 +15,11 @@ import com.mpi.alienresearch.model.enums.Decision;
 
 public class ApplicationServiceImpl implements ApplicationService {
 
-    @Autowired
-    ApplicationRepository applicationRepository;
+    final ApplicationRepository applicationRepository;
+
+    public ApplicationServiceImpl(ApplicationRepository applicationRepository) {
+        this.applicationRepository = applicationRepository;
+    }
 
     @Override
     public Application get(Long id) {

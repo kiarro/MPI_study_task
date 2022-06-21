@@ -10,9 +10,12 @@ import com.mpi.alienresearch.model.Report;
 
 public class ReportServiceImpl implements ReportService {
 
-    @Autowired
-    ReportRepository reportRepository;
-
+    final ReportRepository reportRepository;
+    
+    public ReportServiceImpl(ReportRepository reportRepository){
+        this.reportRepository = reportRepository;
+    }
+    
     @Override
     public Report get(Long id) {
         return reportRepository.findById(id.longValue());

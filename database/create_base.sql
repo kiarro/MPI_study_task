@@ -31,7 +31,7 @@ CREATE TABLE experiments (
 	title VARCHAR(50),
 	description VARCHAR(300),
 	creation_time TIMESTAMP,
-	group BIGINT,
+	research_group BIGINT,
 	state VARCHAR(50)
 );
 

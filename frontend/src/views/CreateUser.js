@@ -21,7 +21,7 @@ export default function App() {
     const [birth_date, setBirthDate] = useState('');
     const [job_agreement_number, setJobAgreementNumber] = useState('');
 
-    const newUserClick = async () => {
+    const backClick = async () => {
         window.open("/admin");
     };
 
