@@ -1,4 +1,5 @@
 import { StrictMode } from "react";
+import './LoginPage.css'
 import { createRoot } from "react-dom/client";
 
 import { styled } from "@mui/material/styles";
@@ -69,8 +70,8 @@ function App() {
         }
     };
     return (
-        <main>
-            <Box sx={{ flexGrow: 1, width: 400 }} margin="10px" padding="10px">
+        <main className="LoginMain" >
+            <Box sx={{ flexGrow: 1, width: 400 }} margin="auto" padding="100px">
                 <Grid container spacing={0}>
                     <Grid item xs={6}>
                         <Box>

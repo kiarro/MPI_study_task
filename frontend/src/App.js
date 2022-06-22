@@ -14,7 +14,7 @@ import logo from './logo.svg';
 
 import './App.css';
 
-import LoginPage from './views/LoginPage';
+import LoginPage from './views/LoginPage/LoginPage';
 import UserProfile from './views/UserProfile';
 import Experiments from './views/Experiments';
 import Experiment from './views/Experiment';
@@ -27,8 +27,8 @@ function App() {
       <body>
         <BrowserRouter>
           <Routes>
-            <Route path='' />
-            <Route exact path='login' element={<LoginPage />} />
+            <Route path='' element={<LoginPage />}/>
+            {/* <Route exact path='login' element={<LoginPage />} /> */}
             <Route exact path='admin' element={<AdminMain />} />
             <Route exact path='user' element={<UserProfile />} />
             <Route exact path='users/new' element={<CreateUser />} />
