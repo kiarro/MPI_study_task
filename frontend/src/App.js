@@ -14,7 +14,7 @@ import logo from './logo.svg';
 
 import './App.css';
 
-import LoginPage from './views/LoginPage';
+import LoginPage from './views/LoginPage/LoginPage';
 import UserProfile from './views/UserProfile';
 import UserProfileEdit from './views/UserProfileEdit';
 import Experiments from './views/Experiments';
