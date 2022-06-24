@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,10 +22,11 @@ import com.mpi.alienresearch.model.Report;
 import com.mpi.alienresearch.service.ExperimentService;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/experiments")
 public class ExperimentController {
 
-    private ExperimentService experimentService;
+    private final ExperimentService experimentService;
 
     public ExperimentController(ExperimentService experimentService) {
         this.experimentService = experimentService;
@@ -35,7 +37,7 @@ public class ExperimentController {
     public ResponseEntity<String> addExperiment(@RequestBody Experiment experiment) {
         Optional<Long> id = Optional.ofNullable(experimentService.add(experiment));
         if (id.isPresent()) {
-            URI uri = URI.create("/experiments/" + id);
+            URI uri = URI.create("/experiments/" + id.get());
             // System.out.println(uri.toString());
             return ResponseEntity.accepted().location(uri).build();
         } else {

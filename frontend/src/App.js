@@ -16,9 +16,12 @@ import './App.css';
 
 import LoginPage from './views/LoginPage';
 import UserProfile from './views/UserProfile';
+import UserProfileEdit from './views/UserProfileEdit';
 import Experiments from './views/Experiments';
 import Experiment from './views/Experiment';
+import NewExperiment from './views/NewExperiment';
 import AdminMain from './views/AdminMain';
+import ResearcherMain from './views/ResearcherMain';
 import CreateUser from './views/CreateUser';
 
 function App() {
@@ -27,12 +30,15 @@ function App() {
       <body>
         <BrowserRouter>
           <Routes>
-            <Route path='' />
+            <Route exact path='' element={<LoginPage />} />
             <Route exact path='login' element={<LoginPage />} />
             <Route exact path='admin' element={<AdminMain />} />
-            <Route exact path='user' element={<UserProfile />} />
+            <Route exact path='researcher' element={<ResearcherMain />} />
+            <Route exact path='users/current' element={<UserProfile />} />
+            <Route exact path='users/:id' element={<UserProfileEdit />} />
             <Route exact path='users/new' element={<CreateUser />} />
             <Route exact path='experiments' element={<Experiments />} />
+            <Route exact path='experiments/new' element={<NewExperiment />} />
             <Route exact path='experiments/:id' element={<Experiment />} />
           </Routes>
         </BrowserRouter>

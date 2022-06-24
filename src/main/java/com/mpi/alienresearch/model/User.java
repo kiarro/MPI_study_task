@@ -37,13 +37,13 @@ public class User {
         return password;
     }
 
-    private Long userGroup = null;
+    private Long userGroup;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    private String firstName = null;
-    private String lastName = null;
+    private String firstName;
+    private String lastName;
     @Column(columnDefinition = "DATE")
     @JsonFormat(pattern = "dd.MM.yyyy")
     private LocalDate birthDate;

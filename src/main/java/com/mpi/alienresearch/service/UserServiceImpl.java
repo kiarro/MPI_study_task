@@ -1,6 +1,7 @@
 package com.mpi.alienresearch.service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +72,7 @@ public class UserServiceImpl implements UserService {
      * Just return all
      */
     @Override
-    public Collection<User> getPage(Long offset, Long limit, String[] sortvalues) {
+    public List<User> getPage(Long offset, Long limit, String[] sortvalues) {
         return userRepository.findAll();
     }
 

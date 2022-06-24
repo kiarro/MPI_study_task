@@ -26,7 +26,7 @@ import com.mpi.alienresearch.model.enums.UserRole;
 @EnableJpaRepositories(basePackages = "com.mpi")
 @ComponentScan("com.mpi.alienresearch")
 public class DemoApplication {
-	private static final Logger log = LoggerFactory.getLogger(DemoApplication.class);
+	// private static final Logger log = LoggerFactory.getLogger(DemoApplication.class);
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}

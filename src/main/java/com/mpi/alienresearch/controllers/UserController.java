@@ -1,6 +1,7 @@
 package com.mpi.alienresearch.controllers;
 
 import java.net.URI;
+import java.util.List;
 
 import javax.websocket.server.PathParam;
 
@@ -20,6 +21,7 @@ import com.mpi.alienresearch.service.UserServiceImpl;
 import com.mpi.alienresearch.state.Credentials;
 import com.mpi.alienresearch.state.PersonalInfo;
 import com.mpi.alienresearch.state.SingleData;
+import com.mpi.alienresearch.state.State;
 
 @RestController
 @CrossOrigin
@@ -54,20 +56,24 @@ public class UserController {
         }
     }
 
+    @GetMapping
+    public List<User> getUsers() {
+        return userService.getPage(1l,1l,null);
+    }
+
     @GetMapping("/{id}")
     public User getById(@PathVariable("id") long id) {
         return userService.get(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateUser(@PathVariable("id") long id, @RequestBody SingleData<Long> group) {
-        User user = userService.get(id);
-        if (user == null) { // dragon not found
+    public ResponseEntity<Void> updateUser(@PathVariable("id") long id, @RequestBody User user) {
+        User currentUser = userService.get(id);
+        if (currentUser == null) { // dragon not found
             return ResponseEntity.notFound().build();
         }
-        user.setGroup(group.getValue());
-
         userService.update(id, user);
+
         return ResponseEntity.noContent().build();
     }
 
@@ -82,6 +88,10 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/current")
+    public User getCurrentUser() {
+        return userService.get(State.getCurrentUser().getId());
+    }
 
     @PostMapping("/current/update_info")
     public void updateCurrentInfo(@RequestBody PersonalInfo info) {

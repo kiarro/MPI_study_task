@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class Experiment {
     
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     Long id;
 
     @Enumerated(EnumType.STRING)
@@ -53,10 +53,10 @@ public class Experiment {
 
     Long researcherGroup;
 
-    @OneToMany
-    List<Report> reports;
-    @OneToMany
-    List<Application> applications;
+    // @OneToMany
+    // List<Report> reports;
+    // @OneToMany
+    // List<Application> applications;
 
     @Column(columnDefinition = "DATE")
     LocalDateTime creationDate;
@@ -78,18 +78,18 @@ public class Experiment {
     public void setId(Long id) {
         this.id = id;
     }
-    public List<Report> getReports() {
-        return reports;
-    }
-    public void setReports(List<Report> reports) {
-        this.reports = reports;
-    }
-    public List<Application> getApplications() {
-        return applications;
-    }
-    public void setApplications(List<Application> applications) {
-        this.applications = applications;
-    }
+    // public List<Report> getReports() {
+    //     return reports;
+    // }
+    // public void setReports(List<Report> reports) {
+    //     this.reports = reports;
+    // }
+    // public List<Application> getApplications() {
+    //     return applications;
+    // }
+    // public void setApplications(List<Application> applications) {
+    //     this.applications = applications;
+    // }
     
     public Long getResearcherGroup() {
         return researcherGroup;

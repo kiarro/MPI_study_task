@@ -59,6 +59,8 @@ function App() {
             if (result.role == "ADMIN") {
                 // window.open("/admin")
                 history("/admin");
+            } else if (result.role == "RESEARCHER") {
+                history("/researcher")
             }
 
             setData(result);

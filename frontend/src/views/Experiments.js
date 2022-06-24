@@ -59,13 +59,39 @@ function ExpList() {
         return <div>Загрузка...</div>;
     } else {
         return (
-            <ul>
-                {items.map(item => (
-                    <li key={item.id}>
-                        {item.title}
-                    </li>
-                ))}
-            </ul>
+            <div>
+            {items.map(item => (
+                <Box sx={{ m: 0, p: 0, border: "1px dashed" }}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={1}>
+                            <Box m={1} display="flex" justifyContent="center">
+                                <Item>item.id</Item>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Box m={1} display="flex" justifyContent="left">
+                                <Item>item.type</Item>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Box m={1} display="flex" justifyContent="left">
+                                <Item>item.description</Item>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Box m={1} display="flex" justifyContent="center">
+                                <Item>item.creationDate</Item>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Box m={1} display="flex" justifyContent="left">
+                                <Item>item.creator.first_name</Item>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </Box>
+            ))}
+            </div>
         );
     }
 

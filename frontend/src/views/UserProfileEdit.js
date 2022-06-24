@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 import { Button, TextField, List } from "@mui/material";
 
 import { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 const Item = styled(Button)(({ theme }) => ({
@@ -17,16 +17,22 @@ const Item = styled(Button)(({ theme }) => ({
 export default function App() {
     const history = useNavigate();
 
+    const { id } = useParams();
+
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
     const [about, setAbout] = useState('');
+    const [group, setGroup] = useState('');
+    const [last_name, setLastName] = useState('');
+    const [first_name, setFirstName] = useState('');
+    const [birth_date, setBirthDate] = useState('');
 
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [item, setItems] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/users/current")
+        fetch("http://localhost:8080/users/" + id)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -36,6 +42,11 @@ export default function App() {
                     setPhone(result.phone);
                     setEmail(result.email);
                     setAbout(result.aboutYourself);
+
+                    setFirstName(result.firstName);
+                    setLastName(result.lastName);
+                    setBirthDate(result.birthDate);
+                    setGroup(result.group);
                 },
                 // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
                 // чтобы не перехватывать исключения из ошибок в самих компонентах.
@@ -52,12 +63,16 @@ export default function App() {
 
     const sendClick = async () => {
         try {
-            const response = await fetch('http://localhost:8080/users/current/update_info', {
-                method: 'POST',
+            const response = await fetch('http://localhost:8080/users/'+id, {
+                method: 'PUT',
                 body: JSON.stringify({
-                    phone_number: phone,
+                    phoneNumber: phone,
                     about: about,
-                    email: email
+                    email: email,
+                    lastName: last_name,
+                    firstName: first_name,
+                    birthDate: birth_date,
+                    userGroup: group
                 }),
                 headers: {
                     'Content-Type': 'application/json',
@@ -105,7 +120,18 @@ export default function App() {
                             </Box>
                         </Grid>
                     </Grid>
-
+                    <Grid container spacing={2}>
+                        <Grid item xs={3}>
+                            <Box display="flex" justifyContent="end">
+                                <Item>Группа:</Item>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Box>
+                                <TextField onChange={(e) => setGroup(e.target.value)} value={group} fullWidth></TextField>
+                            </Box>
+                        </Grid>
+                    </Grid>
                     <Box marginTop="20px" marginBottom="0px">
                         <Item>Основные данные:</Item>
                     </Box>
@@ -117,7 +143,7 @@ export default function App() {
                         </Grid>
                         <Grid item xs={6}>
                             <Box>
-                                <TextField disabled="true" value={item.lastName} fullWidth></TextField>
+                                <TextField onChange={(e) => setLastName(e.target.value)} value={last_name} fullWidth></TextField>
                             </Box>
                         </Grid>
                         <Grid item xs={4}>
@@ -127,7 +153,7 @@ export default function App() {
                         </Grid>
                         <Grid item xs={6}>
                             <Box>
-                                <TextField disabled="true" value={item.firstName} fullWidth></TextField>
+                                <TextField onChange={(e) => setFirstName(e.target.value)} value={first_name} fullWidth></TextField>
                             </Box>
                         </Grid>
                         <Grid item xs={4}>
@@ -137,7 +163,7 @@ export default function App() {
                         </Grid>
                         <Grid item xs={6}>
                             <Box>
-                                <TextField disabled="true" value={item.birthDate} fullWidth></TextField>
+                                <TextField onChange={(e) => setBirthDate(e.target.value)} value={birth_date} fullWidth></TextField>
                             </Box>
                         </Grid>
                         <Grid item xs={4}>
@@ -164,7 +190,7 @@ export default function App() {
                         <Grid item xs={6}>
                             <Box>
                                 <TextField onChange={(e) => setPhone(e.target.value)}
-                                value = {phone} fullWidth></TextField>
+                                    value={phone} fullWidth></TextField>
                             </Box>
                         </Grid>
                         <Grid item xs={4}>
@@ -175,7 +201,7 @@ export default function App() {
                         <Grid item xs={6}>
                             <Box>
                                 <TextField onChange={(e) => setEmail(e.target.value)}
-                                    value = {email} fullWidth
+                                    value={email} fullWidth
                                 ></TextField>
                             </Box>
                         </Grid>
@@ -190,7 +216,7 @@ export default function App() {
                                     fullWidth
                                     multiline="true"
                                     rows="4"
-                                    value = {about}
+                                    value={about}
                                 ></TextField>
                             </Box>
                         </Grid>
@@ -198,7 +224,7 @@ export default function App() {
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <Box m={1} display="flex" justifyContent="flex-start">
-                                <Button variant="contained" onClick={() => sendClick()}>Изменить прочее</Button>
+                                <Button variant="contained" onClick={() => sendClick()}>Изменить</Button>
                             </Box>
                         </Grid>
                         <Grid item xs={6}>
