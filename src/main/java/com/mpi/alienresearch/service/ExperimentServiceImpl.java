@@ -9,7 +9,7 @@ import com.mpi.alienresearch.dao.ApplicationRepository;
 import com.mpi.alienresearch.dao.ExperimentRepository;
 import com.mpi.alienresearch.dao.ReportRepository;
 import com.mpi.alienresearch.filters.ExperimentFilter;
-import com.mpi.alienresearch.model.AppEngineeringWork;
+import com.mpi.alienresearch.model.AppTechnic;
 import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Experiment;
 import com.mpi.alienresearch.model.Report;
@@ -67,7 +67,7 @@ public class ExperimentServiceImpl implements ExperimentService{
     public Long addApplication(long id, Application app) {
         app.setId(id);
         if (app.getType().equals(AppType.EngineeringWorks)) {
-            app = appTechnicRepository.save((AppEngineeringWork)app);
+            app = appTechnicRepository.save((AppTechnic)app);
         }
         return app.getId();
     }

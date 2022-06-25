@@ -18,30 +18,40 @@ public class Experiment {
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    Long id;
+    private Long id;
+
+    private String title;
+    private String description;
+
+    @Column(columnDefinition = "DATE")
+    private LocalDateTime creationTime;
+
+    @ManyToOne
+    private UserGroup researchGroup;
 
     @Enumerated(EnumType.STRING)
-    ExperimentStatus state;
+    private ExperimentStatus state;
 
-    String description;
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
+    public Experiment(Long id, String title, String description, LocalDateTime creationTime, UserGroup researchGroup,
+            ExperimentStatus state) {
+        this.id = id;
+        this.title = title;
         this.description = description;
-    }
-
-    public ExperimentStatus getState() {
-        return state;
-    }
-
-    public void setState(ExperimentStatus state) {
+        this.creationTime = creationTime;
+        this.researchGroup = researchGroup;
         this.state = state;
     }
 
-    String title;
+    public Experiment() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -51,57 +61,36 @@ public class Experiment {
         this.title = title;
     }
 
-    Long researcherGroup;
-
-    // @OneToMany
-    // List<Report> reports;
-    // @OneToMany
-    // List<Application> applications;
-
-    @Column(columnDefinition = "DATE")
-    LocalDateTime creationDate;
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Experiment() {
+    public LocalDateTime getCreationTime() {
+        return creationTime;
     }
 
-    public Long getId() {
-        return id;
+    public void setCreationTime(LocalDateTime creationTime) {
+        this.creationTime = creationTime;
     }
-    public void setId(Long id) {
-        this.id = id;
+
+    public UserGroup getResearchGroup() {
+        return researchGroup;
     }
-    // public List<Report> getReports() {
-    //     return reports;
-    // }
-    // public void setReports(List<Report> reports) {
-    //     this.reports = reports;
-    // }
-    // public List<Application> getApplications() {
-    //     return applications;
-    // }
-    // public void setApplications(List<Application> applications) {
-    //     this.applications = applications;
-    // }
+
+    public void setResearchGroup(UserGroup researchGroup) {
+        this.researchGroup = researchGroup;
+    }
+
+    public ExperimentStatus getState() {
+        return state;
+    }
+
+    public void setState(ExperimentStatus state) {
+        this.state = state;
+    }
     
-    public Long getResearcherGroup() {
-        return researcherGroup;
-    }
-
-    public void setResearcherGroup(Long researcherGroup) {
-        this.researcherGroup = researcherGroup;
-    }
-
-    public void updateWith(Experiment experiment) {
-        setResearcherGroup(experiment.getResearcherGroup());
-        setTitle(experiment.getTitle());
-        setDescription(experiment.getDescription());
-    }
 }

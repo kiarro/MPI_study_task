@@ -12,8 +12,13 @@
 
 ### database
 
-run
+build
 
 `docker build -t kiarro/alien_db:latest .`
 
 from database folder
+
+run 
+
+docker run -p 5432:5432 kiarro/alien_db
+

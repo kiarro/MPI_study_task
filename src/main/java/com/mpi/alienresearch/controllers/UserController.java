@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mpi.alienresearch.model.Credentials;
 import com.mpi.alienresearch.model.User;
 import com.mpi.alienresearch.service.UserService;
 import com.mpi.alienresearch.service.UserServiceImpl;
-import com.mpi.alienresearch.state.Credentials;
 import com.mpi.alienresearch.state.PersonalInfo;
 import com.mpi.alienresearch.state.SingleData;
 import com.mpi.alienresearch.state.State;

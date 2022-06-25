@@ -14,41 +14,45 @@ import com.mpi.alienresearch.model.enums.AppType;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "applications")
 public abstract class Application {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    Long id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
     
     @Enumerated(EnumType.STRING)
-    AppType type;
+    private AppType type;
+
+    private String description;
 
     @ManyToOne
-    User creator;
-    
-    Long executionGroup;
+    private User creator;
 
-    String description;
-
-    Long experimentId;
-
-    public Long getExperimentId() {
-        return experimentId;
-    }
-
-    public void setExperimentId(Long experiment_id) {
-        this.experimentId = experiment_id;
-    }
+    @ManyToOne
+    private Experiment experiment;
 
     @Column(columnDefinition = "DATE")
-    LocalDateTime creationDate;
-
+    private LocalDateTime lastStatusTransitionDate;
+    
     @Enumerated(EnumType.STRING)
-    AppStatus status;
-    
-    @Column(columnDefinition = "DATE")
-    LocalDateTime lastStatusTransitionDate;
+    private AppStatus status;
 
-    @OneToOne
-    Report report;
+    @ManyToOne
+    private UserGroup executionGroup;
+
+    public Application(Long id, AppType type, String description, User creator, Experiment experiment,
+            LocalDateTime lastStatusTransitionDate, AppStatus status, UserGroup executionGroup) {
+        this.id = id;
+        this.type = type;
+        this.description = description;
+        this.creator = creator;
+        this.experiment = experiment;
+        this.lastStatusTransitionDate = lastStatusTransitionDate;
+        this.status = status;
+        this.executionGroup = executionGroup;
+    }
+
+    public Application() {
+    }
 
     public Long getId() {
         return id;
@@ -66,22 +70,6 @@ public abstract class Application {
         this.type = type;
     }
 
-    public User getCreator() {
-        return creator;
-    }
-
-    public void setCreator(User creator) {
-        this.creator = creator;
-    }
-
-    public Long getExecutionGroup() {
-        return executionGroup;
-    }
-
-    public void setExecutionGroup(Long executionGroup) {
-        this.executionGroup = executionGroup;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -90,12 +78,28 @@ public abstract class Application {
         this.description = description;
     }
 
-    public LocalDateTime getCreationDate() {
-        return creationDate;
+    public User getCreator() {
+        return creator;
     }
 
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
+    public void setCreator(User creator) {
+        this.creator = creator;
+    }
+
+    public Experiment getExperiment() {
+        return experiment;
+    }
+
+    public void setExperiment(Experiment experiment) {
+        this.experiment = experiment;
+    }
+
+    public LocalDateTime getLastStatusTransitionDate() {
+        return lastStatusTransitionDate;
+    }
+
+    public void setLastStatusTransitionDate(LocalDateTime lastStatusTransitionDate) {
+        this.lastStatusTransitionDate = lastStatusTransitionDate;
     }
 
     public AppStatus getStatus() {
@@ -106,11 +110,12 @@ public abstract class Application {
         this.status = status;
     }
 
-    public LocalDateTime getLastStatusTransitionDate() {
-        return lastStatusTransitionDate;
+    public UserGroup getExecutionGroup() {
+        return executionGroup;
     }
 
-    public void setLastStatusTransitionDate(LocalDateTime lastStatusTransitionDate) {
-        this.lastStatusTransitionDate = lastStatusTransitionDate;
-    }; 
+    public void setExecutionGroup(UserGroup executionGroup) {
+        this.executionGroup = executionGroup;
+    }
+
 }

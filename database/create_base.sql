@@ -1,19 +1,9 @@
-DROP TABLE IF EXISTS reports;
-DROP TABLE IF EXISTS applications;
-DROP TABLE IF EXISTS app_technic;
-DROP TABLE IF EXISTS experiments;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS user_groups;
-
-
 CREATE TABLE user_groups (
 	id BIGSERIAL PRIMARY KEY
 );
 
 CREATE TABLE users (
 	id BIGSERIAL PRIMARY KEY,
-	username VARCHAR(50) NOT NULL,
-	password VARCHAR(50) NOT NULL,
 	first_name VARCHAR(50),
 	last_name VARCHAR(50),
 	birth_date TIMESTAMP,
@@ -22,8 +12,15 @@ CREATE TABLE users (
 	phone_number VARCHAR(20),
 	email VARCHAR(50),
 	about_yourself VARCHAR(300),
-	user_group BIGINT
-	-- CONSTRAINT FK_UserGroup FOREIGN KEY (user_group) REFERENCES user_groups(id)
+	user_group BIGINT,
+	FOREIGN KEY (user_group) REFERENCES user_groups(id)
+);
+
+CREATE TABLE credentials (
+	id BIGINT PRIMARY KEY,
+	username VARCHAR(50) NOT NULL,
+	password VARCHAR(50) NOT NULL,
+	FOREIGN KEY (id) REFERENCES users(id)
 );
 
 CREATE TABLE experiments (
@@ -32,15 +29,8 @@ CREATE TABLE experiments (
 	description VARCHAR(300),
 	creation_time TIMESTAMP,
 	research_group BIGINT,
-	state VARCHAR(50)
-);
-
-CREATE TABLE reports (
-	id BIGSERIAL PRIMARY KEY,
-	title VARCHAR(50),
-	content VARCHAR(1000),
-	creation_date TIMESTAMP,
-	experiment_id BIGINT
+	state VARCHAR(50),
+	FOREIGN KEY (research_group) REFERENCES user_groups(id)
 );
 
 CREATE TABLE applications (
@@ -52,15 +42,74 @@ CREATE TABLE applications (
 	experiment_id BIGINT,
 	last_status_transition_date TIMESTAMP,
 	status VARCHAR(50),
-	executionGroup BIGINT,
-	report BIGINT
+	execution_group BIGINT,
+	FOREIGN KEY (execution_group) REFERENCES user_groups(id),
+	FOREIGN KEY (experiment_id) REFERENCES experiments(id),
+	FOREIGN KEY (creator) REFERENCES users(id)
 );
 
 CREATE TABLE app_technic (
-	id BIGINT,
-	content VARCHAR(1000)
+	id BIGINT PRIMARY KEY,
+	content VARCHAR(1000),
+	FOREIGN KEY (id) REFERENCES applications(id)
 );
 
+CREATE TABLE reports (
+	id BIGSERIAL PRIMARY KEY,
+	title VARCHAR(50),
+	content VARCHAR(1000),
+	creation_date TIMESTAMP,
+	experiment_id BIGINT,
+	application_id BIGINT,
+	FOREIGN KEY (experiment_id) REFERENCES experiments(id),
+	FOREIGN KEY (application_id) REFERENCES applications(id)
+);
 
-INSERT INTO users (username, password, first_name, role)
-VALUES ('admin', 'admin', 'Admin', 'ADMIN');
+CREATE TABLE subjects (
+	id BIGSERIAL PRIMARY KEY,
+	name VARCHAR(300),
+	hair_color VARCHAR(100),
+	eyes_color VARCHAR(100),
+	skin_color VARCHAR(100),
+	specials VARCHAR(400),
+	weight REAL,
+	height REAL,
+	birth_date DATE
+);
+
+CREATE TABLE artifacts (
+	id BIGSERIAL PRIMARY KEY,
+	name VARCHAR(300),
+	description VARCHAR(1000)
+);
+
+CREATE TABLE app_analysis (
+	id BIGINT PRIMARY KEY,
+	subject_id BIGSERIAL,
+	description VARCHAR(1000),
+	FOREIGN KEY (subject_id) REFERENCES subjects(id),
+	FOREIGN KEY (id) REFERENCES applications(id)
+);
+
+CREATE TABLE landing_point (
+	coord_x NUMERIC(12, 8),
+	coord_y NUMERIC(12, 8),
+	artifact_id BIGINT,
+	application_id BIGINT,
+	amount BIGINT,
+	FOREIGN KEY (artifact_id) REFERENCES artifacts(id),
+	FOREIGN KEY (application_id) REFERENCES applications(id)
+);
+
+CREATE TABLE app_landing (
+	id BIGINT PRIMARY KEY,
+	FOREIGN KEY (id) REFERENCES applications(id)
+);
+
+WITH ins1 AS (
+    INSERT INTO users (first_name, role)
+    VALUES ('Admin', 'ADMIN')
+    RETURNING id AS id
+)
+INSERT INTO credentials (id, username, password)
+SELECT id, 'admin', 'admin' FROM ins1;

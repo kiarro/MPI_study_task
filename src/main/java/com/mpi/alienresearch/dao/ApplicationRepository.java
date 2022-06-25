@@ -1,6 +1,6 @@
 package com.mpi.alienresearch.dao;
 
-import com.mpi.alienresearch.model.AppEngineeringWork;
+import com.mpi.alienresearch.model.AppTechnic;
 import com.mpi.alienresearch.model.Application;
 
 import java.util.List;

@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.mpi.alienresearch.filters.ApplicationFilter;
-import com.mpi.alienresearch.model.AppEngineeringWork;
+import com.mpi.alienresearch.model.AppTechnic;
 import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Report;
 import com.mpi.alienresearch.model.enums.AppStatus;

@@ -7,25 +7,31 @@ import javax.persistence.*;
 @Entity
 @Table(name = "reports")
 public class Report {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    Long id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
+
+    private String title;
+    private String content;
     
     @Column(columnDefinition = "DATE")
-    LocalDateTime creationDate;
+    private LocalDateTime creationDate;
 
-    String title;
+    @ManyToOne
+    private Experiment experiment;
 
-    String text;
+    @ManyToOne
+    private Application application;
 
-    Long experimentId;
-
-    public Long getExperimentId() {
-        return experimentId;
-    }
-
-    public void setExperimentId(Long experimentId) {
-        this.experimentId = experimentId;
+    public Report(Long id, String title, String content, LocalDateTime creationDate, Experiment experiment,
+            Application application) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.creationDate = creationDate;
+        this.experiment = experiment;
+        this.application = application;
     }
 
     public Report() {
@@ -39,14 +45,6 @@ public class Report {
         this.id = id;
     }
 
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -55,11 +53,36 @@ public class Report {
         this.title = title;
     }
 
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String content) {
+        this.content = content;
     }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Experiment getExperiment() {
+        return experiment;
+    }
+
+    public void setExperiment(Experiment experiment) {
+        this.experiment = experiment;
+    }
+
+    public Application getApplication() {
+        return application;
+    }
+
+    public void setApplication(Application application) {
+        this.application = application;
+    }
+
 }
