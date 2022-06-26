@@ -2,6 +2,7 @@ package com.mpi.alienresearch.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -44,12 +45,11 @@ public class User {
     @ManyToOne
     private UserGroup userGroup;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private Credentials credentials;
 
     public User(Long id, String firstName, String lastName, LocalDate birthDate, String jobAgreementNumber,
-            UserRole role, String phoneNumber, String email, String aboutYourself, UserGroup userGroup, 
-            Credentials credentials) {
+            UserRole role, String phoneNumber, String email, String aboutYourself, UserGroup userGroup) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -60,7 +60,6 @@ public class User {
         this.email = email;
         this.aboutYourself = aboutYourself;
         this.userGroup = userGroup;
-        this.credentials = credentials;
     }
 
     public User() {

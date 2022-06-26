@@ -10,7 +10,7 @@ import com.mpi.alienresearch.model.enums.AppStatus;
 import com.mpi.alienresearch.model.enums.AppType;
 
 @Entity
-@Table(name = "app_technic")
+@Table(name = "apps_technic")
 public class AppTechnic extends Application {
     
     private String content;

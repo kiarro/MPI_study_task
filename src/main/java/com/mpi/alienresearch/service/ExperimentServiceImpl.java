@@ -5,9 +5,9 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mpi.alienresearch.dao.ApplicationRepository;
-import com.mpi.alienresearch.dao.ExperimentRepository;
-import com.mpi.alienresearch.dao.ReportRepository;
+import com.mpi.alienresearch.dao.ApplicationDao;
+import com.mpi.alienresearch.dao.ExperimentDao;
+import com.mpi.alienresearch.dao.ReportDao;
 import com.mpi.alienresearch.filters.ExperimentFilter;
 import com.mpi.alienresearch.model.AppTechnic;
 import com.mpi.alienresearch.model.Application;
@@ -19,14 +19,14 @@ import com.mpi.alienresearch.model.enums.ExperimentStatus;
 @Service
 public class ExperimentServiceImpl implements ExperimentService{
 
-    final ExperimentRepository experimentRepository;
+    final ExperimentDao experimentRepository;
     
-    final ReportRepository reportRepository;
+    final ReportDao reportRepository;
     
-    final ApplicationRepository appTechnicRepository;
+    final ApplicationDao appTechnicRepository;
 
-    public ExperimentServiceImpl(ExperimentRepository experimentRepository, ReportRepository reportRepository,
-            ApplicationRepository appTechnicRepository) {
+    public ExperimentServiceImpl(ExperimentDao experimentRepository, ReportDao reportRepository,
+            ApplicationDao appTechnicRepository) {
         this.experimentRepository = experimentRepository;
         this.reportRepository = reportRepository;
         this.appTechnicRepository = appTechnicRepository;
@@ -34,7 +34,8 @@ public class ExperimentServiceImpl implements ExperimentService{
 
     @Override
     public Experiment get(long id) {
-        return experimentRepository.findById(id);
+        // return experimentRepository.findById(id);
+        return null;
     }
 
     /**
@@ -53,14 +54,15 @@ public class ExperimentServiceImpl implements ExperimentService{
 
     @Override
     public void update(long id, Experiment experiment) {
-        Experiment experiment1 = experimentRepository.findById(id);
-        experiment1.updateWith(experiment);
-        experimentRepository.save(experiment1);
+        // Experiment experiment1 = experimentRepository.findById(id);
+        // experiment1.updateWith(experiment);
+        // experimentRepository.save(experiment1);
     }
 
     @Override
     public Collection<Experiment> getByGroup(Long groupId) {
-        return experimentRepository.findByResearcherGroup(groupId);
+        // return experimentRepository.findByResearcherGroup(groupId);
+        return null;
     }
 
     @Override
@@ -81,9 +83,9 @@ public class ExperimentServiceImpl implements ExperimentService{
 
     @Override
     public void setState(long id, ExperimentStatus state) {
-        Experiment experiment = experimentRepository.findById(id);
-        experiment.setState(state);
-        experimentRepository.save(experiment);
+        // Experiment experiment = experimentRepository.findById(id);
+        // experiment.setState(state);
+        // experimentRepository.save(experiment);
     }
     
 }

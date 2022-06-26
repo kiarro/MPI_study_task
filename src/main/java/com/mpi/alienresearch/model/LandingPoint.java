@@ -1,22 +1,34 @@
 package com.mpi.alienresearch.model;
 
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "landing_points")
 public class LandingPoint {
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
+
     @Embedded
-    Coordinates coordinates;
+    private Coordinates coordinates;
 
     @ManyToOne
-    Artifact artifact;
+    private Artifact artifact;
 
     @ManyToOne
-    AppLanding application;
+    private AppLanding application;
 
-    Integer amount;
+    private Integer amount;
 
-    public LandingPoint(Coordinates coordinates, Artifact artifact, AppLanding application, Integer amount) {
+    public LandingPoint(Long id, Coordinates coordinates, Artifact artifact, AppLanding application, Integer amount) {
+        this.id = id;
         this.coordinates = coordinates;
         this.artifact = artifact;
         this.application = application;
@@ -56,6 +68,14 @@ public class LandingPoint {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
     
 }

@@ -7,9 +7,9 @@ import javax.persistence.Embeddable;
 public class Coordinates {
 
     @Column(name = "coord_x")
-    float x;
+    private float x;
     @Column(name = "coord_y")
-    float y;
+    private float y;
     
     public Coordinates(float x, float y) {
         this.x = x;

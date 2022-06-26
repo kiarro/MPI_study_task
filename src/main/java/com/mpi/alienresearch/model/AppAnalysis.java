@@ -10,13 +10,13 @@ import com.mpi.alienresearch.model.enums.AppStatus;
 import com.mpi.alienresearch.model.enums.AppType;
 
 @Entity
-@Table(name = "app_analysis")
+@Table(name = "apps_analysis")
 public class AppAnalysis extends Application {
 
     @ManyToOne
-    Subject subject;
+    private Subject subject;
 
-    String description;
+    private String description;
 
     public AppAnalysis(Long id, AppType type, String description, User creator, Experiment experiment,
             LocalDateTime lastStatusTransitionDate, AppStatus status, UserGroup executionGroup, Subject subject,

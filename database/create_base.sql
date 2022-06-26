@@ -7,12 +7,12 @@ CREATE TABLE users (
 	first_name VARCHAR(50),
 	last_name VARCHAR(50),
 	birth_date TIMESTAMP,
-	job_agreement_number VARCHAR(10),
+	job_agreement_number VARCHAR(100),
 	role VARCHAR(30) NOT NULL,
-	phone_number VARCHAR(20),
-	email VARCHAR(50),
+	phone_number VARCHAR(100),
+	email VARCHAR(100),
 	about_yourself VARCHAR(300),
-	user_group BIGINT,
+	user_group_id BIGINT,
 	FOREIGN KEY (user_group) REFERENCES user_groups(id)
 );
 
@@ -48,7 +48,7 @@ CREATE TABLE applications (
 	FOREIGN KEY (creator) REFERENCES users(id)
 );
 
-CREATE TABLE app_technic (
+CREATE TABLE apps_technic (
 	id BIGINT PRIMARY KEY,
 	content VARCHAR(1000),
 	FOREIGN KEY (id) REFERENCES applications(id)
@@ -83,7 +83,7 @@ CREATE TABLE artifacts (
 	description VARCHAR(1000)
 );
 
-CREATE TABLE app_analysis (
+CREATE TABLE apps_analysis (
 	id BIGINT PRIMARY KEY,
 	subject_id BIGSERIAL,
 	description VARCHAR(1000),
@@ -91,7 +91,8 @@ CREATE TABLE app_analysis (
 	FOREIGN KEY (id) REFERENCES applications(id)
 );
 
-CREATE TABLE landing_point (
+CREATE TABLE landing_points (
+	id BIGSERIAL PRIMARY KEY,
 	coord_x NUMERIC(12, 8),
 	coord_y NUMERIC(12, 8),
 	artifact_id BIGINT,
@@ -101,7 +102,7 @@ CREATE TABLE landing_point (
 	FOREIGN KEY (application_id) REFERENCES applications(id)
 );
 
-CREATE TABLE app_landing (
+CREATE TABLE apps_landing (
 	id BIGINT PRIMARY KEY,
 	FOREIGN KEY (id) REFERENCES applications(id)
 );

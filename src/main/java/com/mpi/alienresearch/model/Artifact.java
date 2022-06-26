@@ -15,10 +15,10 @@ public class Artifact {
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     
-    String name;
-    String description;
+    private String name;
+    private String description;
     
     public Artifact(Long id, String name, String description) {
         this.id = id;

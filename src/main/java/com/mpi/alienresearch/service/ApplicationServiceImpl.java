@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mpi.alienresearch.dao.ApplicationRepository;
-import com.mpi.alienresearch.dao.ApplicationRepository;
+import com.mpi.alienresearch.dao.ApplicationDao;
+import com.mpi.alienresearch.dao.ApplicationDao;
 import com.mpi.alienresearch.filters.ApplicationFilter;
 import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Report;
@@ -17,17 +17,15 @@ import com.mpi.alienresearch.model.enums.Decision;
 @Service
 public class ApplicationServiceImpl implements ApplicationService {
 
-    final ApplicationRepository applicationRepository;
+    final ApplicationDao applicationRepository;
 
-    public ApplicationServiceImpl(ApplicationRepository applicationRepository) {
+    public ApplicationServiceImpl(ApplicationDao applicationRepository) {
         this.applicationRepository = applicationRepository;
     }
 
     @Override
     public Application get(Long id) {
-        Application app = applicationRepository.findById(id.longValue());
-        
-        return app;
+        return null;
     }
 
     /**
@@ -51,14 +49,15 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public void setState(Long id, AppStatus status) {
-        Application app = applicationRepository.findById(id.longValue());
-        app.setStatus(status);
-        applicationRepository.save(app);
+        // Application app = applicationRepository.findById(id.longValue());
+        // app.setStatus(status);
+        // applicationRepository.save(app);
     }
 
     @Override
     public List<Application> getByExperiment(Long experimentId) {
-        return applicationRepository.findByExperimentId(experimentId);
+        // return applicationRepository.findByExperimentId(experimentId);
+        return null;
     }
 
 }

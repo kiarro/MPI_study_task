@@ -1,9 +1,13 @@
 package com.mpi.alienresearch.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -11,16 +15,21 @@ import javax.persistence.Table;
 public class Credentials {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    // @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id = 0l;
 
     private String username;
     private String password;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id")
+    @MapsId
+    private User user;
 
-    public Credentials(Long id, String username, String password) {
-        this.id = id;
+    public Credentials(String username, String password, User user) {
         this.username = username;
         this.password = password;
+        this.user = user;
     }
 
     public Credentials() {
@@ -48,6 +57,14 @@ public class Credentials {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

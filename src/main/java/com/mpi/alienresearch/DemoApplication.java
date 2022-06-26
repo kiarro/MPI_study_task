@@ -18,7 +18,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import com.mpi.alienresearch.dao.UserRepository;
+import com.mpi.alienresearch.dao.UserDao;
 import com.mpi.alienresearch.model.User;
 import com.mpi.alienresearch.model.enums.UserRole;
 

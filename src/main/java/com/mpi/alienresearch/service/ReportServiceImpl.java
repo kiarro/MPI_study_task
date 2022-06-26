@@ -5,22 +5,23 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mpi.alienresearch.dao.ReportRepository;
+import com.mpi.alienresearch.dao.ReportDao;
 import com.mpi.alienresearch.filters.ReportFilter;
 import com.mpi.alienresearch.model.Report;
 
 @Service
 public class ReportServiceImpl implements ReportService {
 
-    final ReportRepository reportRepository;
+    final ReportDao reportRepository;
     
-    public ReportServiceImpl(ReportRepository reportRepository){
+    public ReportServiceImpl(ReportDao reportRepository){
         this.reportRepository = reportRepository;
     }
     
     @Override
     public Report get(Long id) {
-        return reportRepository.findById(id.longValue());
+        // return reportRepository.findById(id.longValue());
+        return null;
     }
 
     /**
@@ -44,7 +45,8 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public Collection<Report> getByExperiment(Long experimentId) {
-        return reportRepository.findByExperimentId(experimentId);
+        // return reportRepository.findByExperimentId(experimentId);
+        return null;
     }
 
 }
