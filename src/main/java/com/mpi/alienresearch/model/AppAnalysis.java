@@ -16,14 +16,14 @@ public class AppAnalysis extends Application {
     @ManyToOne
     private Subject subject;
 
-    private String description;
+    private String analysisDescription;
 
-    public AppAnalysis(Long id, AppType type, String description, User creator, Experiment experiment,
+    public AppAnalysis(Long id, String description, User creator, Experiment experiment,
             LocalDateTime lastStatusTransitionDate, AppStatus status, UserGroup executionGroup, Subject subject,
-            String description2) {
-        super(id, type, description, creator, experiment, lastStatusTransitionDate, status, executionGroup);
+            String analysisDescription) {
+        super(id, AppType.Analysis, description, creator, experiment, lastStatusTransitionDate, status, executionGroup);
         this.subject = subject;
-        description = description2;
+        this.analysisDescription = analysisDescription;
     }
 
     public AppAnalysis() {
@@ -37,12 +37,12 @@ public class AppAnalysis extends Application {
         this.subject = subject;
     }
 
-    public String getDescription() {
-        return description;
+    public String getAnalysisDescription() {
+        return analysisDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setAnalysisDescription(String description) {
+        this.analysisDescription = description;
     }
     
 }

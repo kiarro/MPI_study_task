@@ -30,16 +30,16 @@ public class Experiment {
     private UserGroup researchGroup;
 
     @Enumerated(EnumType.STRING)
-    private ExperimentStatus state;
+    private ExperimentStatus status;
 
     public Experiment(Long id, String title, String description, LocalDateTime creationTime, UserGroup researchGroup,
-            ExperimentStatus state) {
+            ExperimentStatus status) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.creationTime = creationTime;
         this.researchGroup = researchGroup;
-        this.state = state;
+        this.status = status;
     }
 
     public Experiment() {
@@ -85,12 +85,12 @@ public class Experiment {
         this.researchGroup = researchGroup;
     }
 
-    public ExperimentStatus getState() {
-        return state;
+    public ExperimentStatus getStatus() {
+        return status;
     }
 
-    public void setState(ExperimentStatus state) {
-        this.state = state;
+    public void setStatus(ExperimentStatus status) {
+        this.status = status;
     }
     
 }

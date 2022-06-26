@@ -54,6 +54,10 @@ public abstract class Application {
     public Application() {
     }
 
+    public <T extends Application> T asClass() {
+        return (T)this;
+    }
+
     public Long getId() {
         return id;
     }

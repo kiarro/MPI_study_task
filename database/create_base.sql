@@ -13,7 +13,7 @@ CREATE TABLE users (
 	email VARCHAR(100),
 	about_yourself VARCHAR(300),
 	user_group_id BIGINT,
-	FOREIGN KEY (user_group) REFERENCES user_groups(id)
+	FOREIGN KEY (user_group_id) REFERENCES user_groups(id)
 );
 
 CREATE TABLE credentials (
@@ -28,24 +28,24 @@ CREATE TABLE experiments (
 	title VARCHAR(50),
 	description VARCHAR(300),
 	creation_time TIMESTAMP,
-	research_group BIGINT,
-	state VARCHAR(50),
-	FOREIGN KEY (research_group) REFERENCES user_groups(id)
+	research_group_id BIGINT,
+	status VARCHAR(50),
+	FOREIGN KEY (research_group_id) REFERENCES user_groups(id)
 );
 
 CREATE TABLE applications (
 	id BIGSERIAL PRIMARY KEY,
 	type VARCHAR(50),
 	description VARCHAR(200),
-	creator BIGINT,
+	creator_id BIGINT,
 	creation_date TIMESTAMP,
 	experiment_id BIGINT,
 	last_status_transition_date TIMESTAMP,
 	status VARCHAR(50),
-	execution_group BIGINT,
-	FOREIGN KEY (execution_group) REFERENCES user_groups(id),
+	execution_group_id BIGINT,
+	FOREIGN KEY (execution_group_id) REFERENCES user_groups(id),
 	FOREIGN KEY (experiment_id) REFERENCES experiments(id),
-	FOREIGN KEY (creator) REFERENCES users(id)
+	FOREIGN KEY (creator_id) REFERENCES users(id)
 );
 
 CREATE TABLE apps_technic (

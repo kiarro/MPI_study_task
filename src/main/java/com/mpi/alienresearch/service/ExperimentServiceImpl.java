@@ -68,7 +68,7 @@ public class ExperimentServiceImpl implements ExperimentService{
     @Override
     public Long addApplication(long id, Application app) {
         app.setId(id);
-        if (app.getType().equals(AppType.EngineeringWorks)) {
+        if (app.getType().equals(AppType.Technic)) {
             app = appTechnicRepository.save((AppTechnic)app);
         }
         return app.getId();
