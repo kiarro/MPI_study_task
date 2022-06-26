@@ -1,5 +1,6 @@
 package com.mpi.alienresearch.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -29,15 +30,15 @@ public class Subject {
     private String skinColor;
     private String specials;
 
-    private Float weight;
-    private Float height;
+    private Double weight;
+    private Double height;
     
     @Column(columnDefinition = "DATE")
     @JsonFormat(pattern = "dd.MM.yyyy")
-    private Date birthDate;
+    private LocalDate birthDate;
 
     public Subject(Long id, String name, String hairColor, String eyesColor, String skinColor, String specials,
-            Float weight, Float height, Date birthDate) {
+            Double weight, Double height, LocalDate birthDate) {
         this.id = id;
         this.name = name;
         this.hairColor = hairColor;
@@ -100,27 +101,27 @@ public class Subject {
         this.specials = specials;
     }
 
-    public Float getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(Float weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 
-    public Float getHeight() {
+    public Double getHeight() {
         return height;
     }
 
-    public void setHeight(Float height) {
+    public void setHeight(Double height) {
         this.height = height;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
