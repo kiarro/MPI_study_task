@@ -23,6 +23,7 @@ import NewExperiment from './views/NewExperiment';
 import AdminMain from './views/AdminMain';
 import ResearcherMain from './views/ResearcherMain';
 import CreateUser from './views/CreateUser';
+import WorkerMain from './view/'
 
 function App() {
   return (

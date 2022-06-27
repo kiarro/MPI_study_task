@@ -58,14 +58,14 @@ export default function App() {
     return (
         <main>
             <Box sx={{ flexGrow: 1, width: 400 }} margin="10px" padding="10px">
-                <Button variant="contained" onClick={() => profileClick()}>User profile</Button>
+                <Button variant="contained" onClick={() => profileClick()}>Профиль</Button>
             </Box>
             <Box sx={{ flexGrow: 1, width: 400 }} margin="10px" padding="10px">
-                <Button variant="contained" onClick={() => newUserClick()}>Creare new user</Button>
+                <Button variant="contained" onClick={() => newUserClick()}>Добавить пользователя</Button>
             </Box>
             <UserList></UserList>
             <Box sx={{ flexGrow: 1, width: 400 }} margin="10px" padding="10px">
-                <Button variant="contained" onClick={() => exitClick()}>Exit</Button>
+                <Button variant="contained" onClick={() => exitClick()}>Выйти</Button>
             </Box>
         </main>
     );
