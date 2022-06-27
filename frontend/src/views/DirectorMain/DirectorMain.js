@@ -94,6 +94,9 @@ export default function App() {
             <Box sx={{ flexGrow: 1, width: 400 }} margin="10px" padding="10px">
                 <Button variant="contained" onClick={() => rejectApplicationClick()}>Отклонить заявку</Button>
             </Box>
+            <Box sx={{ flexGrow: 1, width: 400 }} margin="10px" padding="10px">
+                <Button variant="contained" onClick={() => exitClick()}>Выйти</Button>
+            </Box>
         </main>
     );
 }
