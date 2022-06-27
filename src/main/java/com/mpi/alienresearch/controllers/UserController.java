@@ -2,6 +2,7 @@ package com.mpi.alienresearch.controllers;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import javax.websocket.server.PathParam;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mpi.alienresearch.model.Credentials;
@@ -68,23 +70,16 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateUser(@PathVariable("id") long id, @RequestBody User user) {
-        User currentUser = userService.get(id);
-        if (currentUser == null) { // dragon not found
-            return ResponseEntity.notFound().build();
-        }
         userService.update(id, user);
 
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}/update_group")
-    public ResponseEntity<Void> updateUserGroup(@PathVariable("id") long id, @RequestBody User user) {
-        User currentUser = userService.get(id);
-        if (currentUser == null) { // dragon not found
-            return ResponseEntity.notFound().build();
-        }
-        // dragon exists -> update it
-        userService.update(id, user);
+    public ResponseEntity<Void> updateUserGroup(@PathVariable("id") long id,
+                @RequestParam(name = "group") Optional<Long> groupId) {
+        
+        userService.updateGroup(id, groupId);
         return ResponseEntity.noContent().build();
     }
 
@@ -93,8 +88,8 @@ public class UserController {
         return userService.get(State.getCurrentUser().getId());
     }
 
-    @PostMapping("/current/update_info")
-    public void updateCurrentInfo(@RequestBody PersonalInfo info) {
-        userService.updateCurrentInfo(info);
+    @PutMapping("/current")
+    public void updateCurrentInfo(@RequestBody User user) {
+        userService.update(State.getCurrentUser().getId(), user);
     }
 }

@@ -36,7 +36,6 @@ export default function App() {
             const response = await fetch('http://localhost:8080/experiments/', {
                 method: 'POST',
                 body: JSON.stringify({
-                    researcherGroup: team,
                     title: title,
                     description: description,
                     state: "CREATED"
@@ -66,17 +65,7 @@ export default function App() {
         <main>
             <Box sx={{ flexGrow: 1 }} margin="10px" padding="10px">
                 <Grid container spacing={2}>
-                    <Grid item xs={3}>
-                        <Box>
-                            <Item>Команда:</Item>
-                        </Box>
-                    </Grid>
-                    <Grid item xs={9}>
-                        <Box>
-                            <TextField onChange={(e) => setTeam(e.target.value)}
-                                fullWidth></TextField>
-                        </Box>
-                    </Grid>
+                    
                     <Grid item xs={3}>
                         <Box>
                             <Item>Заголовок:</Item>

@@ -12,7 +12,7 @@ import com.mpi.alienresearch.model.enums.Decision;
 
 public interface ApplicationService {
     public Application get(Long id);
-    public <T extends Application> List<T> getPage(Long offset, Long limit, String[] sortvalues, ApplicationFilter filter);
+    public <T extends Application> List<T> getPage(Long offset, Long limit, String[] sortvalues, Application filter);
     public Long add(Application application);
     public void update(Long id, Application application);
 

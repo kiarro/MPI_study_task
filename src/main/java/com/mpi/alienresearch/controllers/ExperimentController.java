@@ -19,7 +19,9 @@ import com.mpi.alienresearch.filters.ExperimentFilter;
 import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Experiment;
 import com.mpi.alienresearch.model.Report;
+import com.mpi.alienresearch.model.UserGroup;
 import com.mpi.alienresearch.service.ExperimentService;
+import com.mpi.alienresearch.state.State;
 
 @RestController
 @CrossOrigin
@@ -35,6 +37,7 @@ public class ExperimentController {
 
     @PostMapping
     public ResponseEntity<String> addExperiment(@RequestBody Experiment experiment) {
+        experiment.setResearchGroup(State.getCurrentUser().getUserGroup());
         Optional<Long> id = Optional.ofNullable(experimentService.add(experiment));
         if (id.isPresent()) {
             URI uri = URI.create("/experiments/" + id.get());
@@ -48,7 +51,7 @@ public class ExperimentController {
     public Collection<Experiment> getAll(@RequestParam(name = "offset", defaultValue = "0") Long offset,
             @RequestParam(name = "limit", defaultValue = "10") Long limit,
             @RequestParam(name = "sort", required = false) String[] sortvalues,
-            ExperimentFilter filter) {
+            Experiment filter) {
 
         Collection<Experiment> experiments = experimentService.getPage(offset, limit, sortvalues, filter);
 
@@ -95,4 +98,16 @@ public class ExperimentController {
         }
     }
 
+    @GetMapping("/current")
+    public Collection<Experiment> getForCurrent(@RequestParam(name = "offset", defaultValue = "0") Long offset,
+            @RequestParam(name = "limit", defaultValue = "10") Long limit,
+            @RequestParam(name = "sort", required = false) String[] sortvalues,
+            Experiment filter) {
+
+        Optional<UserGroup> ug = Optional.ofNullable(State.getCurrentUser().getUserGroup());
+        filter.setResearchGroup(ug.orElse(new UserGroup(0l)));
+        Collection<Experiment> experiments = experimentService.getPage(offset, limit, sortvalues, filter);
+
+        return experiments;
+    }
 }

@@ -14,6 +14,7 @@ import com.mpi.alienresearch.dao.UserDao;
 import com.mpi.alienresearch.dao.UserGroupDao;
 import com.mpi.alienresearch.model.Credentials;
 import com.mpi.alienresearch.model.User;
+import com.mpi.alienresearch.model.UserGroup;
 import com.mpi.alienresearch.state.PersonalInfo;
 import com.mpi.alienresearch.state.State;
 
@@ -24,9 +25,9 @@ public class UserServiceImpl implements UserService {
     final UserGroupDao userGroupDao;
     final CredentialsDao credentialsDao;
 
-    public UserServiceImpl(UserDao userDao, 
-                            UserGroupDao userGroupDao,
-                            CredentialsDao credentialsDao){
+    public UserServiceImpl(UserDao userDao,
+            UserGroupDao userGroupDao,
+            CredentialsDao credentialsDao) {
         this.userDao = userDao;
         this.userGroupDao = userGroupDao;
         this.credentialsDao = credentialsDao;
@@ -34,7 +35,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User get(long id) {
-        return userDao.findById(id).get();
+        Optional<User> user = userDao.findById(id);
+        if (user.isPresent()) {
+            return user.get();
+        } else {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    String.format("User with id=%d don't exists", id));
+        }
     }
 
     @Override
@@ -64,6 +72,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updateGroup(long id, Optional<Long> group) {
+        User u = this.get(id);
+        // if group is not null
+        if (group.isPresent()) { // set it to user
+            Optional<UserGroup> ug = userGroupDao.findById(group.get());
+            // if user group exists
+            if (ug.isPresent()) {
+                // set it to user
+                u.setUserGroup(ug.get());
+            } else {
+                // create user group with id and set it to user
+                u.setUserGroup(
+                        userGroupDao.save(new UserGroup(group.get())));
+            }
+        } else { // set null group to user
+            u.setUserGroup(null);
+        }
+        userDao.save(u);
+    }
+
+    @Override
     public User login(String username, String password) {
         Optional<Credentials> credentials = credentialsDao.findByUsername(username);
         if (credentials.isPresent()) {
@@ -72,11 +101,11 @@ public class UserServiceImpl implements UserService {
                 return credentials.get().getUser();
             } else {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
-                            "Wrong password");
+                        "Wrong password");
             }
         } else {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
-                        "User with such username don't exists");
+                    "User with such username don't exists");
         }
     }
 

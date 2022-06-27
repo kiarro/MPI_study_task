@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.mpi.alienresearch.dao.ApplicationDao;
@@ -44,8 +45,9 @@ public class ExperimentServiceImpl implements ExperimentService{
      * Just return all
      */
     @Override
-    public Collection<Experiment> getPage(Long offset, Long limit, String[] sortvalues, ExperimentFilter filter) {
-        return experimentDao.findAll();
+    public Collection<Experiment> getPage(Long offset, Long limit, String[] sortvalues, Experiment filter) {
+        Example<Experiment> example = Example.of(filter);
+        return experimentDao.findAll(example);
     }
 
     @Override

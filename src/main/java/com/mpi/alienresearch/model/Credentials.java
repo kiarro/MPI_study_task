@@ -10,6 +10,9 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "credentials")
 public class Credentials {
@@ -22,8 +25,9 @@ public class Credentials {
     private String password;
     
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id", updatable = false, insertable = false)
     @MapsId
+    @JsonIgnore
     private User user;
 
     public Credentials(String username, String password, User user) {

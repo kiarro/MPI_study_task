@@ -67,7 +67,7 @@ function App() {
                         </Grid>
                         <Grid item xs={3}>
                             <Box>
-                                <TextField placeholder="ЕХ12" value={exp.id} fullWidth></TextField>
+                                <TextField disabled value={exp.id} fullWidth></TextField>
                             </Box>
                         </Grid>
                         <Grid item xs={3}>
@@ -77,7 +77,7 @@ function App() {
                         </Grid>
                         <Grid item xs={3}>
                             <Box>
-                                <TextField placeholder="RC1" value={exp.researcherGroup} fullWidth></TextField>
+                                <TextField disabled value={exp.researchGroup.id} fullWidth></TextField>
                             </Box>
                         </Grid>
                         <Grid item xs={3}>
@@ -88,7 +88,7 @@ function App() {
                         <Grid item xs={9}>
                             <Box>
                                 <TextField
-                                    placeholder="Исследование влияния пустышки на человека"
+                                    disabled
                                     value={exp.title}
                                     fullWidth
                                 ></TextField>
@@ -102,7 +102,7 @@ function App() {
                         <Grid item xs={12} marginTop="0px" paddingTop="0px">
                             <Box>
                                 <TextField
-                                    placeholder="Данное исследование проводится с целью определить влияние пустышки на человека в естественных условиях"
+                                    disabled
                                     fullWidth
                                     multiline="true"
                                     rows="6"
@@ -187,7 +187,7 @@ function AppList(input) {
     // этот useEffect будет запущен один раз
     // аналогично componentDidMount()
     useEffect(() => {
-        fetch("/api/applications?experiment=" + input.id)
+        fetch("http://localhost:8080/applications?experiment=" + input.id)
             .then(res => res.json())
             .then(
                 (result) => {

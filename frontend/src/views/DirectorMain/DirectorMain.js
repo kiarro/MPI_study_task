@@ -292,7 +292,7 @@ function ApplicationList() {
                             </Grid>
                             <Grid item xs={2}>
                                 <Box m={1} display="flex" justifyContent="center">
-                                    <Item>{item.executionGroup}</Item>
+                                    <Item>{item.executionGroup.id}</Item>
                                 </Box>
                             </Grid>
                             <Grid item xs={2}>

@@ -4,6 +4,14 @@ import { StrictMode } from "react";
 import './WorkerMain.css'
 import { createRoot } from "react-dom/client";
 
+import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import { Button, TextField, List } from "@mui/material";
+
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
+
 export default function App()
 {
 
@@ -48,7 +56,6 @@ return (
         <Box sx={{ flexGrow: 1, width: 400 }} margin="10px" padding="10px">
             <Button variant="contained" >Заявки к принятию</Button>
         </Box>
-        <UserList></UserList>
         <Box sx={{ flexGrow: 1, width: 400 }} margin="10px" padding="10px">
             <Button variant="contained" onClick={() => exitClick()}>Выйти</Button>
         </Box>

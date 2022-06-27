@@ -57,12 +57,25 @@ function App() {
 
             console.log('result is: ', JSON.stringify(result, null, 4));
 
-            if (result.role == "ADMIN") {
-                // window.open("/admin")
-                history("/admin");
-            } else if (result.role == "RESEARCHER") {
-                history("/researcher")
+
+            switch (result.role) {
+                case "ADMIN":
+                    history("/admin");
+                    break;
+                case "RESEARCHER":
+                    history("/researcher");
+                    break;
+                case "DIRECTOR":
+                    history("/director");
+                    break;
             }
+
+            // if (result.role == "ADMIN") {
+            //     // window.open("/admin")
+            //     history("/admin");
+            // } else if (result.role == "RESEARCHER") {
+            //     history("/researcher")
+            // }
 
             setData(result);
         } catch (err) {

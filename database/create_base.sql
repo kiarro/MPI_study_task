@@ -1,5 +1,5 @@
 CREATE TABLE user_groups (
-	id BIGSERIAL PRIMARY KEY
+	id BIGINT PRIMARY KEY
 );
 
 CREATE TABLE users (
@@ -86,7 +86,7 @@ CREATE TABLE artifacts (
 CREATE TABLE apps_analysis (
 	id BIGINT PRIMARY KEY,
 	subject_id BIGSERIAL,
-	description VARCHAR(1000),
+	analysis_description VARCHAR(1000),
 	FOREIGN KEY (subject_id) REFERENCES subjects(id),
 	FOREIGN KEY (id) REFERENCES applications(id)
 );

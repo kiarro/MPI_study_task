@@ -10,11 +10,16 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mpi.alienresearch.model.enums.UserRole;
 
 /**
@@ -43,9 +48,21 @@ public class User {
     private String aboutYourself = null;
     
     @ManyToOne
+    // @JsonIgnore
+    @JsonIncludeProperties({"id"})
     private UserGroup userGroup;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    // @JsonProperty("userGroup")
+    // private Long getUserGroupId() {
+    //     if (userGroup == null) {
+    //         return null;
+    //     } else {
+    //         return userGroup.getId();
+    //     }
+    // }
+
+    @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "user")
+    @JsonIncludeProperties({"id", "username"})
     private Credentials credentials;
 
     public User(Long id, String firstName, String lastName, LocalDate birthDate, String jobAgreementNumber,

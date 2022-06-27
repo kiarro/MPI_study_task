@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.mpi.alienresearch.dao.ApplicationDao;
@@ -32,8 +33,9 @@ public class ApplicationServiceImpl implements ApplicationService {
      * Just returns all
      */
     @Override
-    public <T extends Application> List<T> getPage(Long offset, Long limit, String[] sortvalues, ApplicationFilter filter) {
-        return (List<T>)(List<?>)applicationRepository.findAll();
+    public <T extends Application> List<T> getPage(Long offset, Long limit, String[] sortvalues, Application filter) {
+        Example<Application> example = Example.of(filter); 
+        return (List<T>)(List<?>)applicationRepository.findAll(example);
     }
 
     @Override

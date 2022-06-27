@@ -17,13 +17,13 @@ const Item = styled(Button)(({ theme }) => ({
 export default function App() {
     const history = useNavigate();
 
-    const [phone, setPhone] = useState('');
+    const [phoneNumber, setPhone] = useState('');
     const [email, setEmail] = useState('');
-    const [about, setAbout] = useState('');
+    const [aboutYourself, setAbout] = useState('');
 
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [item, setItems] = useState([]);
+    const [user, setItems] = useState([]);
 
     useEffect(() => {
         fetch("http://localhost:8080/users/current")
@@ -33,7 +33,7 @@ export default function App() {
                     setIsLoaded(true);
                     setItems(result);
 
-                    setPhone(result.phone);
+                    setPhone(result.phoneNumber);
                     setEmail(result.email);
                     setAbout(result.aboutYourself);
                 },
@@ -52,13 +52,13 @@ export default function App() {
 
     const sendClick = async () => {
         try {
-            const response = await fetch('http://localhost:8080/users/current/update_info', {
-                method: 'POST',
-                body: JSON.stringify({
-                    phone_number: phone,
-                    about: about,
-                    email: email
-                }),
+            user.phoneNumber = phoneNumber;
+            user.email = email;
+            user.aboutYourself = aboutYourself;
+
+            const response = await fetch('http://localhost:8080/users/current', {
+                method: 'PUT',
+                body: JSON.stringify(user),
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -91,7 +91,7 @@ export default function App() {
                         </Grid>
                         <Grid item xs={3}>
                             <Box>
-                                <TextField disabled="true" value={item.id} fullWidth></TextField>
+                                <TextField disabled="true" value={user.id} fullWidth></TextField>
                             </Box>
                         </Grid>
                         <Grid item xs={3}>
@@ -101,7 +101,19 @@ export default function App() {
                         </Grid>
                         <Grid item xs={3}>
                             <Box>
-                                <TextField disabled="true" value={item.role} fullWidth></TextField>
+                                <TextField disabled="true" value={user.role} fullWidth></TextField>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={2}>
+                        <Grid item xs={3}>
+                            <Box display="flex" justifyContent="end">
+                                <Item>Группа:</Item>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Box>
+                                <TextField value={user.userGroup.id} disabled fullWidth></TextField>
                             </Box>
                         </Grid>
                     </Grid>
@@ -117,7 +129,7 @@ export default function App() {
                         </Grid>
                         <Grid item xs={6}>
                             <Box>
-                                <TextField disabled="true" value={item.lastName} fullWidth></TextField>
+                                <TextField disabled="true" value={user.lastName} fullWidth></TextField>
                             </Box>
                         </Grid>
                         <Grid item xs={4}>
@@ -127,7 +139,7 @@ export default function App() {
                         </Grid>
                         <Grid item xs={6}>
                             <Box>
-                                <TextField disabled="true" value={item.firstName} fullWidth></TextField>
+                                <TextField disabled="true" value={user.firstName} fullWidth></TextField>
                             </Box>
                         </Grid>
                         <Grid item xs={4}>
@@ -137,7 +149,7 @@ export default function App() {
                         </Grid>
                         <Grid item xs={6}>
                             <Box>
-                                <TextField disabled="true" value={item.birthDate} fullWidth></TextField>
+                                <TextField disabled="true" value={user.birthDate} fullWidth></TextField>
                             </Box>
                         </Grid>
                         <Grid item xs={4}>
@@ -147,7 +159,7 @@ export default function App() {
                         </Grid>
                         <Grid item xs={6}>
                             <Box>
-                                <TextField disabled="true" value={item.jobAgreementNumber} fullWidth></TextField>
+                                <TextField disabled="true" value={user.jobAgreementNumber} fullWidth></TextField>
                             </Box>
                         </Grid>
                     </Grid>
@@ -164,7 +176,7 @@ export default function App() {
                         <Grid item xs={6}>
                             <Box>
                                 <TextField onChange={(e) => setPhone(e.target.value)}
-                                value = {phone} fullWidth></TextField>
+                                value = {phoneNumber} fullWidth></TextField>
                             </Box>
                         </Grid>
                         <Grid item xs={4}>
@@ -190,7 +202,7 @@ export default function App() {
                                     fullWidth
                                     multiline="true"
                                     rows="4"
-                                    value = {about}
+                                    value = {aboutYourself}
                                 ></TextField>
                             </Box>
                         </Grid>

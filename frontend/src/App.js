@@ -23,7 +23,8 @@ import NewExperiment from './views/NewExperiment';
 import AdminMain from './views/AdminMain';
 import ResearcherMain from './views/ResearcherMain';
 import CreateUser from './views/CreateUser';
-import WorkerMain from './view/'
+import WorkerMain from './views/WorkerMain/WorkerMain';
+import DirectorMain from './views/DirectorMain/DirectorMain';
 
 function App() {
   return (
@@ -35,6 +36,8 @@ function App() {
             <Route exact path='login' element={<LoginPage />} />
             <Route exact path='admin' element={<AdminMain />} />
             <Route exact path='researcher' element={<ResearcherMain />} />
+            <Route exact path='worker' element={<WorkerMain />} />
+            <Route exact path='director' element={<DirectorMain />} />
             <Route exact path='users/current' element={<UserProfile />} />
             <Route exact path='users/:id' element={<UserProfileEdit />} />
             <Route exact path='users/new' element={<CreateUser />} />

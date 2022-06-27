@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mpi.alienresearch.model.enums.AppStatus;
 import com.mpi.alienresearch.model.enums.AppType;
 
@@ -13,7 +16,7 @@ import com.mpi.alienresearch.model.enums.AppType;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "applications")
-public abstract class Application {
+public class Application {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -25,10 +28,22 @@ public abstract class Application {
     private String description;
 
     @ManyToOne
+    @JsonIgnore
     private User creator;
 
+    @JsonProperty("creator")
+    private Long getCreatorId(){
+        return creator.getId();
+    }
+
     @ManyToOne
+    @JsonIgnore
     private Experiment experiment;
+
+    @JsonProperty("experiment")
+    private Long getExperimentId(){
+        return experiment.getId();
+    }
 
     @Column(columnDefinition = "DATE")
     private LocalDateTime lastStatusTransitionDate;
@@ -37,7 +52,13 @@ public abstract class Application {
     private AppStatus status;
 
     @ManyToOne
+    @JsonIgnore
     private UserGroup executionGroup;
+    
+    @JsonProperty("executionGroup")
+    private Long getExecutionGroupId(){
+        return executionGroup.getId();
+    }
 
     public Application(Long id, AppType type, String description, User creator, Experiment experiment,
             LocalDateTime lastStatusTransitionDate, AppStatus status, UserGroup executionGroup) {

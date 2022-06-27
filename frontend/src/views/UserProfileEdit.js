@@ -19,17 +19,17 @@ export default function App() {
 
     const { id } = useParams();
 
-    const [phone, setPhone] = useState('');
+    const [phoneNumber, setPhone] = useState('');
     const [email, setEmail] = useState('');
-    const [about, setAbout] = useState('');
+    const [aboutYourself, setAbout] = useState('');
     const [group, setGroup] = useState('');
-    const [last_name, setLastName] = useState('');
-    const [first_name, setFirstName] = useState('');
-    const [birth_date, setBirthDate] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [birthDate, setBirthDate] = useState('');
 
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [item, setItems] = useState([]);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         fetch("http://localhost:8080/users/" + id)
@@ -37,16 +37,16 @@ export default function App() {
             .then(
                 (result) => {
                     setIsLoaded(true);
-                    setItems(result);
+                    setUser(result);
 
-                    setPhone(result.phone);
+                    setPhone(result.phoneNumber);
                     setEmail(result.email);
                     setAbout(result.aboutYourself);
 
                     setFirstName(result.firstName);
                     setLastName(result.lastName);
                     setBirthDate(result.birthDate);
-                    setGroup(result.group);
+                    setGroup(result.userGroup.id);
                 },
                 // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
                 // чтобы не перехватывать исключения из ошибок в самих компонентах.
@@ -63,17 +63,35 @@ export default function App() {
 
     const sendClick = async () => {
         try {
+            user.phoneNumber = phoneNumber;
+            user.email = email;
+            user.aboutYourself = aboutYourself;
+            user.firstName = firstName;
+            user.lastName = lastName;
+            user.birthDate = birthDate;
+
             const response = await fetch('http://localhost:8080/users/'+id, {
                 method: 'PUT',
-                body: JSON.stringify({
-                    phoneNumber: phone,
-                    about: about,
-                    email: email,
-                    lastName: last_name,
-                    firstName: first_name,
-                    birthDate: birth_date,
-                    userGroup: group
-                }),
+                body: JSON.stringify(user),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error! status: ${response.status}`);
+            }
+            // const result = await response.json();
+
+            // console.log('result is: ', JSON.stringify(result, null, 4));
+        } catch (err) {
+        } finally {
+        }
+
+        try {
+            const response = await fetch('http://localhost:8080/users/'+id+
+                    '/update_group' + (group == null ?'':('?group='+group)), {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -106,7 +124,7 @@ export default function App() {
                         </Grid>
                         <Grid item xs={3}>
                             <Box>
-                                <TextField disabled="true" value={item.id} fullWidth></TextField>
+                                <TextField disabled="true" value={user.id} fullWidth></TextField>
                             </Box>
                         </Grid>
                         <Grid item xs={3}>
@@ -116,7 +134,7 @@ export default function App() {
                         </Grid>
                         <Grid item xs={3}>
                             <Box>
-                                <TextField disabled="true" value={item.role} fullWidth></TextField>
+                                <TextField disabled="true" value={user.role} fullWidth></TextField>
                             </Box>
                         </Grid>
                     </Grid>
@@ -143,7 +161,7 @@ export default function App() {
                         </Grid>
                         <Grid item xs={6}>
                             <Box>
-                                <TextField onChange={(e) => setLastName(e.target.value)} value={last_name} fullWidth></TextField>
+                                <TextField onChange={(e) => setLastName(e.target.value)} value={lastName} fullWidth></TextField>
                             </Box>
                         </Grid>
                         <Grid item xs={4}>
@@ -153,7 +171,7 @@ export default function App() {
                         </Grid>
                         <Grid item xs={6}>
                             <Box>
-                                <TextField onChange={(e) => setFirstName(e.target.value)} value={first_name} fullWidth></TextField>
+                                <TextField onChange={(e) => setFirstName(e.target.value)} value={firstName} fullWidth></TextField>
                             </Box>
                         </Grid>
                         <Grid item xs={4}>
@@ -163,7 +181,7 @@ export default function App() {
                         </Grid>
                         <Grid item xs={6}>
                             <Box>
-                                <TextField onChange={(e) => setBirthDate(e.target.value)} value={birth_date} fullWidth></TextField>
+                                <TextField onChange={(e) => setBirthDate(e.target.value)} value={birthDate} fullWidth></TextField>
                             </Box>
                         </Grid>
                         <Grid item xs={4}>
@@ -173,7 +191,7 @@ export default function App() {
                         </Grid>
                         <Grid item xs={6}>
                             <Box>
-                                <TextField disabled="true" value={item.jobAgreementNumber} fullWidth></TextField>
+                                <TextField disabled="true" value={user.jobAgreementNumber} fullWidth></TextField>
                             </Box>
                         </Grid>
                     </Grid>
@@ -190,7 +208,7 @@ export default function App() {
                         <Grid item xs={6}>
                             <Box>
                                 <TextField onChange={(e) => setPhone(e.target.value)}
-                                    value={phone} fullWidth></TextField>
+                                    value={phoneNumber} fullWidth></TextField>
                             </Box>
                         </Grid>
                         <Grid item xs={4}>
@@ -216,7 +234,7 @@ export default function App() {
                                     fullWidth
                                     multiline="true"
                                     rows="4"
-                                    value={about}
+                                    value={aboutYourself}
                                 ></TextField>
                             </Box>
                         </Grid>

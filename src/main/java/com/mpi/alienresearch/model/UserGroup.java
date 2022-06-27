@@ -7,7 +7,6 @@ import javax.persistence.*;
 public class UserGroup {
     
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     
     public UserGroup(Long id) {

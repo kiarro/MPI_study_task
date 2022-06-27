@@ -37,7 +37,7 @@ public class ApplicationController {
     public Collection<Application> getAll(@RequestParam(name = "offset", defaultValue = "0") Long offset,
             @RequestParam(name = "limit", defaultValue = "10") Long limit,
             @RequestParam(name = "sort", required = false) String[] sortvalues,
-            ApplicationFilter filter) {
+            Application filter) {
 
         Collection<Application> applications = applicationService.getPage(offset, limit, sortvalues, filter);
 

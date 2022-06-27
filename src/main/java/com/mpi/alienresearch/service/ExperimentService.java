@@ -12,7 +12,7 @@ import com.mpi.alienresearch.model.enums.ExperimentStatus;
 
 public interface ExperimentService {
     public Experiment get(long id);
-    public Collection<Experiment> getPage(Long offset, Long limit, String[] sortvalues, ExperimentFilter filter);
+    public Collection<Experiment> getPage(Long offset, Long limit, String[] sortvalues, Experiment filter);
 
     public List<Experiment> getByGroup(UserGroup group);
 

@@ -24,7 +24,7 @@ export default function App() {
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/experiments/")
+        fetch("http://localhost:8080/experiments/current")
             .then(res => res.json())
             .then(
                 (result) => {
