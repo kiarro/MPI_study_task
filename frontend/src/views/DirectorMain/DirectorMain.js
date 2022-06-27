@@ -22,12 +22,28 @@ export default function App() {
 
     const history = useNavigate();
 
-    const newUserClick = async () => {
-        history("/users/new");
+    const checkApplicationClick = async () => {
+        history("/applications/current");
     };
 
-    const profileClick = async () => {
-        history("/users/current");
+    const approveApplicationClick = async () => {
+        history("/applications/approved");
+    };
+
+    const rejectApplicationClick = async () => {
+        history("/applications/rejected");
+    };
+
+    const checkExperimentClick = async () => {
+        history("/experiments/current");
+    };
+
+    const approveExperimentClick = async () => {
+        history("/experiments/approved");
+    };
+
+    const rejectExperimentClick = async () => {
+        history("/experiments/rejected");
     };
 
     const exitClick = async () => {
@@ -59,24 +75,24 @@ export default function App() {
     return (
         <main>
             <Box sx={{ flexGrow: 1, width: 400 }} margin="10px" padding="10px">
-                <Button variant="contained" onClick={() => profileClick()}>Посмотреть заявку</Button>
+                <Button variant="contained" onClick={() => checkApplicationClick()}>Посмотреть заявку</Button>
             </Box>
             <ApplicationList></ApplicationList>
             <Box sx={{ flexGrow: 1, width: 400 }} margin="10px" padding="10px">
-                <Button variant="contained" onClick={() => newUserClick()}>Одобрить заявку</Button>
+                <Button variant="contained" onClick={() => approveApplicationClick()}>Одобрить заявку</Button>
             </Box>
             <Box sx={{ flexGrow: 1, width: 400 }} margin="10px" padding="10px">
-                <Button variant="contained" onClick={() => exitClick()}>Посмотреть эксперимент</Button>
+                <Button variant="contained" onClick={() => checkExperimentClick()}>Посмотреть эксперимент</Button>
             </Box>
             <ExperimentList></ExperimentList>
             <Box sx={{ flexGrow: 1, width: 400 }} margin="10px" padding="10px">
-                <Button variant="contained" onClick={() => exitClick()}>Утверждить закрытие эксперимента</Button>
+                <Button variant="contained" onClick={() => approveExperimentClick()}>Утверждить закрытие эксперимента</Button>
             </Box>
             <Box sx={{ flexGrow: 1, width: 400 }} margin="10px" padding="10px">
-                <Button variant="contained" onClick={() => exitClick()}>Отклонить закрытие эксперимента</Button>
+                <Button variant="contained" onClick={() => rejectExperimentClick()}>Отклонить закрытие эксперимента</Button>
             </Box>
             <Box sx={{ flexGrow: 1, width: 400 }} margin="10px" padding="10px">
-                <Button variant="contained" onClick={() => exitClick()}>Отклонить заявку</Button>
+                <Button variant="contained" onClick={() => rejectApplicationClick()}>Отклонить заявку</Button>
             </Box>
         </main>
     );
@@ -247,7 +263,7 @@ function ApplicationList() {
                         </Grid>
                         <Grid item xs={3}>
                             <Box m={1} display="flex" justifyContent="left">
-                                <Item>creator</Item>
+                                <Item>creatorId</Item>
                             </Box>
                         </Grid>
                         <Grid item xs={3}>
@@ -257,12 +273,12 @@ function ApplicationList() {
                         </Grid>
                         <Grid item xs={2}>
                             <Box m={1} display="flex" justifyContent="left">
-                                <Item>executionGroup</Item>
+                                <Item>executionGroupId</Item>
                             </Box>
                         </Grid>
                         <Grid item xs={2}>
                             <Box m={1} display="flex" justifyContent="left">
-                                <Item>report</Item>
+                                <Item>experimentId</Item>
                             </Box>
                         </Grid>
                     </Grid>
@@ -282,7 +298,7 @@ function ApplicationList() {
                             </Grid>
                             <Grid item xs={3}>
                                 <Box m={1} display="flex" justifyContent="left">
-                                    <Item>{item.creator}</Item>
+                                    <Item>{item.creatorId}</Item>
                                 </Box>
                             </Grid>
                             <Grid item xs={3}>
@@ -297,7 +313,7 @@ function ApplicationList() {
                             </Grid>
                             <Grid item xs={2}>
                                 <Box m={1} display="flex" justifyContent="left">
-                                    <Item>{item.report}</Item>
+                                    <Item>{item.experimentId}</Item>
                                 </Box>
                             </Grid>
                         </Grid>
