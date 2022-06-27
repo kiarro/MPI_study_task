@@ -62,7 +62,7 @@ public class ApplicationController {
 
     @PostMapping("/{id}/set-status")
     public void decisionApplication(@PathVariable("id") Long id, @RequestParam(name = "status") AppStatus status) {
-        applicationService.setState(id, status);
+        applicationService.setStatus(id, status);
     }
 
 }

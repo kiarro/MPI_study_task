@@ -48,7 +48,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public void setState(Long id, AppStatus status) {
+    public void setStatus(Long id, AppStatus status) {
         // Application app = applicationRepository.findById(id.longValue());
         // app.setStatus(status);
         // applicationRepository.save(app);

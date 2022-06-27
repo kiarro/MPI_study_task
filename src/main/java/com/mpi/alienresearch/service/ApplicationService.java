@@ -16,7 +16,7 @@ public interface ApplicationService {
     public Long add(Application application);
     public void update(Long id, Application application);
 
-    public void setState(Long id, AppStatus status);
+    public void setStatus(Long id, AppStatus status);
 
     public Collection<Application> getByExperiment(Long experimentId);
 }

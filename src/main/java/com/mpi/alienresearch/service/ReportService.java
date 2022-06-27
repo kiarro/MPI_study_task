@@ -1,8 +1,11 @@
 package com.mpi.alienresearch.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import com.mpi.alienresearch.filters.ReportFilter;
+import com.mpi.alienresearch.model.Application;
+import com.mpi.alienresearch.model.Experiment;
 import com.mpi.alienresearch.model.Report;
 
 public interface ReportService {
@@ -11,5 +14,7 @@ public interface ReportService {
     public Long add(Report report);
     public void update(Long id, Report report);
 
-    public Collection<Report> getByExperiment(Long experiment_id);
+    public List<Report> getByExperiment(Experiment experiment);
+    public Report getByApplication(Application application);
+
 }

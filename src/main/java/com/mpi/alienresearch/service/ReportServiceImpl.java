@@ -1,12 +1,15 @@
 package com.mpi.alienresearch.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mpi.alienresearch.dao.ReportDao;
 import com.mpi.alienresearch.filters.ReportFilter;
+import com.mpi.alienresearch.model.Application;
+import com.mpi.alienresearch.model.Experiment;
 import com.mpi.alienresearch.model.Report;
 
 @Service
@@ -20,8 +23,7 @@ public class ReportServiceImpl implements ReportService {
     
     @Override
     public Report get(Long id) {
-        // return reportRepository.findById(id.longValue());
-        return null;
+        return reportRepository.findById(id).get();
     }
 
     /**
@@ -44,9 +46,13 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Collection<Report> getByExperiment(Long experimentId) {
-        // return reportRepository.findByExperimentId(experimentId);
-        return null;
+    public List<Report> getByExperiment(Experiment experiment) {
+        return reportRepository.findByExperiment(experiment);
+    }
+
+    @Override
+    public Report getByApplication(Application application) {
+        return reportRepository.findByApplication(application).get();
     }
 
 }

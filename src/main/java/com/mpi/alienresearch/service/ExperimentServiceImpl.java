@@ -1,6 +1,7 @@
 package com.mpi.alienresearch.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,29 +14,30 @@ import com.mpi.alienresearch.model.AppTechnic;
 import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Experiment;
 import com.mpi.alienresearch.model.Report;
+import com.mpi.alienresearch.model.UserGroup;
 import com.mpi.alienresearch.model.enums.AppType;
 import com.mpi.alienresearch.model.enums.ExperimentStatus;
 
 @Service
 public class ExperimentServiceImpl implements ExperimentService{
 
-    final ExperimentDao experimentRepository;
+    final ExperimentDao experimentDao;
     
-    final ReportDao reportRepository;
+    final ReportDao reportDao;
     
-    final ApplicationDao appTechnicRepository;
+    final ApplicationDao applicationDao;
 
-    public ExperimentServiceImpl(ExperimentDao experimentRepository, ReportDao reportRepository,
-            ApplicationDao appTechnicRepository) {
-        this.experimentRepository = experimentRepository;
-        this.reportRepository = reportRepository;
-        this.appTechnicRepository = appTechnicRepository;
+    public ExperimentServiceImpl(ExperimentDao experimentDao, 
+                                ReportDao reportDao,
+                                ApplicationDao appTechnicDao) {
+        this.experimentDao = experimentDao;
+        this.reportDao = reportDao;
+        this.applicationDao = appTechnicDao;
     }
 
     @Override
     public Experiment get(long id) {
-        // return experimentRepository.findById(id);
-        return null;
+        return experimentDao.findById(id).get();
     }
 
     /**
@@ -43,49 +45,45 @@ public class ExperimentServiceImpl implements ExperimentService{
      */
     @Override
     public Collection<Experiment> getPage(Long offset, Long limit, String[] sortvalues, ExperimentFilter filter) {
-        return experimentRepository.findAll();
+        return experimentDao.findAll();
     }
 
     @Override
     public Long add(Experiment experiment) {
-        experiment = experimentRepository.save(experiment);
+        experiment = experimentDao.save(experiment);
         return experiment.getId();
     }
 
     @Override
     public void update(long id, Experiment experiment) {
-        // Experiment experiment1 = experimentRepository.findById(id);
-        // experiment1.updateWith(experiment);
-        // experimentRepository.save(experiment1);
+        experiment.setId(id);
+        experimentDao.save(experiment);
     }
 
     @Override
-    public Collection<Experiment> getByGroup(Long groupId) {
-        // return experimentRepository.findByResearcherGroup(groupId);
-        return null;
+    public List<Experiment> getByGroup(UserGroup group) {
+        return experimentDao.findByResearchGroup(group);
     }
 
     @Override
     public Long addApplication(long id, Application app) {
         app.setId(id);
-        if (app.getType().equals(AppType.Technic)) {
-            app = appTechnicRepository.save((AppTechnic)app);
-        }
+        app = applicationDao.save(app);
         return app.getId();
     }
 
     @Override
     public Long addReport(long id, Report report) {
         report.setId(id);
-        report = reportRepository.save(report);
+        report = reportDao.save(report);
         return report.getId();
     }
 
     @Override
-    public void setState(long id, ExperimentStatus state) {
-        // Experiment experiment = experimentRepository.findById(id);
-        // experiment.setState(state);
-        // experimentRepository.save(experiment);
+    public void setStatus(long id, ExperimentStatus status) {
+        Experiment experiment = experimentDao.findById(id).get();
+        experiment.setStatus(status);
+        experimentDao.save(experiment);
     }
     
 }

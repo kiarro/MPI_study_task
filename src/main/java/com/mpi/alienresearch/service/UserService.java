@@ -11,7 +11,6 @@ public interface UserService {
     public List<User> getPage(Long offset, Long limit, String[] sortvalues);
     public long add(User report);
     public void update(long id, User report);
-    public void updateCurrentInfo(PersonalInfo info);
 
     public User login(String username, String password);
     public void logout();
