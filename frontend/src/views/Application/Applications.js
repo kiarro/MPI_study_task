@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-
+import './Applications.css'
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -22,7 +22,7 @@ function App() {
 
     return (
         <main>
-            <Button href="/experiments/new">Add application</Button>
+            <Button href="/applications/new">Add application</Button>
             <ApplicationsList></ApplicationsList>
         </main>
     );
