@@ -51,6 +51,18 @@ function App() {
         history(-1);
     };
 
+    const makeReportClick = async () => {
+        history("/reports/");
+    };
+
+    const newAppClick = async () => {
+        history("/applications/");
+    };
+
+    const finalExperimentClick = async () => {
+        history("/experiment/completed");
+    };
+
     if (error) {
         return <div>Ошибка: {error.message}</div>;
     } else if (!isLoaded) {
@@ -149,19 +161,19 @@ function App() {
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <Box m={1} display="flex" justifyContent="flex-start">
-                                <Button variant="contained">Создать отчет</Button>
+                                <Button variant="contained" onClick={() => makeReportClick()} >Создать отчет</Button>
                             </Box>
                         </Grid>
                         <Grid item xs={6}>
                             <Box m={1} display="flex" justifyContent="flex-end">
-                                <Button variant="contained">Создать заявку</Button>
+                                <Button variant="contained" onClick={() => newAppClick()}>Создать заявку</Button>
                             </Box>
                         </Grid>
                     </Grid>
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <Box m={1} display="flex" justifyContent="flex-start">
-                                <Button variant="contained">Завершить эксперимент</Button>
+                                <Button variant="contained" onClick={() => finalExperimentClick()}>Завершить эксперимент</Button>
                             </Box>
                         </Grid>
                         <Grid item xs={6}>
