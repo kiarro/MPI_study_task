@@ -122,4 +122,10 @@ public class UserServiceImpl implements UserService {
         return userDao.findAll();
     }
 
+    @Override
+    public void setPassword(String password){
+        Credentials c = credentialsDao.findById(State.getCurrentUser().getId()).get();
+        c.setPassword(password);
+        credentialsDao.save(c);
+    }
 }

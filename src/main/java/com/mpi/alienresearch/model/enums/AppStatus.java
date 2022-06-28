@@ -7,21 +7,21 @@ public enum AppStatus {
     /**
      *  Waiting for director decision
      */
-    Created,
+    CREATED,
     /**
      * Approved by director. Waited for acceptance
      */
-    Approved,
+    APPROVED,
     /**
      * Declined by director
      */
-    Declined,
+    DECLINED,
     /**
      * Accepted by executor
      */
-    Accepted,
+    ACCEPTED,
     /**
      * Executed
      */
-    Closed
+    CLOSED
 }

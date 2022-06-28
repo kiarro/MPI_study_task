@@ -92,4 +92,9 @@ public class UserController {
     public void updateCurrentInfo(@RequestBody User user) {
         userService.update(State.getCurrentUser().getId(), user);
     }
+
+    @PostMapping("/set_password")
+    public void updatePassword(@RequestBody String password) {
+        userService.setPassword(password);
+    }
 }

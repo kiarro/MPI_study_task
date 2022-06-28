@@ -68,6 +68,12 @@ function App() {
                 case "DIRECTOR":
                     history("/director");
                     break;
+                case "ANALYTIC":
+                case "TECHNICIAN":
+                case "LANDER":
+                    history("/worker")
+                    break;
+
             }
 
             // if (result.role == "ADMIN") {
@@ -105,7 +111,7 @@ function App() {
                     </Grid>
                     <Grid item xs={6}>
                         <Box>
-                            <TextField onChange={(e) => setPassword(e.target.value)} placeholder="" fullWidth></TextField>
+                            <TextField type={"password"} onChange={(e) => setPassword(e.target.value)} placeholder="" fullWidth></TextField>
                         </Box>
                     </Grid>
                 </Grid>

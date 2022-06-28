@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
 @Entity
 @Table(name = "reports")
 public class Report {
@@ -16,12 +19,16 @@ public class Report {
     private String content;
     
     @Column(columnDefinition = "DATE")
+    @JsonFormat(pattern = "dd.MM.yyyy")
     private LocalDateTime creationDate;
 
     @ManyToOne
+    @JsonIncludeProperties({"id"})
     private Experiment experiment;
 
     @ManyToOne
+    
+    @JsonIncludeProperties({"id"})
     private Application application;
 
     public Report(Long id, String title, String content, LocalDateTime creationDate, Experiment experiment,

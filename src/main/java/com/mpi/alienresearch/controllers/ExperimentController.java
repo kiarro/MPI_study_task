@@ -20,6 +20,7 @@ import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Experiment;
 import com.mpi.alienresearch.model.Report;
 import com.mpi.alienresearch.model.UserGroup;
+import com.mpi.alienresearch.model.enums.ExperimentStatus;
 import com.mpi.alienresearch.service.ExperimentService;
 import com.mpi.alienresearch.state.State;
 
@@ -90,7 +91,7 @@ public class ExperimentController {
     public ResponseEntity<String> addReport(@PathVariable("id") Long id, @RequestBody Report report) {
         Optional<Long> appId = Optional.ofNullable(experimentService.addReport(id, report));
         if (appId.isPresent()) {
-            URI uri = URI.create("/reports/" + appId);
+            URI uri = URI.create("/reports/" + appId.get());
             // System.out.println(uri.toString());
             return ResponseEntity.accepted().location(uri).build();
         } else {
@@ -109,5 +110,26 @@ public class ExperimentController {
         Collection<Experiment> experiments = experimentService.getPage(offset, limit, sortvalues, filter);
 
         return experiments;
+    }
+
+    @PostMapping("/{id}/approve")
+    public void accept(@PathVariable("id") Long id) {
+        experimentService.setStatus(id, ExperimentStatus.IN_PROGRESS);
+    }
+    @PostMapping("/{id}/decline")
+    public void decline(@PathVariable("id") Long id) {
+        experimentService.setStatus(id, ExperimentStatus.DECLINED);
+    }
+    @PostMapping("/{id}/close")
+    public void close(@PathVariable("id") Long id) {
+        experimentService.setStatus(id, ExperimentStatus.FINISHED);
+    }
+    @PostMapping("/{id}/unclose")
+    public void unclose(@PathVariable("id") Long id) {
+        experimentService.setStatus(id, ExperimentStatus.IN_PROGRESS);
+    }
+    @PostMapping("/{id}/finishing")
+    public void finishing(@PathVariable("id") Long id) {
+        experimentService.setStatus(id, ExperimentStatus.FINISHING);
     }
 }

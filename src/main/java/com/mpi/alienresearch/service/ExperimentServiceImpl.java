@@ -1,5 +1,6 @@
 package com.mpi.alienresearch.service;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -52,6 +53,8 @@ public class ExperimentServiceImpl implements ExperimentService{
 
     @Override
     public Long add(Experiment experiment) {
+        experiment.setCreationTime(LocalDateTime.now());
+        experiment.setStatus(ExperimentStatus.CREATED);
         experiment = experimentDao.save(experiment);
         return experiment.getId();
     }
@@ -77,6 +80,7 @@ public class ExperimentServiceImpl implements ExperimentService{
     @Override
     public Long addReport(long id, Report report) {
         report.setId(id);
+        report.setCreationDate(LocalDateTime.now());
         report = reportDao.save(report);
         return report.getId();
     }

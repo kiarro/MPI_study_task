@@ -47,9 +47,39 @@ function App() {
             )
     }, [])
 
+
     const backClick = async () => {
         history(-1);
     };
+
+    const finishExp = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/experiments/'+String(id)+'/finishing', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error! status: ${response.status}`);
+            }
+            history(-1);
+            
+        } catch (err) {
+        } finally {
+        }
+    };
+
+    const createApp = async () => {
+        history("add_app");
+    };
+
+    const createRep = async () => {
+        history("add_rep");
+    };
+
+    var b_disabled = (exp.status != "IN_PROGRESS")?"disabled":"";
 
     if (error) {
         return <div>Ошибка: {error.message}</div>;
@@ -78,6 +108,16 @@ function App() {
                         <Grid item xs={3}>
                             <Box>
                                 <TextField disabled value={exp.researchGroup.id} fullWidth></TextField>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Box>
+                                <Item>Состояние:</Item>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={9}>
+                            <Box>
+                                <TextField disabled value={exp.status} fullWidth></TextField>
                             </Box>
                         </Grid>
                         <Grid item xs={3}>
@@ -136,11 +176,6 @@ function App() {
                                     <Item>Дата</Item>
                                 </Box>
                             </Grid>
-                            <Grid item xs={3}>
-                                <Box m={1} display="flex" justifyContent="center">
-                                    <Item>Исследователь</Item>
-                                </Box>
-                            </Grid>
                         </Grid>
                         <Grid item xs={12} marginTop="0px" paddingTop="0px">
                             <AppList id={id}></AppList>
@@ -149,19 +184,19 @@ function App() {
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <Box m={1} display="flex" justifyContent="flex-start">
-                                <Button variant="contained">Создать отчет</Button>
+                                <Button disabled={b_disabled} onClick={() => createRep()} variant="contained">Создать отчет</Button>
                             </Box>
                         </Grid>
                         <Grid item xs={6}>
                             <Box m={1} display="flex" justifyContent="flex-end">
-                                <Button variant="contained">Создать заявку</Button>
+                                <Button disabled={b_disabled} onClick={() => createApp()} variant="contained">Создать заявку</Button>
                             </Box>
                         </Grid>
                     </Grid>
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <Box m={1} display="flex" justifyContent="flex-start">
-                                <Button variant="contained">Завершить эксперимент</Button>
+                                <Button disabled={b_disabled} onClick={() => finishExp()} variant="contained">Завершить эксперимент</Button>
                             </Box>
                         </Grid>
                         <Grid item xs={6}>
@@ -177,10 +212,11 @@ function App() {
 }
 
 function AppList(input) {
+    const history = useNavigate();
 
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [items, setItems] = useState([]);
+    const [items1, setItems1] = useState([]);
 
     // console.log(id.id);
     // Примечание: пустой массив зависимостей [] означает, что
@@ -192,7 +228,7 @@ function AppList(input) {
             .then(
                 (result) => {
                     setIsLoaded(true);
-                    setItems(result);
+                    setItems1(result);
                 },
                 // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
                 // чтобы не перехватывать исключения из ошибок в самих компонентах.
@@ -203,6 +239,28 @@ function AppList(input) {
             )
     }, [])
 
+    const [items2, setItems2] = useState([]);
+    useEffect(() => {
+        fetch("http://localhost:8080/reports?experiment=" + input.id)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    setIsLoaded(true);
+                    setItems2(result);
+                },
+                // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
+                // чтобы не перехватывать исключения из ошибок в самих компонентах.
+                (error) => {
+                    setIsLoaded(true);
+                    setError(error);
+                }
+            )
+    }, [])
+    
+    const reportClick = async (id) => {
+        history("/reports/" + id);
+    };
+
     if (error) {
         return <div>Ошибка: {error.message}</div>;
     } else if (!isLoaded) {
@@ -210,32 +268,27 @@ function AppList(input) {
     } else {
         return (
             <List sx={{ m: 0, p: 0 }}>
-                {items.map(item => (
+                {items1.concat(items2).map(item => (
                     <Box sx={{ m: 0, p: 0, border: "1px dashed" }}>
                         <Grid container spacing={2}>
                             <Grid item xs={1}>
                                 <Box m={1} display="flex" justifyContent="center">
-                                    <Item>item.id</Item>
+                                    <Item><Button onClick={() => reportClick(item.id)}>{item.id}</Button></Item>
                                 </Box>
                             </Grid>
                             <Grid item xs={2}>
                                 <Box m={1} display="flex" justifyContent="left">
-                                    <Item>item.type</Item>
+                                    <Item>{item.application==null?"REPORT":"APPLICATION"}</Item>
                                 </Box>
                             </Grid>
                             <Grid item xs={4}>
                                 <Box m={1} display="flex" justifyContent="left">
-                                    <Item>item.description</Item>
+                                    <Item>{item.title}</Item>
                                 </Box>
                             </Grid>
                             <Grid item xs={2}>
                                 <Box m={1} display="flex" justifyContent="center">
-                                    <Item>item.creationDate</Item>
-                                </Box>
-                            </Grid>
-                            <Grid item xs={3}>
-                                <Box m={1} display="flex" justifyContent="left">
-                                    <Item>item.creator.first_name</Item>
+                                    <Item>{item.creationDate}</Item>
                                 </Box>
                             </Grid>
                         </Grid>

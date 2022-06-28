@@ -201,7 +201,7 @@ class JpatestApplicationTests {
 
 		// update
 		UserGroup newExecGroup = userGroupDao.findById(6l).get();
-		AppStatus newStatus = AppStatus.Accepted;
+		AppStatus newStatus = AppStatus.ACCEPTED;
 		sApp.setExecutionGroup(newExecGroup);
 		sApp.setStatus(newStatus);
 		applicationDao.save(sApp);
@@ -231,7 +231,7 @@ class JpatestApplicationTests {
 
 		// update
 		UserGroup newExecGroup = userGroupDao.findById(5l).get();
-		AppStatus newStatus = AppStatus.Approved;
+		AppStatus newStatus = AppStatus.APPROVED;
 		String newDesc = "new desc of analysis";
 		sApp.setExecutionGroup(newExecGroup);
 		sApp.setStatus(newStatus);
@@ -328,7 +328,7 @@ class JpatestApplicationTests {
 
 		// update
 		UserGroup newExecGroup = userGroupDao.findById(5l).get();
-		AppStatus newStatus = AppStatus.Approved;
+		AppStatus newStatus = AppStatus.APPROVED;
 		String newDesc = "new desc of analysis";
 		sApp.setExecutionGroup(newExecGroup);
 		sApp.setStatus(newStatus);
@@ -370,11 +370,11 @@ class JpatestApplicationTests {
 
 	AppTechnic oAppTechnic = new AppTechnic(0l, "description",
 			null, null, LocalDateTime.now(),
-			AppStatus.Created, null, "content");
+			AppStatus.CREATED, null, "content");
 
 	AppAnalysis oAppAnalysis = new AppAnalysis(0l,
 			"analysis description", null, null,
-			LocalDateTime.now(), AppStatus.Created, null,
+			LocalDateTime.now(), AppStatus.CREATED, null,
 			null, "description2");
 
 	Report oReport = new Report(0l, "report title",
@@ -390,6 +390,6 @@ class JpatestApplicationTests {
 	AppLanding oAppLanding = new AppLanding(0l,
 			"landing description", 
 			null, null, LocalDateTime.now(),
-			AppStatus.Created, null);
+			AppStatus.CREATED, null);
 	
 }

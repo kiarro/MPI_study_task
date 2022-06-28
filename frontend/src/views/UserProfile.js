@@ -75,6 +75,32 @@ export default function App() {
         }
     };
 
+    const [password, setPassword] = useState('');
+    const passChangeClick = async () => {
+        try {
+            user.phoneNumber = phoneNumber;
+            user.email = email;
+            user.aboutYourself = aboutYourself;
+
+            const response = await fetch('http://localhost:8080/users/set_password', {
+                method: 'POST',
+                body: password,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error! status: ${response.status}`);
+            }
+            // const result = await response.json();
+
+            // console.log('result is: ', JSON.stringify(result, null, 4));
+        } catch (err) {
+        } finally {
+        }
+    };
+
     if (error) {
         return <div>Ошибка: {error.message}</div>;
     } else if (!isLoaded) {
@@ -115,6 +141,24 @@ export default function App() {
                             <Box>
                                 <TextField value={user.userGroup.id} disabled fullWidth></TextField>
                             </Box>
+                        </Grid>
+                    </Grid>
+
+                    <Grid container spacing={1} margin="10px" marginTop="0px" border="solid">
+                        <Grid item xs={4}>
+                        <Box marginTop="20px" marginBottom="0px">
+                            <Item>Изменить пароль:</Item>
+                        </Box>
+                        </Grid>
+                        <Grid item xs={4}>
+                        <Box marginTop="20px" marginBottom="0px">
+                            <TextField onChange={(e) => setPassword(e.target.value)} fullWidth></TextField>
+                        </Box>
+                        </Grid>
+                        <Grid item xs={4}>
+                        <Box marginTop="20px" marginBottom="0px">
+                            <Button variant="contained" onClick={() => passChangeClick()}>Изменить пароль</Button>
+                        </Box>
                         </Grid>
                     </Grid>
 
@@ -176,7 +220,7 @@ export default function App() {
                         <Grid item xs={6}>
                             <Box>
                                 <TextField onChange={(e) => setPhone(e.target.value)}
-                                value = {phoneNumber} fullWidth></TextField>
+                                    value={phoneNumber} fullWidth></TextField>
                             </Box>
                         </Grid>
                         <Grid item xs={4}>
@@ -187,7 +231,7 @@ export default function App() {
                         <Grid item xs={6}>
                             <Box>
                                 <TextField onChange={(e) => setEmail(e.target.value)}
-                                    value = {email} fullWidth
+                                    value={email} fullWidth
                                 ></TextField>
                             </Box>
                         </Grid>
@@ -202,7 +246,7 @@ export default function App() {
                                     fullWidth
                                     multiline="true"
                                     rows="4"
-                                    value = {aboutYourself}
+                                    value={aboutYourself}
                                 ></TextField>
                             </Box>
                         </Grid>

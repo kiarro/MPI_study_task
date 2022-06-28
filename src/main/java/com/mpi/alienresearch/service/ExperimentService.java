@@ -23,6 +23,4 @@ public interface ExperimentService {
     public Long addReport(long id, Report report);
 
     public void setStatus(long id, ExperimentStatus state);
-    
-
 }

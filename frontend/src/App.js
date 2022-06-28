@@ -25,6 +25,10 @@ import ResearcherMain from './views/ResearcherMain';
 import CreateUser from './views/CreateUser';
 import WorkerMain from './views/WorkerMain/WorkerMain';
 import DirectorMain from './views/DirectorMain/DirectorMain';
+import NewApplication from './views/Application/NewApplication';
+// import Application from './views/Application/Application';
+import NewReport from './views/Report/NewReport';
+import Report from './views/Report/Report';
 
 function App() {
   return (
@@ -44,6 +48,10 @@ function App() {
             <Route exact path='experiments' element={<Experiments />} />
             <Route exact path='experiments/new' element={<NewExperiment />} />
             <Route exact path='experiments/:id' element={<Experiment />} />
+            <Route exact path='experiments/:id/add_rep' element={<NewReport />}/>
+            <Route exact path='reports/:id' element={<Report />}/>
+
+            {/* <Route exact path='applications/:id' element={<Application/>}/> */}
           </Routes>
         </BrowserRouter>
       </body>
