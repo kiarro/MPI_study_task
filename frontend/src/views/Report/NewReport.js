@@ -1,6 +1,5 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -58,7 +57,6 @@ export default function App() {
         } finally {
         }
     }
-
 
     // console.log(id);
     return (
