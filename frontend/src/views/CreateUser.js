@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import { Button, TextField, List } from "@mui/material";
+import { Button, TextField, List, FormControl, Select, InputLabel, MenuItem } from "@mui/material";
 
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
@@ -67,7 +67,24 @@ export default function App() {
                 </Grid>
                 <Grid item xs={3}>
                     <Box>
-                        <TextField onChange={(e) => setRole(e.target.value)} fullWidth></TextField>
+                        {/* <TextField onChange={(e) => setRole(e.target.value)} fullWidth></TextField> */}
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label"></InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={role}
+                                label="role"
+                                onChange={(e) => setRole(e.target.value)}
+                            >
+                                <MenuItem value={"RESEARCHER"}>RESEARCHER</MenuItem>
+                                <MenuItem value={"ADMIN"}>ADMIN</MenuItem>
+                                <MenuItem value={"DIRECTOR"}>DIRECTOR</MenuItem>
+                                <MenuItem value={"ANALYTIC"}>ANALYTIC</MenuItem>
+                                <MenuItem value={"TECHNICIAN"}>TECHNICIAN</MenuItem>
+                                <MenuItem value={"LANDER"}>LANDER</MenuItem>
+                            </Select>
+                        </FormControl>
                     </Box>
                 </Grid>
             </Grid>
