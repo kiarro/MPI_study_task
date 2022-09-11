@@ -12,6 +12,11 @@ import { Button, TextField, List } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 
+const Item = styled(Button)(({ theme }) => ({
+    padding: theme.spacing(2),
+    textAlign: "left"
+}));
+
 function ApplicationsList() {
 
     const [error, setError] = useState(null);
