@@ -79,7 +79,7 @@ public class ExperimentController {
     public ResponseEntity<String> addApplication(@PathVariable("id") Long id, @RequestBody Application app) {
         Optional<Long> appId = Optional.ofNullable(experimentService.addApplication(id, app));
         if (appId.isPresent()) {
-            URI uri = URI.create("/applications/" + appId);
+            URI uri = URI.create("/applications/" + appId.get());
             // System.out.println(uri.toString());
             return ResponseEntity.accepted().location(uri).build();
         } else {

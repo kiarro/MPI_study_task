@@ -27,7 +27,6 @@ public class Report {
     private Experiment experiment;
 
     @ManyToOne
-    
     @JsonIncludeProperties({"id"})
     private Application application;
 

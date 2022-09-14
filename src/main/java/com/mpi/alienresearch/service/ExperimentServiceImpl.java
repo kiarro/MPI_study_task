@@ -19,6 +19,7 @@ import com.mpi.alienresearch.model.Report;
 import com.mpi.alienresearch.model.UserGroup;
 import com.mpi.alienresearch.model.enums.AppType;
 import com.mpi.alienresearch.model.enums.ExperimentStatus;
+import com.mpi.alienresearch.state.State;
 
 @Service
 public class ExperimentServiceImpl implements ExperimentService{
@@ -72,14 +73,16 @@ public class ExperimentServiceImpl implements ExperimentService{
 
     @Override
     public Long addApplication(long id, Application app) {
-        app.setId(id);
+        // app.setId(id);
+        app.setCreationDate(LocalDateTime.now());
+        app.setCreator(State.getCurrentUser());
         app = applicationDao.save(app);
         return app.getId();
     }
 
     @Override
     public Long addReport(long id, Report report) {
-        report.setId(id);
+        // report.setId(id);
         report.setCreationDate(LocalDateTime.now());
         report = reportDao.save(report);
         return report.getId();

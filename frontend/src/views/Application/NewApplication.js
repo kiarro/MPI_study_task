@@ -4,7 +4,7 @@ import './NewApplication.css'
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { Button, TextField, List } from "@mui/material";
+import { Button, TextField, List, FormControl, Select, InputLabel, MenuItem } from "@mui/material";
 
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
@@ -23,9 +23,10 @@ export default function App() {
     const [items, setItems] = useState([]);
 
     const [team, setTeam] = useState('');
-    const [title, setType] = useState('');
+    const [type, setType] = useState('');
     const [description, setDescription] = useState('');
 
+    const { id } = useParams();
 
     const backClick = async () => {
         history(-1);
@@ -33,12 +34,13 @@ export default function App() {
 
     const sendClick = async () => {
         try {
-            const response = await fetch('http://localhost:8080/applications/', {
+            const response = await fetch('http://localhost:8080/experiments/'+id+'/applications', {
                 method: 'POST',
                 body: JSON.stringify({
-                    title: title,
+                    type: type,
                     description: description,
-                    state: "CREATED"
+                    status: "CREATED",
+                    experiment: {id: id}
                 }),
                 headers: {
                     'Content-Type': 'application/json',
@@ -73,9 +75,24 @@ export default function App() {
                     </Grid>
                     <Grid item xs={9}>
                         <Box>
-                            <TextField onChange={(e) => setType(e.target.value)}
+                            {/* <TextField onChange={(e) => setType(e.target.value)}
                                        fullWidth
-                            ></TextField>
+                            ></TextField> */}
+
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label"></InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={type}
+                                    label="type"
+                                    onChange={(e) => setType(e.target.value)}
+                                >
+                                    <MenuItem value={"ANALYSIS"}>ANALYSIS</MenuItem>
+                                    <MenuItem value={"TECHNIC"}>TECHNIC</MenuItem>
+                                    <MenuItem value={"LANDING"}>LANDING</MenuItem>
+                                </Select>
+                            </FormControl>
                         </Box>
                     </Grid>
                     <Grid item xs={3} marginBottom="0px" paddingBottom="0px">

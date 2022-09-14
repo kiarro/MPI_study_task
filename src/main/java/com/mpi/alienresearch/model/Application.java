@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -30,6 +31,10 @@ public class Application {
     @ManyToOne
     @JsonIgnore
     private User creator;
+    
+    @Column(columnDefinition = "DATE")
+    @JsonFormat(pattern = "dd.MM.yyyy")
+    private LocalDateTime creationDate;
 
     @JsonProperty("creator")
     private Long getCreatorId(){
@@ -37,7 +42,8 @@ public class Application {
     }
 
     @ManyToOne
-    @JsonIgnore
+    // @JsonIgnore
+    @JsonIncludeProperties({"id"})
     private Experiment experiment;
 
     @JsonProperty("experiment")
@@ -57,16 +63,17 @@ public class Application {
     
     @JsonProperty("executionGroup")
     private Long getExecutionGroupId(){
-        return executionGroup.getId();
+        return executionGroup == null ? null : executionGroup.getId();
     }
 
-    public Application(Long id, AppType type, String description, User creator, Experiment experiment,
+    public Application(Long id, AppType type, String description, User creator, Experiment experiment, LocalDateTime creationDate,
             LocalDateTime lastStatusTransitionDate, AppStatus status, UserGroup executionGroup) {
         this.id = id;
         this.type = type;
         this.description = description;
         this.creator = creator;
         this.experiment = experiment;
+        this.creationDate = creationDate;
         this.lastStatusTransitionDate = lastStatusTransitionDate;
         this.status = status;
         this.executionGroup = executionGroup;
@@ -109,6 +116,14 @@ public class Application {
 
     public void setCreator(User creator) {
         this.creator = creator;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
     public Experiment getExperiment() {

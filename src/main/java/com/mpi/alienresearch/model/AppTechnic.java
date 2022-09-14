@@ -15,9 +15,9 @@ public class AppTechnic extends Application {
     
     private String content;
 
-    public AppTechnic(Long id, String description, User creator, Experiment experiment,
+    public AppTechnic(Long id, String description, User creator, Experiment experiment, LocalDateTime creationDate,
             LocalDateTime lastStatusTransitionDate, AppStatus status, UserGroup executionGroup, String content) {
-        super(id, AppType.Technic, description, creator, experiment, lastStatusTransitionDate, status, executionGroup);
+        super(id, AppType.TECHNIC, description, creator, experiment, creationDate, lastStatusTransitionDate, status, executionGroup);
         this.content = content;
     }
 

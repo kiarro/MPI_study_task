@@ -18,10 +18,10 @@ public class AppAnalysis extends Application {
 
     private String analysisDescription;
 
-    public AppAnalysis(Long id, String description, User creator, Experiment experiment,
+    public AppAnalysis(Long id, String description, User creator, Experiment experiment, LocalDateTime creationDate,
             LocalDateTime lastStatusTransitionDate, AppStatus status, UserGroup executionGroup, Subject subject,
             String analysisDescription) {
-        super(id, AppType.Analysis, description, creator, experiment, lastStatusTransitionDate, status, executionGroup);
+        super(id, AppType.ANALYSIS, description, creator, experiment, creationDate, lastStatusTransitionDate, status, executionGroup);
         this.subject = subject;
         this.analysisDescription = analysisDescription;
     }

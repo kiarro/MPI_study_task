@@ -278,7 +278,7 @@ function AppList(input) {
                             </Grid>
                             <Grid item xs={2}>
                                 <Box m={1} display="flex" justifyContent="left">
-                                    <Item>{item.application==null?"REPORT":"APPLICATION"}</Item>
+                                    <Item>{!item.type?"REPORT":"APPLICATION"}</Item>
                                 </Box>
                             </Grid>
                             <Grid item xs={4}>
