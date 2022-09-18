@@ -27,7 +27,7 @@ function ApplicationsList() {
     // этот useEffect будет запущен один раз
     // аналогично componentDidMount()
     useEffect(() => {
-        fetch("/api/applications")
+        fetch("http://localhost:8080/applications")
             .then(res => res.json())
             .then(
                 (result) => {
@@ -50,37 +50,71 @@ function ApplicationsList() {
     } else {
         return (
             <div>
+                <Box sx={{ m: 0, p: 0, border: "1px dashed" }}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={1}>
+                                <Box m={1} display="flex" justifyContent="center">
+                                    <Item>id</Item>
+                                </Box>
+                            </Grid>
+                            <Grid item xs={2}>
+                                <Box m={1} display="flex" justifyContent="left">
+                                    <Item>type</Item>
+                                </Box>
+                            </Grid>
+                            <Grid item xs={1}>
+                                <Box m={1} display="flex" justifyContent="left">
+                                    <Item>creatorId</Item>
+                                </Box>
+                            </Grid>
+                            <Grid item xs={2}>
+                                <Box m={1} display="flex" justifyContent="center">
+                                    <Item>status</Item>
+                                </Box>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <Box m={1} display="flex" justifyContent="left">
+                                    <Item>executionGroup</Item>
+                                </Box>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <Box m={1} display="flex" justifyContent="left">
+                                    <Item>experimentId</Item>
+                                </Box>
+                            </Grid>
+                        </Grid>
+                    </Box>
                 {items.map(item => (
                     <Box sx={{ m: 0, p: 0, border: "1px dashed" }}>
                         <Grid container spacing={2}>
                             <Grid item xs={1}>
                                 <Box m={1} display="flex" justifyContent="center">
-                                    <Item>item.id</Item>
+                                    <Item>{item.id}</Item>
                                 </Box>
                             </Grid>
                             <Grid item xs={2}>
                                 <Box m={1} display="flex" justifyContent="left">
-                                    <Item>item.type</Item>
+                                    <Item>{item.type}</Item>
                                 </Box>
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={1}>
                                 <Box m={1} display="flex" justifyContent="left">
-                                    <Item>item.creatorId</Item>
+                                    <Item>{item.creatorId}</Item>
                                 </Box>
                             </Grid>
                             <Grid item xs={2}>
                                 <Box m={1} display="flex" justifyContent="center">
-                                    <Item>item.status</Item>
+                                    <Item>{item.status}</Item>
                                 </Box>
                             </Grid>
                             <Grid item xs={3}>
                                 <Box m={1} display="flex" justifyContent="left">
-                                    <Item>item.executionGroup</Item>
+                                    <Item>{item.executionGroup}</Item>
                                 </Box>
                             </Grid>
                             <Grid item xs={3}>
                                 <Box m={1} display="flex" justifyContent="left">
-                                    <Item>item.experimentId</Item>
+                                    <Item>{item.experimentId}</Item>
                                 </Box>
                             </Grid>
                         </Grid>

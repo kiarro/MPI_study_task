@@ -261,6 +261,10 @@ function AppList(input) {
         history("/reports/" + id);
     };
 
+    const appClick = async (id) => {
+        history("/applications/" + id);
+    }
+
     if (error) {
         return <div>Ошибка: {error.message}</div>;
     } else if (!isLoaded) {
@@ -273,7 +277,7 @@ function AppList(input) {
                         <Grid container spacing={2}>
                             <Grid item xs={1}>
                                 <Box m={1} display="flex" justifyContent="center">
-                                    <Item><Button onClick={() => reportClick(item.id)}>{item.id}</Button></Item>
+                                    <Item><Button onClick={() => !item.type?reportClick(item.id):appClick(item.id)}>{item.id}</Button></Item>
                                 </Box>
                             </Grid>
                             <Grid item xs={2}>

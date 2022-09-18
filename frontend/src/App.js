@@ -17,9 +17,9 @@ import './App.css';
 import LoginPage from './views/LoginPage/LoginPage';
 import UserProfile from './views/UserProfile/UserProfile';
 import UserProfileEdit from './views/UserProfile/UserProfileEdit';
-import Experiments from './views/Experiments';
+import Experiments from './views/Experiment/Experiments';
 import Experiment from './views/Researcher/Experiment';
-import NewExperiment from './views/NewExperiment';
+import NewExperiment from './views/Experiment/NewExperiment';
 import AdminMain from './views/Admin/AdminMain';
 import ResearcherMain from './views/Researcher/ResearcherMain';
 import CreateUser from './views/Admin/CreateUser';
@@ -29,6 +29,7 @@ import NewApplication from './views/Application/NewApplication';
 // import Application from './views/Application/Application';
 import NewReport from './views/Report/NewReport';
 import Report from './views/Report/Report';
+import Application from './views/Application/Application';
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
             <Route exact path='experiments/:id/add_rep' element={<NewReport />}/>
             <Route exact path='experiments/:id/add_app' element={<NewApplication />}/>
             <Route exact path='reports/:id' element={<Report />}/>
+            <Route exact path='applications/:id' element={<Application />}/>
 
             {/* <Route exact path='applications/:id' element={<Application/>}/> */}
           </Routes>

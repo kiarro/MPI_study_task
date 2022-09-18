@@ -368,14 +368,14 @@ class JpatestApplicationTests {
 	Experiment oExperiment = new Experiment(0l, "title", "exp description",
 			LocalDateTime.now(), null, ExperimentStatus.CREATED);
 
-	// AppTechnic oAppTechnic = new AppTechnic(0l, "description",
-	// 		null, null, LocalDateTime.now(),
-	// 		AppStatus.CREATED, null, "content");
+	AppTechnic oAppTechnic = new AppTechnic(0l, "description",
+			null, null, LocalDateTime.now(), LocalDateTime.now(),
+			AppStatus.CREATED, null, "content");
 
-	// AppAnalysis oAppAnalysis = new AppAnalysis(0l,
-	// 		"analysis description", null, null,
-	// 		LocalDateTime.now(), AppStatus.CREATED, null,
-	// 		null, "description2");
+	AppAnalysis oAppAnalysis = new AppAnalysis(0l,
+			"analysis description", null, null,
+			LocalDateTime.now(), LocalDateTime.now(), AppStatus.CREATED, null,
+			null, "description2");
 
 	Report oReport = new Report(0l, "report title",
 			"content report", LocalDateTime.now(),
@@ -389,7 +389,7 @@ class JpatestApplicationTests {
 			null, null, 3);
 	AppLanding oAppLanding = new AppLanding(0l,
 			"landing description", 
-			null, null, LocalDateTime.now(),
+			null, null, LocalDateTime.now(), LocalDateTime.now(),
 			AppStatus.CREATED, null);
 	
 }

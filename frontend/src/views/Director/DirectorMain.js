@@ -307,7 +307,55 @@ function ApplicationList() {
     }, [])
 
     const approve = async (aid) => {
-        fetch("http://localhost:8080/applications/" + aid + "/approve", "POST")
+        // fetch("http://localhost:8080/applications/" + aid + "/set-status?status=APPROVED", "POST")
+        //     .then(res => res.json())
+        //     .then(
+        //         (result) => {
+        //             setIsLoaded(true);
+        //             setItems(result);
+        //         },
+        //         // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
+        //         // чтобы не перехватывать исключения из ошибок в самих компонентах.
+        //         (error) => {
+        //             setIsLoaded(true);
+        //             setError(error);
+        //         }
+        //     );
+        // history("/applications/approved");
+        try {
+            const response = await fetch("http://localhost:8080/applications/" + String(aid) + "/set-status?status=APPROVED", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error! status: ${response.status}`);
+            }
+            
+            await fetch("http://localhost:8080/applications?status=CREATED")
+                    .then(res => res.json())
+                    .then(
+                        (result) => {
+                            setIsLoaded(true);
+                            setItems(result);
+                        },
+                        // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
+                        // чтобы не перехватывать исключения из ошибок в самих компонентах.
+                        (error) => {
+                            setIsLoaded(true);
+                            setError(error);
+                        }
+                    )
+            
+        } catch (err) {
+        } finally {
+        }
+    };
+
+    const decline = async (aid) => {
+        fetch("http://localhost:8080/applications/" + aid + "/set-status?status=DECLINED", "POST")
             .then(res => res.json())
             .then(
                 (result) => {

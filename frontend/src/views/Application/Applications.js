@@ -9,8 +9,6 @@ import { Button, TextField, List } from "@mui/material";
 import { useState, useEffect } from 'react';
 import Applications from "./Applications";
 
-const rootElement = document.getElementById("root");
-const root = createRoot(rootElement);
 
 const Item = styled(Button)(({ theme }) => ({
     padding: theme.spacing(2),
@@ -19,7 +17,6 @@ const Item = styled(Button)(({ theme }) => ({
 
 
 function App() {
-
     return (
         <main>
             <Button href="/applications/new">Add application</Button>

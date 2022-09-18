@@ -26,7 +26,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public Application get(Long id) {
-        return null;
+        return applicationRepository.findById(id).get();
     }
 
     /**
@@ -51,9 +51,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public void setStatus(Long id, AppStatus status) {
-        // Application app = applicationRepository.findById(id.longValue());
-        // app.setStatus(status);
-        // applicationRepository.save(app);
+        Application app = applicationRepository.findById(id).get();
+        app.setStatus(status);
+        applicationRepository.save(app);
     }
 
     @Override
