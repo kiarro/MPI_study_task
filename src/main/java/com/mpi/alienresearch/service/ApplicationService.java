@@ -7,6 +7,7 @@ import com.mpi.alienresearch.filters.ApplicationFilter;
 import com.mpi.alienresearch.model.AppTechnic;
 import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Report;
+import com.mpi.alienresearch.model.User;
 import com.mpi.alienresearch.model.enums.AppStatus;
 import com.mpi.alienresearch.model.enums.Decision;
 
@@ -17,6 +18,7 @@ public interface ApplicationService {
     public void update(Long id, Application application);
 
     public void setStatus(Long id, AppStatus status);
+    public void setExecutionGroup(Long id, User user);
 
     public Collection<Application> getByExperiment(Long experimentId);
 }

@@ -20,6 +20,7 @@ import com.mpi.alienresearch.model.Report;
 import com.mpi.alienresearch.model.enums.AppStatus;
 import com.mpi.alienresearch.model.enums.Decision;
 import com.mpi.alienresearch.service.ApplicationService;
+import com.mpi.alienresearch.state.State;
 
 @RestController
 @CrossOrigin
@@ -63,6 +64,12 @@ public class ApplicationController {
     @PostMapping("/{id}/set-status")
     public void decisionApplication(@PathVariable("id") Long id, @RequestParam(name = "status") AppStatus status) {
         applicationService.setStatus(id, status);
+    }
+
+    @PostMapping("/{id}/accept")
+    public void acceptApplication(@PathVariable("id") Long id) {
+        applicationService.setStatus(id, AppStatus.ACCEPTED);
+        applicationService.setExecutionGroup(id, State.getCurrentUser());
     }
 
 }

@@ -1,11 +1,13 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import './NewApplication.css'
+
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { Button, TextField, List, FormControl, Select, InputLabel, MenuItem } from "@mui/material";
-
+import TechApplication from './TechApplication';
+import AnalysisApplication from './AnalysisApplication';
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -108,6 +110,14 @@ export default function App() {
                                        rows="6"
                             ></TextField>
                         </Box>
+                    </Grid>
+                    <Grid>
+                        { () => {
+                            switch (type){
+                                case "TECHNICH": return (TechApplication)
+                                case "ANALYSIS": return (AnalysisApplication)
+                            }
+                        }}
                     </Grid>
                 </Grid>
                 <Grid container spacing={2}>

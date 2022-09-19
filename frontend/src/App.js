@@ -49,7 +49,8 @@ function App() {
             <Route exact path='experiments' element={<Experiments />} />
             <Route exact path='experiments/new' element={<NewExperiment />} />
             <Route exact path='experiments/:id' element={<Experiment />} />
-            <Route exact path='experiments/:id/add_rep' element={<NewReport />}/>
+            <Route exact path=':type/:id/add_rep' element={<NewReport />}/>
+            {/* <Route exact path='applications/:id/add_rep' element={<NewReport />}/> */}
             <Route exact path='experiments/:id/add_app' element={<NewApplication />}/>
             <Route exact path='reports/:id' element={<Report />}/>
             <Route exact path='applications/:id' element={<Application />}/>

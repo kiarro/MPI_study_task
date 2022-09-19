@@ -24,7 +24,7 @@ export default function App() {
     const [content, setContent] = useState('');
     const [title, setTitle] = useState('');
 
-    const { id } = useParams();
+    const { id, type } = useParams();
 
     const backClick = async () => {
         history(-1);
@@ -32,7 +32,7 @@ export default function App() {
 
     const sendClick = async () => {
         try {
-            const response = await fetch('http://localhost:8080/experiments/'+id+'/reports', {
+            const response = await fetch('http://localhost:8080/'+type+'/'+id+'/reports', {
                 method: 'POST',
                 body: JSON.stringify({
                     title: title,

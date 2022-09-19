@@ -12,6 +12,7 @@ import com.mpi.alienresearch.dao.ApplicationDao;
 import com.mpi.alienresearch.filters.ApplicationFilter;
 import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Report;
+import com.mpi.alienresearch.model.User;
 import com.mpi.alienresearch.model.enums.AppStatus;
 import com.mpi.alienresearch.model.enums.Decision;
 
@@ -60,6 +61,13 @@ public class ApplicationServiceImpl implements ApplicationService {
     public List<Application> getByExperiment(Long experimentId) {
         // return applicationRepository.findByExperimentId(experimentId);
         return null;
+    }
+
+    @Override
+    public void setExecutionGroup(Long id, User user) {
+        Application app = applicationRepository.findById(id).get();
+        app.setExecutionGroup(user.getUserGroup());
+        applicationRepository.save(app);
     }
 
 }
