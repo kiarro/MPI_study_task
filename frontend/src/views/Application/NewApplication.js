@@ -63,6 +63,14 @@ export default function App() {
         }
     }
 
+    const specific_part = () => {
+        switch (type){
+            case "TECHNIC": return (<TechApplication disabled={false}></TechApplication>);
+            case "ANALYSIS": return (<AnalysisApplication disabled={false}></AnalysisApplication>);
+            default: return (<Item>{type}</Item>);
+        }
+    }
+
 
     // console.log(id);
     return (
@@ -111,13 +119,15 @@ export default function App() {
                             ></TextField>
                         </Box>
                     </Grid>
-                    <Grid>
-                        { () => {
-                            switch (type){
-                                case "TECHNICH": return (TechApplication)
-                                case "ANALYSIS": return (AnalysisApplication)
-                            }
-                        }}
+                    <Grid item xs={2} justify="flex-end">
+                        <Box>
+                            <Item>Номер Подопытного:</Item>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={3} justify="flex-start">
+                        <Box disabled>
+                            {specific_part()}
+                        </Box>
                     </Grid>
                 </Grid>
                 <Grid container spacing={2}>

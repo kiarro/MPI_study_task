@@ -14,12 +14,13 @@ const Item = styled(Button)(({ theme }) => ({
     textAlign: "left"
 }));
 
-export default function App() {
+export default function App(disabled) {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
 
     const [human, setHuman] = useState('');
+    // const [isDisabled, setDisabled] = useState('');
     
     const getData = () => {
         return {
@@ -34,7 +35,8 @@ export default function App() {
     return (
         <main>
             <Box sx={{ flexGrow: 1 }} margin="10px">
-                <TextField onChange={(e) => setHuman(e.target.value)}
+                <TextField disabled={disabled}
+                            onChange={(e) => setHuman(e.target.value)}
                 ></TextField>
                 
             </Box>

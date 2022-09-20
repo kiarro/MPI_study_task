@@ -6,6 +6,9 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { Button, TextField, List, FormControl, Select, InputLabel, MenuItem } from "@mui/material";
 
+import TechApplication from './TechApplication';
+import AnalysisApplication from './AnalysisApplication';
+
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -49,6 +52,14 @@ export default function App() {
             )
     }, [])
 
+    const specific_part = () => {
+        switch (type) {
+            case "TECHNIC": return (<TechApplication disabled={true}></TechApplication>);
+            case "ANALYSIS": return (<AnalysisApplication disabled={true}></AnalysisApplication>);
+            default: return (<Item>{type}</Item>);
+        }
+    }
+
     // console.log(id);
     if (error) {
         return <div>Ошибка: {error.message}</div>;
@@ -81,18 +92,28 @@ export default function App() {
                         <Grid item xs={12} marginTop="0px" paddingTop="0px">
                             <Box>
                                 <TextField disabled
-                                        fullWidth
-                                        value={description}
-                                        multiline="true"
-                                        rows="6"
+                                    fullWidth
+                                    value={description}
+                                    multiline="true"
+                                    rows="6"
                                 ></TextField>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={2} justify="flex-end">
+                            <Box>
+                                <Item>Номер Подопытного:</Item>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={3} justify="flex-start">
+                            <Box>
+                                {specific_part()}
                             </Box>
                         </Grid>
                     </Grid>
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <Box m={1} display="flex" justifyContent="flex-start">
-                                
+
                             </Box>
                         </Grid>
                         <Grid item xs={6}>

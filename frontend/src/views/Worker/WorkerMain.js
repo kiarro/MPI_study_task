@@ -18,6 +18,7 @@ const Item = styled(Button)(({ theme }) => ({
 }));
 
 function ApplicationsList() {
+    const history = useNavigate();
 
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
