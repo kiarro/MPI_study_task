@@ -1,5 +1,6 @@
 package com.mpi.alienresearch.controllers;
 
+import java.net.URI;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -70,6 +71,18 @@ public class ApplicationController {
     public void acceptApplication(@PathVariable("id") Long id) {
         applicationService.setStatus(id, AppStatus.ACCEPTED);
         applicationService.setExecutionGroup(id, State.getCurrentUser());
+    }
+
+    @PostMapping("/{id}/reports")
+    public ResponseEntity<String> addReport(@PathVariable("id") Long id, @RequestBody Report report) {
+        Optional<Long> appId = Optional.ofNullable(applicationService.addReport(id, report));
+        if (appId.isPresent()) {
+            URI uri = URI.create("/reports/" + appId.get());
+            // System.out.println(uri.toString());
+            return ResponseEntity.accepted().location(uri).build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 }

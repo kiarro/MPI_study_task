@@ -1,5 +1,6 @@
 package com.mpi.alienresearch.service;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.mpi.alienresearch.dao.ApplicationDao;
+import com.mpi.alienresearch.dao.ReportDao;
 import com.mpi.alienresearch.dao.ApplicationDao;
 import com.mpi.alienresearch.filters.ApplicationFilter;
 import com.mpi.alienresearch.model.Application;
@@ -19,15 +21,17 @@ import com.mpi.alienresearch.model.enums.Decision;
 @Service
 public class ApplicationServiceImpl implements ApplicationService {
 
-    final ApplicationDao applicationRepository;
+    final ApplicationDao applicationDao;
+    final ReportDao reportDao;
 
-    public ApplicationServiceImpl(ApplicationDao applicationRepository) {
-        this.applicationRepository = applicationRepository;
+    public ApplicationServiceImpl(ApplicationDao applicationRepository, ReportDao reportRepository) {
+        this.applicationDao = applicationRepository;
+        this.reportDao = reportRepository;
     }
 
     @Override
     public Application get(Long id) {
-        return applicationRepository.findById(id).get();
+        return applicationDao.findById(id).get();
     }
 
     /**
@@ -36,12 +40,12 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public <T extends Application> List<T> getPage(Long offset, Long limit, String[] sortvalues, Application filter) {
         Example<Application> example = Example.of(filter); 
-        return (List<T>)(List<?>)applicationRepository.findAll(example);
+        return (List<T>)(List<?>)applicationDao.findAll(example);
     }
 
     @Override
     public Long add(Application application) {
-        return applicationRepository.save(application).getId();
+        return applicationDao.save(application).getId();
     }
 
     @Override
@@ -52,9 +56,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public void setStatus(Long id, AppStatus status) {
-        Application app = applicationRepository.findById(id).get();
+        Application app = applicationDao.findById(id).get();
         app.setStatus(status);
-        applicationRepository.save(app);
+        applicationDao.save(app);
     }
 
     @Override
@@ -65,9 +69,17 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public void setExecutionGroup(Long id, User user) {
-        Application app = applicationRepository.findById(id).get();
+        Application app = applicationDao.findById(id).get();
         app.setExecutionGroup(user.getUserGroup());
-        applicationRepository.save(app);
+        applicationDao.save(app);
+    }
+
+    @Override
+    public Long addReport(long id, Report report) {
+        // report.setId(id);
+        report.setCreationDate(LocalDateTime.now());
+        report = reportDao.save(report);
+        return report.getId();
     }
 
 }

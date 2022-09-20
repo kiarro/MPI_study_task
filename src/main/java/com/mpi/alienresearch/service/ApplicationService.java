@@ -20,5 +20,7 @@ public interface ApplicationService {
     public void setStatus(Long id, AppStatus status);
     public void setExecutionGroup(Long id, User user);
 
+    public Long addReport(long id, Report report);
+    
     public Collection<Application> getByExperiment(Long experimentId);
 }

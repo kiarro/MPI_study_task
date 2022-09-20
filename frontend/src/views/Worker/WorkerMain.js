@@ -44,8 +44,20 @@ function ApplicationsList() {
             )
     }
 
-    const report = async () => {
-        history("add_rep");
+    const report = async (aid) => {
+        history("/applications/" + aid + "/add_rep");
+    };
+
+    const close = async (aid) => {
+        const r = await fetch("http://localhost:8080/applications/" + String(aid) + "/set-status?status=CLOSED", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+            
+            
+
     };
 
     useEffect(() => {
@@ -74,34 +86,34 @@ function ApplicationsList() {
         return (
             <div>
                 <Box sx={{ m: 0, p: 0, border: "1px dashed" }}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={1}>
-                                <Box m={1} display="flex" justifyContent="center">
-                                    <Item>id</Item>
-                                </Box>
-                            </Grid>
-                            <Grid item xs={2}>
-                                <Box m={1} display="flex" justifyContent="left">
-                                    <Item>type</Item>
-                                </Box>
-                            </Grid>
-                            <Grid item xs={1}>
-                                <Box m={1} display="flex" justifyContent="left">
-                                    <Item>creatorId</Item>
-                                </Box>
-                            </Grid>
-                            <Grid item xs={2}>
-                                <Box m={1} display="flex" justifyContent="center">
-                                    <Item>status</Item>
-                                </Box>
-                            </Grid>
-                            <Grid item xs={3}>
-                                <Box m={1} display="flex" justifyContent="left">
-                                    <Item>Actions</Item>
-                                </Box>
-                            </Grid>
+                    <Grid container spacing={2}>
+                        <Grid item xs={1}>
+                            <Box m={1} display="flex" justifyContent="center">
+                                <Item>id</Item>
+                            </Box>
                         </Grid>
-                    </Box>
+                        <Grid item xs={2}>
+                            <Box m={1} display="flex" justifyContent="left">
+                                <Item>type</Item>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={1}>
+                            <Box m={1} display="flex" justifyContent="left">
+                                <Item>creatorId</Item>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Box m={1} display="flex" justifyContent="center">
+                                <Item>status</Item>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Box m={1} display="flex" justifyContent="left">
+                                <Item>Actions</Item>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </Box>
                 {items.map(item => (
                     <Box sx={{ m: 0, p: 0, border: "1px dashed" }}>
                         <Grid container spacing={2}>
@@ -125,9 +137,14 @@ function ApplicationsList() {
                                     <Item>{item.status}</Item>
                                 </Box>
                             </Grid>
-                            <Grid item xs={3}>
+                            <Grid item xs={1}>
                                 <Box m={1} display="flex" justifyContent="center">
                                     <Item><Button onClick={() => report(item.id)}>Report</Button></Item>
+                                </Box>
+                            </Grid>
+                            <Grid item xs={1}>
+                                <Box m={1} display="flex" justifyContent="center">
+                                    <Item><Button onClick={() => close(item.id)}>Close</Button></Item>
                                 </Box>
                             </Grid>
                         </Grid>
@@ -167,7 +184,7 @@ function ApplicationsListToGet() {
     useEffect(() => {
         reload()
     }, [])
-    
+
     const accept = async (aid) => {
         try {
             const response = await fetch("http://localhost:8080/applications/" + String(aid) + "/accept", {
@@ -180,11 +197,11 @@ function ApplicationsListToGet() {
             if (!response.ok) {
                 throw new Error(`Error! status: ${response.status}`);
             }
-            
+
             await reload();
 
             await ApplicationsList.reload();
-            
+
         } catch (err) {
         } finally {
         }
@@ -198,34 +215,34 @@ function ApplicationsListToGet() {
         return (
             <div>
                 <Box sx={{ m: 0, p: 0, border: "1px dashed" }}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={1}>
-                                <Box m={1} display="flex" justifyContent="center">
-                                    <Item>id</Item>
-                                </Box>
-                            </Grid>
-                            <Grid item xs={2}>
-                                <Box m={1} display="flex" justifyContent="left">
-                                    <Item>type</Item>
-                                </Box>
-                            </Grid>
-                            <Grid item xs={1}>
-                                <Box m={1} display="flex" justifyContent="left">
-                                    <Item>creatorId</Item>
-                                </Box>
-                            </Grid>
-                            <Grid item xs={2}>
-                                <Box m={1} display="flex" justifyContent="center">
-                                    <Item>status</Item>
-                                </Box>
-                            </Grid>
-                            <Grid item xs={3}>
-                                <Box m={1} display="flex" justifyContent="left">
-                                    <Item>Action</Item>
-                                </Box>
-                            </Grid>
+                    <Grid container spacing={2}>
+                        <Grid item xs={1}>
+                            <Box m={1} display="flex" justifyContent="center">
+                                <Item>id</Item>
+                            </Box>
                         </Grid>
-                    </Box>
+                        <Grid item xs={2}>
+                            <Box m={1} display="flex" justifyContent="left">
+                                <Item>type</Item>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={1}>
+                            <Box m={1} display="flex" justifyContent="left">
+                                <Item>creatorId</Item>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Box m={1} display="flex" justifyContent="center">
+                                <Item>status</Item>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Box m={1} display="flex" justifyContent="left">
+                                <Item>Action</Item>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </Box>
                 {items.map(item => (
                     <Box sx={{ m: 0, p: 0, border: "1px dashed" }}>
                         <Grid container spacing={2}>
@@ -262,8 +279,7 @@ function ApplicationsListToGet() {
     }
 }
 
-export default function App()
-{
+export default function App() {
 
     const history = useNavigate();
 
@@ -298,25 +314,25 @@ export default function App()
         }
     };
 
-return (
-    <main>
-        <Box sx={{ flexGrow: 1, width: 400 }} margin="10px" padding="10px">
-            <Button variant="contained" onClick={() => profileClick()}>Профиль</Button>
-        </Box>
-        {/* <Box sx={{ flexGrow: 1, width: 400 }} margin="10px" padding="10px">
+    return (
+        <main>
+            <Box sx={{ flexGrow: 1, width: 400 }} margin="10px" padding="10px">
+                <Button variant="contained" onClick={() => profileClick()}>Профиль</Button>
+            </Box>
+            {/* <Box sx={{ flexGrow: 1, width: 400 }} margin="10px" padding="10px">
             <Button variant="contained" onClick={() => applicationsClick()} >Принять новую заявку</Button>
         </Box> */}
-        <Box>
-            <Item>Accepted applications</Item>
-        </Box>
-        <ApplicationsList></ApplicationsList>
-        <Box>
-            <Item>Applications to accept</Item>
-        </Box>
-        <ApplicationsListToGet></ApplicationsListToGet>
-        <Box sx={{ flexGrow: 1, width: 400 }} margin="10px" padding="10px">
-            <Button variant="contained" onClick={() => exitClick()}>Выйти</Button>
-        </Box>
-    </main>
-);
+            <Box>
+                <Item>Accepted applications</Item>
+            </Box>
+            <ApplicationsList></ApplicationsList>
+            <Box>
+                <Item>Applications to accept</Item>
+            </Box>
+            <ApplicationsListToGet></ApplicationsListToGet>
+            <Box sx={{ flexGrow: 1, width: 400 }} margin="10px" padding="10px">
+                <Button variant="contained" onClick={() => exitClick()}>Выйти</Button>
+            </Box>
+        </main>
+    );
 }
