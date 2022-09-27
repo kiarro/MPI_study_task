@@ -22,7 +22,8 @@ import com.mpi.alienresearch.model.enums.AppType;
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME,
     include = JsonTypeInfo.As.PROPERTY,
-    property = "type"
+    property = "type",
+    defaultImpl = Application.class
 )
 @JsonSubTypes({
     @JsonSubTypes.Type(value = AppTechnic.class, name = "TECHNIC"),

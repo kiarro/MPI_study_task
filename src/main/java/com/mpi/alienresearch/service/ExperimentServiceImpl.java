@@ -74,18 +74,8 @@ public class ExperimentServiceImpl implements ExperimentService{
 
     @Override
     public Long addApplication(long id, Application app) {
-        // app.setId(id);
         app.setCreationDate(LocalDateTime.now());
         app.setCreator(State.getCurrentUser());
-        // AppType at = app.getType();
-        // switch (at) {
-        //     case ANALYSIS:
-        //         app = (AppAnalysis)app;
-        //         break;
-        //     case TECHNIC:
-        //         app = (AppTechnic)app;
-        //         break;
-        // }
         app = applicationDao.save(app);
         return app.getId();
     }

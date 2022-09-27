@@ -28,6 +28,8 @@ export default function App() {
     const [type, setType] = useState('');
     const [description, setDescription] = useState('');
 
+    const [app_, setApp_] = useState({});
+
     const { id } = useParams();
 
     const backClick = async () => {
@@ -42,6 +44,7 @@ export default function App() {
                     setIsLoaded(true);
                     setType(result.type);
                     setDescription(result.description);
+                    setApp_(result);
                 },
                 // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
                 // чтобы не перехватывать исключения из ошибок в самих компонентах.
@@ -55,7 +58,7 @@ export default function App() {
     const specific_part = () => {
         switch (type) {
             case "TECHNIC": return (<TechApplication disabled={true}></TechApplication>);
-            case "ANALYSIS": return (<AnalysisApplication disabled={true} disabled_card={true}></AnalysisApplication>);
+            case "ANALYSIS": return (<AnalysisApplication disabled={true} is_card={true} application={app_}></AnalysisApplication>);
             default: return (<Item>{type}</Item>);
         }
     }
@@ -99,17 +102,9 @@ export default function App() {
                                 ></TextField>
                             </Box>
                         </Grid>
-                        <Grid item xs={2} justify="flex-end">
-                            <Box>
-                                <Item>Номер Подопытного:</Item>
-                            </Box>
-                        </Grid>
-                        <Grid item xs={3} justify="flex-start">
-                            <Box>
-                                {specific_part()}
-                            </Box>
-                        </Grid>
                     </Grid>
+                    {specific_part()}
+
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <Box m={1} display="flex" justifyContent="flex-start">

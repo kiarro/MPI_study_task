@@ -5,6 +5,9 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { Button, TextField, List } from "@mui/material";
 
+import TechApplication from './../Application/TechApplication';
+import AnalysisApplication from './../Application/AnalysisApplication';
+
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -32,12 +35,13 @@ export default function App() {
 
     const sendClick = async () => {
         try {
-            const response = await fetch('http://localhost:8080/'+type+'/'+id+'/reports', {
+            const response = await fetch('http://localhost:8080/' + type + '/' + id + '/reports', {
                 method: 'POST',
                 body: JSON.stringify({
                     title: title,
                     content: content,
-                    experiment: {id: id}
+                    application: { id: id },
+                    // experiment: { id: null }
                 }),
                 headers: {
                     'Content-Type': 'application/json',
@@ -58,12 +62,50 @@ export default function App() {
         }
     }
 
+    const [app_, setApp_] = useState({});
+
+    const [data_app, setDataApp] = useState(null);
+
+    useEffect(() => {
+        if (type == "applications") {
+            fetch("http://localhost:8080/applications/" + id)
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        setIsLoaded(true);
+                        setApp_(result);
+
+                        console.log(result);
+
+                        switch (result.type) {
+                            case "TECHNIC": 
+                                setDataApp (<TechApplication disabled={true}></TechApplication>);
+                                break;
+                            case "ANALYSIS": 
+                                setDataApp (<AnalysisApplication disabled={false} is_card={true} application={result}></AnalysisApplication>);
+                                break;
+                            default: 
+                                setDataApp (<Item>{type}</Item>);
+                        }
+                    },
+                    // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
+                    // чтобы не перехватывать исключения из ошибок в самих компонентах.
+                    (error) => {
+                        setIsLoaded(true);
+                        setError(error);
+                    }
+                );
+
+            
+        }
+    }, [])
+
     // console.log(id);
     return (
         <main>
             <Box sx={{ flexGrow: 1 }} margin="10px" padding="10px">
                 <Grid container spacing={2}>
-                    
+
                     <Grid item xs={3}>
                         <Box>
                             <Item>Заголовок:</Item>
@@ -91,6 +133,7 @@ export default function App() {
                         </Box>
                     </Grid>
                 </Grid>
+                {data_app}
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <Box m={1} display="flex" justifyContent="flex-start">

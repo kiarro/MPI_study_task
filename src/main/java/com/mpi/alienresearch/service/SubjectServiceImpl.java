@@ -32,14 +32,14 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public Long add(Subject report) {
+    public Long add(Subject subject) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public void update(Long id, Subject report) {
-        // TODO Auto-generated method stub
-        
+    public void update(Long id, Subject subject) {
+        subject.setId(id);
+        subjectRepository.save(subject);
     }
 }
