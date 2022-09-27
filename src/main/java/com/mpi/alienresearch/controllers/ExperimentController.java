@@ -116,7 +116,7 @@ public class ExperimentController {
             Experiment filter) {
 
         Optional<UserGroup> ug = Optional.ofNullable(State.getCurrentUser().getUserGroup());
-        filter.setResearchGroup(ug.orElse(new UserGroup(0l)));
+        filter.setResearchGroup(ug.orElse(new UserGroup(null)));
         Collection<Experiment> experiments = experimentService.getPage(offset, limit, sortvalues, filter);
 
         return experiments;

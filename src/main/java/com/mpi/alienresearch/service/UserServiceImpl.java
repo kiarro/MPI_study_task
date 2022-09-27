@@ -49,6 +49,11 @@ public class UserServiceImpl implements UserService {
     public long add(User user) {
         // save user
         user = userDao.save(user);
+        // create group
+        UserGroup ug = new UserGroup(user.getId());
+        ug = userGroupDao.save(ug);
+        user.setUserGroup(ug);
+        user = userDao.save(user);
         // create credentials
         user.setCredentials(new Credentials(null, null, user));
         String username = user.getLastName().toLowerCase();
