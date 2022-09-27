@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mpi.alienresearch.filters.ExperimentFilter;
+import com.mpi.alienresearch.model.AppAnalysis;
+import com.mpi.alienresearch.model.AppLanding;
+import com.mpi.alienresearch.model.AppTechnic;
 import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Experiment;
 import com.mpi.alienresearch.model.Report;
@@ -24,16 +27,20 @@ import com.mpi.alienresearch.model.enums.ExperimentStatus;
 import com.mpi.alienresearch.service.ExperimentService;
 import com.mpi.alienresearch.state.State;
 
+import java.util.logging.Logger;
+
+
 @RestController
 @CrossOrigin
 @RequestMapping("/experiments")
 public class ExperimentController {
 
+    private static Logger _log = Logger.getLogger(ExperimentController.class.getName());
+
     private final ExperimentService experimentService;
 
     public ExperimentController(ExperimentService experimentService) {
         this.experimentService = experimentService;
-
     }
 
     @PostMapping
@@ -77,6 +84,9 @@ public class ExperimentController {
 
     @PostMapping("/{id}/applications")
     public ResponseEntity<String> addApplication(@PathVariable("id") Long id, @RequestBody Application app) {
+        // _log.info(String.valueOf(app instanceof AppTechnic));
+        // _log.info(String.valueOf(app instanceof AppAnalysis));
+        // _log.info(String.valueOf(app instanceof AppLanding));
         Optional<Long> appId = Optional.ofNullable(experimentService.addApplication(id, app));
         if (appId.isPresent()) {
             URI uri = URI.create("/applications/" + appId.get());

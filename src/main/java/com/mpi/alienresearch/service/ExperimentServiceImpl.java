@@ -12,6 +12,7 @@ import com.mpi.alienresearch.dao.ApplicationDao;
 import com.mpi.alienresearch.dao.ExperimentDao;
 import com.mpi.alienresearch.dao.ReportDao;
 import com.mpi.alienresearch.filters.ExperimentFilter;
+import com.mpi.alienresearch.model.AppAnalysis;
 import com.mpi.alienresearch.model.AppTechnic;
 import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Experiment;
@@ -76,6 +77,15 @@ public class ExperimentServiceImpl implements ExperimentService{
         // app.setId(id);
         app.setCreationDate(LocalDateTime.now());
         app.setCreator(State.getCurrentUser());
+        // AppType at = app.getType();
+        // switch (at) {
+        //     case ANALYSIS:
+        //         app = (AppAnalysis)app;
+        //         break;
+        //     case TECHNIC:
+        //         app = (AppTechnic)app;
+        //         break;
+        // }
         app = applicationDao.save(app);
         return app.getId();
     }

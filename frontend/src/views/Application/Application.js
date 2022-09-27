@@ -55,7 +55,7 @@ export default function App() {
     const specific_part = () => {
         switch (type) {
             case "TECHNIC": return (<TechApplication disabled={true}></TechApplication>);
-            case "ANALYSIS": return (<AnalysisApplication disabled={true}></AnalysisApplication>);
+            case "ANALYSIS": return (<AnalysisApplication disabled={true} disabled_card={true}></AnalysisApplication>);
             default: return (<Item>{type}</Item>);
         }
     }

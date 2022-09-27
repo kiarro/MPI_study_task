@@ -11,6 +11,7 @@ import com.mpi.alienresearch.model.enums.AppType;
 
 @Entity
 @Table(name = "apps_technic")
+@PrimaryKeyJoinColumn(name = "id")
 public class AppTechnic extends Application {
     
     private String content;
@@ -22,6 +23,7 @@ public class AppTechnic extends Application {
     }
 
     public AppTechnic() {
+        setType(AppType.TECHNIC);
     }
 
     public String getContent() {

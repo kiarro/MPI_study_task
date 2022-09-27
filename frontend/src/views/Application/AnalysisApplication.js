@@ -9,37 +9,61 @@ import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+import HumanData from "./../Human/HumanData";
+
 const Item = styled(Button)(({ theme }) => ({
     padding: theme.spacing(2),
     textAlign: "left"
 }));
 
-export default function App(disabled) {
+export default function App(params) {
+    var disabled = params.disabled;
+    var is_card = params.is_card;
+    var data = params.data;
+
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
 
     const [human, setHuman] = useState('');
+    // const [data, setData] = useState(params.data);
     // const [isDisabled, setDisabled] = useState('');
-    
+
     const getData = () => {
         return {
             human: human,
         }
     }
 
-    const setData = (data) => {
-        setHuman(data.human);
+    const human_part = () => {
+        if (is_card) {
+            return (<Grid container spacing={2}>
+                <Grid item xs={2}>
+                    <HumanData visibility={false} disabled={disabled} sub_id={human}></HumanData>
+                </Grid>
+            </Grid>);
+        } else {
+            return (<Grid container spacing={2}>
+                <Grid item xs={2}>
+                    <Box>
+                        <Item>Номер Подопытного:</Item>
+                    </Box>
+                </Grid>
+                <Grid item xs={2}>
+                    <Box sx={{ flexGrow: 1 }} margin="10px">
+                        <TextField disabled={disabled}
+                            onChange={(e) => /*setHuman(e.target.value)*/ data.subject_id = e.target.value}
+                        ></TextField>
+
+                    </Box>
+                </Grid>
+            </Grid>);
+        }
     }
 
     return (
         <main>
-            <Box sx={{ flexGrow: 1 }} margin="10px">
-                <TextField disabled={disabled}
-                            onChange={(e) => setHuman(e.target.value)}
-                ></TextField>
-                
-            </Box>
+            {human_part()}
         </main>
     );
 }

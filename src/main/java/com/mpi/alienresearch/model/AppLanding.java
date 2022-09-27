@@ -20,6 +20,7 @@ public class AppLanding extends Application {
     }
 
     public AppLanding() {
+        setType(AppType.LANDING);
     } 
     
 }

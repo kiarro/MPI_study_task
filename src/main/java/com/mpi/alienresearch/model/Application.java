@@ -8,12 +8,27 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.mpi.alienresearch.model.enums.AppStatus;
 import com.mpi.alienresearch.model.enums.AppType;
+
+
+
 
 /**
  * Заявка
  */
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME,
+    include = JsonTypeInfo.As.PROPERTY,
+    property = "type"
+)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = AppTechnic.class, name = "TECHNIC"),
+    @JsonSubTypes.Type(value = AppAnalysis.class, name = "ANALYSIS"),
+    @JsonSubTypes.Type(value = AppLanding.class, name = "LANDING")
+})
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "applications")
@@ -24,6 +39,7 @@ public class Application {
     private Long id;
     
     @Enumerated(EnumType.STRING)
+    @JsonProperty("type")
     private AppType type;
 
     private String description;

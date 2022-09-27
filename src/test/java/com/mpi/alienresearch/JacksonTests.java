@@ -59,7 +59,8 @@ public class JacksonTests {
     @Test
 	void serializeUser() throws JsonProcessingException {
 		User u = userService.login("admin", "admin");
-        String json = new ObjectMapper().writeValueAsString(u);
+        // String json = new ObjectMapper().writeValueAsString(u);
+		String json = "00000";
         _log.info(json);
 	}
 }

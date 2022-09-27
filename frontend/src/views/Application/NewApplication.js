@@ -28,6 +28,8 @@ export default function App() {
     const [type, setType] = useState('');
     const [description, setDescription] = useState('');
 
+    const [data, setData] = useState({});
+
     const { id } = useParams();
 
     const backClick = async () => {
@@ -36,14 +38,20 @@ export default function App() {
 
     const sendClick = async () => {
         try {
+            var body = {
+                type: type,
+                description: description,
+                status: "CREATED",
+                experiment: {id: id}
+            };
+
+            if (type == "ANALYSIS") {
+                body.subject = {id: data.subject_id};
+            }
+
             const response = await fetch('http://localhost:8080/experiments/'+id+'/applications', {
                 method: 'POST',
-                body: JSON.stringify({
-                    type: type,
-                    description: description,
-                    status: "CREATED",
-                    experiment: {id: id}
-                }),
+                body: JSON.stringify(body),
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -65,8 +73,8 @@ export default function App() {
 
     const specific_part = () => {
         switch (type){
-            case "TECHNIC": return (<TechApplication disabled={false}></TechApplication>);
-            case "ANALYSIS": return (<AnalysisApplication disabled={false}></AnalysisApplication>);
+            case "TECHNIC": return (<TechApplication disabled={false} data={data}></TechApplication>);
+            case "ANALYSIS": return (<AnalysisApplication disabled={false} is_card={false} data={data}></AnalysisApplication>);
             default: return (<Item>{type}</Item>);
         }
     }
@@ -119,17 +127,9 @@ export default function App() {
                             ></TextField>
                         </Box>
                     </Grid>
-                    <Grid item xs={2} justify="flex-end">
-                        <Box>
-                            <Item>Номер Подопытного:</Item>
-                        </Box>
-                    </Grid>
-                    <Grid item xs={3} justify="flex-start">
-                        <Box disabled>
-                            {specific_part()}
-                        </Box>
-                    </Grid>
                 </Grid>
+                {specific_part()}
+ 
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <Box m={1} display="flex" justifyContent="flex-start">
