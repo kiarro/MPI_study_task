@@ -11,6 +11,7 @@ import { Button, TextField, List } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
 
 const Item = styled(Button)(({ theme }) => ({
     padding: theme.spacing(2),
@@ -18,6 +19,7 @@ const Item = styled(Button)(({ theme }) => ({
 }));
 
 function ApplicationsList() {
+
     const history = useNavigate();
 
     const [error, setError] = useState(null);
@@ -55,26 +57,12 @@ function ApplicationsList() {
                 'Content-Type': 'application/json',
             },
         });
-            
-            
+        reload();
+                       
 
     };
 
     useEffect(() => {
-        // fetch("http://localhost:8080/applications")
-        //     .then(res => res.json())
-        //     .then(
-        //         (result) => {
-        //             setIsLoaded(true);
-        //             setItems(result);
-        //         },
-        //         // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
-        //         // чтобы не перехватывать исключения из ошибок в самих компонентах.
-        //         (error) => {
-        //             setIsLoaded(true);
-        //             setError(error);
-        //         }
-        //     )
         reload();
     }, [])
 
@@ -157,6 +145,10 @@ function ApplicationsList() {
 
 function ApplicationsListToGet() {
 
+    const history = useNavigate();
+
+    const { type } = useParams();
+
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
@@ -164,8 +156,18 @@ function ApplicationsListToGet() {
     // Примечание: пустой массив зависимостей [] означает, что
     // этот useEffect будет запущен один раз
     // аналогично componentDidMount()
-    function reload() {
-        fetch("http://localhost:8080/applications?status=APPROVED")
+    function reload(type1) {
+        var type1 = "a"
+        switch (type) {
+            case "TECHNICIAN":
+                type1 = "TECHNIC"; break;
+            case "ANALYTIC":
+                type1 = "ANALYSIS"; break;
+            case "LANDER":
+                type1 = "LANDING"; break;
+        };
+
+        fetch("http://localhost:8080/applications?status=APPROVED&type="+type1)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -182,8 +184,14 @@ function ApplicationsListToGet() {
     }
 
     useEffect(() => {
-        reload()
+        
+
+        reload();
     }, [])
+
+    const reportClick = async (id) => {
+        history("/reports/" + id);
+    };
 
     const accept = async (aid) => {
         try {
@@ -198,9 +206,11 @@ function ApplicationsListToGet() {
                 throw new Error(`Error! status: ${response.status}`);
             }
 
-            await reload();
+            window.location.reload(false);
 
-            await ApplicationsList.reload();
+            // await reload();
+
+            // await ApplicationsList.reload();
 
         } catch (err) {
         } finally {
@@ -248,7 +258,7 @@ function ApplicationsListToGet() {
                         <Grid container spacing={2}>
                             <Grid item xs={1}>
                                 <Box m={1} display="flex" justifyContent="center">
-                                    <Item>{item.id}</Item>
+                                    <Item onClick={() => reportClick(item.id)}>{item.id}</Item>
                                 </Box>
                             </Grid>
                             <Grid item xs={2}>
@@ -313,6 +323,8 @@ export default function App() {
         } finally {
         }
     };
+
+    var l1;
 
     return (
         <main>

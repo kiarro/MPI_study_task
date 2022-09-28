@@ -41,6 +41,9 @@ public class ApplicationController {
             @RequestParam(name = "sort", required = false) String[] sortvalues,
             Application filter) {
 
+        if (filter.getStatus() == AppStatus.ACCEPTED) {
+            filter.setExecutionGroup(State.getCurrentUser().getUserGroup());
+        }
         Collection<Application> applications = applicationService.getPage(offset, limit, sortvalues, filter);
 
         return applications;

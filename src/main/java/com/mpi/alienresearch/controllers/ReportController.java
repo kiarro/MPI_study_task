@@ -31,9 +31,9 @@ public class ReportController {
 
     @GetMapping
     public Collection<Report> getAll(@RequestParam(name = "offset", defaultValue = "0") Long offset,
-            @RequestParam(name = "limit", defaultValue = "10") Long limit,
+            @RequestParam(name = "limit", defaultValue = "100") Long limit,
             @RequestParam(name = "sort", required = false) String[] sortvalues,
-            ReportFilter filter) {
+            Report filter) {
 
         Collection<Report> reports = reportService.getPage(offset, limit, sortvalues, filter);
 
@@ -41,12 +41,12 @@ public class ReportController {
     }
 
     @GetMapping("/{id}")
-    public Report getExperiment(@PathVariable("id") Long id) {
+    public Report getReport(@PathVariable("id") Long id) {
         return reportService.get(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> putExperiment(@PathVariable("id") Long id, @RequestBody Report report) {
+    public ResponseEntity<Void> putReport(@PathVariable("id") Long id, @RequestBody Report report) {
         Report currentReport = reportService.get(id);
         if (currentReport == null) { // experiment not found
             return ResponseEntity.notFound().build();

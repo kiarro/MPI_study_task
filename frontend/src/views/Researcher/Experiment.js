@@ -171,9 +171,14 @@ function App() {
                                     <Item>Заголовок</Item>
                                 </Box>
                             </Grid>
-                            <Grid item xs={2}>
+                            <Grid item xs={3}>
                                 <Box m={1} display="flex" justifyContent="center">
                                     <Item>Дата</Item>
+                                </Box>
+                            </Grid>
+                            <Grid item xs={2}>
+                                <Box m={1} display="flex" justifyContent="center">
+                                    <Item>Status</Item>
                                 </Box>
                             </Grid>
                         </Grid>
@@ -281,18 +286,23 @@ function AppList(input) {
                                 </Box>
                             </Grid>
                             <Grid item xs={2}>
-                                <Box m={1} display="flex" justifyContent="left">
+                                <Box m={1} display="flex" justifyContent="center">
                                     <Item>{!item.type?"REPORT":"APPLICATION"}</Item>
                                 </Box>
                             </Grid>
                             <Grid item xs={4}>
-                                <Box m={1} display="flex" justifyContent="left">
+                                <Box m={1} display="flex" justifyContent="center">
                                     <Item>{item.title}</Item>
+                                </Box>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <Box m={1} display="flex" justifyContent="center">
+                                    <Item>{item.creationDate}</Item>
                                 </Box>
                             </Grid>
                             <Grid item xs={2}>
                                 <Box m={1} display="flex" justifyContent="center">
-                                    <Item>{item.creationDate}</Item>
+                                    <Item>{item.status}</Item>
                                 </Box>
                             </Grid>
                         </Grid>

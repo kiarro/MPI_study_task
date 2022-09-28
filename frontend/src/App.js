@@ -41,7 +41,7 @@ function App() {
             <Route exact path='login' element={<LoginPage />} />
             <Route exact path='admin' element={<AdminMain />} />
             <Route exact path='researcher' element={<ResearcherMain />} />
-            <Route exact path='worker' element={<WorkerMain />} />
+            <Route exact path='worker/:type' element={<WorkerMain />} />
             <Route exact path='director' element={<DirectorMain />} />
             <Route exact path='users/current' element={<UserProfile />} />
             <Route exact path='users/:id' element={<UserProfileEdit />} />

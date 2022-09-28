@@ -69,9 +69,13 @@ function App() {
                     history("/director");
                     break;
                 case "ANALYTIC":
+                    history("/worker/ANALYTIC")
+                    break;
                 case "TECHNICIAN":
+                    history("/worker/TECHNICIAN")
+                    break;
                 case "LANDER":
-                    history("/worker")
+                    history("/worker/LANDER")
                     break;
 
             }

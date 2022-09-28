@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.mpi.alienresearch.dao.ReportDao;
@@ -30,8 +31,9 @@ public class ReportServiceImpl implements ReportService {
      * Just return all
      */
     @Override
-    public Collection<Report> getPage(Long offset, Long limit, String[] sortvalues, ReportFilter filter) {
-        return reportRepository.findAll();
+    public Collection<Report> getPage(Long offset, Long limit, String[] sortvalues, Report filter) {
+        Example<Report> example = Example.of(filter);
+        return (List<Report>)reportRepository.findAll(example);
     }
 
     @Override

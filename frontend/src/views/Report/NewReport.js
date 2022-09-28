@@ -35,14 +35,20 @@ export default function App() {
 
     const sendClick = async () => {
         try {
+            var body = {
+                title: title,
+                content: content,
+            };
+
+            if (type == "applications") {
+                body.application = { id: id };
+            } else if (type == "experiments") {
+                body.experiment = { id: id };
+            }
+
             const response = await fetch('http://localhost:8080/' + type + '/' + id + '/reports', {
                 method: 'POST',
-                body: JSON.stringify({
-                    title: title,
-                    content: content,
-                    application: { id: id },
-                    // experiment: { id: null }
-                }),
+                body: JSON.stringify(body),
                 headers: {
                     'Content-Type': 'application/json',
                 },

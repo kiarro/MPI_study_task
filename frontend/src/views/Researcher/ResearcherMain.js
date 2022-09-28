@@ -87,6 +87,9 @@ export default function App() {
                 <Button variant="contained" onClick={() => exitClick()}>Exit</Button>
             </Box>
             <div>
+                <Box>
+                    <Item>Applications</Item>
+                </Box>
             <Box sx={{ m: 0, p: 0, border: "1px dashed" }}>
                     <Grid container spacing={2}>
                         <Grid item xs={2}>
@@ -101,7 +104,7 @@ export default function App() {
                         </Grid>
                         <Grid item xs={5}>
                             <Box m={1} display="flex" justifyContent="left">
-                                <Item>description</Item>
+                                <Item>status</Item>
                             </Box>
                         </Grid>
                     </Grid>
@@ -121,7 +124,7 @@ export default function App() {
                         </Grid>
                         <Grid item xs={5}>
                             <Box m={1} display="flex" justifyContent="left">
-                                <Item>{item.description}</Item>
+                                <Item>{item.status}</Item>
                             </Box>
                         </Grid>
                     </Grid>

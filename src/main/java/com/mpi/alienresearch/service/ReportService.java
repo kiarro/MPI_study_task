@@ -10,7 +10,7 @@ import com.mpi.alienresearch.model.Report;
 
 public interface ReportService {
     public Report get(Long id);
-    public Collection<Report> getPage(Long offset, Long limit, String[] sortvalues, ReportFilter filter);
+    public Collection<Report> getPage(Long offset, Long limit, String[] sortvalues, Report filter);
     public Long add(Report report);
     public void update(Long id, Report report);
 
