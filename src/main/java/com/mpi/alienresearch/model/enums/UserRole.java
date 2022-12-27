@@ -1,10 +1,18 @@
 package com.mpi.alienresearch.model.enums;
 
-public enum UserRole {
+import org.springframework.security.core.GrantedAuthority;
+
+public enum UserRole implements GrantedAuthority {
     RESEARCHER,
     ADMIN,
     DIRECTOR,
     ANALYTIC,
     TECHNICIAN,
-    LANDER
+    LANDER;
+
+    @Override
+    public String getAuthority() {
+        return name();
+    }
 }
+

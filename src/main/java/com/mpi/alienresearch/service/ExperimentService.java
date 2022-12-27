@@ -1,26 +1,95 @@
 package com.mpi.alienresearch.service;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.stereotype.Service;
+
+import com.mpi.alienresearch.dao.ApplicationDao;
+import com.mpi.alienresearch.dao.ExperimentDao;
+import com.mpi.alienresearch.dao.ReportDao;
 import com.mpi.alienresearch.filters.ExperimentFilter;
+import com.mpi.alienresearch.model.AppAnalysis;
+import com.mpi.alienresearch.model.AppTechnic;
 import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Experiment;
 import com.mpi.alienresearch.model.Report;
 import com.mpi.alienresearch.model.UserGroup;
+import com.mpi.alienresearch.model.enums.AppType;
 import com.mpi.alienresearch.model.enums.ExperimentStatus;
 
-public interface ExperimentService {
-    public Experiment get(long id);
-    public Collection<Experiment> getPage(Long offset, Long limit, String[] sortvalues, Experiment filter);
+@Service
+public class ExperimentService {
 
-    public List<Experiment> getByGroup(UserGroup group);
+    final ExperimentDao experimentDao;
+    
+    final ReportDao reportDao;
+    
+    final ApplicationDao applicationDao;
 
-    public Long add(Experiment experiment);
-    public void update(long id, Experiment experiment);
+    public ExperimentService(ExperimentDao experimentDao, 
+                                ReportDao reportDao,
+                                ApplicationDao appTechnicDao) {
+        this.experimentDao = experimentDao;
+        this.reportDao = reportDao;
+        this.applicationDao = appTechnicDao;
+    }
 
-    public Long addApplication(long id, Application app);
-    public Long addReport(long id, Report report);
+    
+    public Experiment get(long id) {
+        return experimentDao.findById(id).get();
+    }
 
-    public void setStatus(long id, ExperimentStatus state);
+    /**
+     * Just return all
+     */
+    
+    public Collection<Experiment> getPage(Long offset, Long limit, String[] sortvalues, Experiment filter) {
+        Example<Experiment> example = Example.of(filter);
+        return experimentDao.findAll(example);
+    }
+
+    
+    public Long add(Experiment experiment) {
+        experiment.setCreationTime(LocalDateTime.now());
+        experiment.setStatus(ExperimentStatus.CREATED);
+        experiment = experimentDao.save(experiment);
+        return experiment.getId();
+    }
+
+    
+    public void update(long id, Experiment experiment) {
+        experiment.setId(id);
+        experimentDao.save(experiment);
+    }
+
+    
+    public List<Experiment> getByGroup(UserGroup group) {
+        return experimentDao.findByResearchGroup(group);
+    }
+
+    
+    public Long addApplication(long id, Application app) {
+        app = applicationDao.save(app);
+        return app.getId();
+    }
+
+    
+    public Long addReport(long id, Report report) {
+        // report.setId(id);
+        report.setCreationDate(LocalDateTime.now());
+        report = reportDao.save(report);
+        return report.getId();
+    }
+
+    
+    public void setStatus(long id, ExperimentStatus status) {
+        Experiment experiment = experimentDao.findById(id).get();
+        experiment.setStatus(status);
+        experimentDao.save(experiment);
+    }
+    
 }

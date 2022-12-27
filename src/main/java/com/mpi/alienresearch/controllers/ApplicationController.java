@@ -1,10 +1,13 @@
 package com.mpi.alienresearch.controllers;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.Collection;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,10 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mpi.alienresearch.filters.ApplicationFilter;
 import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Report;
+import com.mpi.alienresearch.model.User;
 import com.mpi.alienresearch.model.enums.AppStatus;
 import com.mpi.alienresearch.model.enums.Decision;
 import com.mpi.alienresearch.service.ApplicationService;
-import com.mpi.alienresearch.state.State;
+import com.mpi.alienresearch.service.UserService;
 
 @RestController
 @CrossOrigin
@@ -29,20 +33,25 @@ import com.mpi.alienresearch.state.State;
 public class ApplicationController {
     
     private final ApplicationService applicationService;
+    private final UserService userService;
 
-    public ApplicationController(ApplicationService applicationService) {
+    public ApplicationController(ApplicationService applicationService,
+                                    UserService userService) {
         this.applicationService = applicationService;
-
+        this.userService = userService;
     }
 
     @GetMapping
     public Collection<Application> getAll(@RequestParam(name = "offset", defaultValue = "0") Long offset,
             @RequestParam(name = "limit", defaultValue = "10") Long limit,
             @RequestParam(name = "sort", required = false) String[] sortvalues,
-            Application filter) {
+            Application filter,
+            Authentication auth) {
 
         if (filter.getStatus() == AppStatus.ACCEPTED) {
-            filter.setExecutionGroup(State.getCurrentUser().getUserGroup());
+            String username = auth.getName();
+            User user = userService.loadUserByUsername(username);
+            filter.setExecutionGroup(user.getUserGroup());
         }
         Collection<Application> applications = applicationService.getPage(offset, limit, sortvalues, filter);
 
@@ -71,9 +80,12 @@ public class ApplicationController {
     }
 
     @PostMapping("/{id}/accept")
-    public void acceptApplication(@PathVariable("id") Long id) {
+    public void acceptApplication(@PathVariable("id") Long id,
+                                    Authentication auth) {
         applicationService.setStatus(id, AppStatus.ACCEPTED);
-        applicationService.setExecutionGroup(id, State.getCurrentUser());
+        String username = auth.getName();
+        User user = userService.loadUserByUsername(username);
+        applicationService.setExecutionGroup(id, user);
     }
 
     @PostMapping("/{id}/reports")

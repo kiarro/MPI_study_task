@@ -19,6 +19,8 @@ public class Artifact {
     
     private String name;
     private String description;
+
+    private Double radiation;
     
     public Artifact(Long id, String name, String description) {
         this.id = id;

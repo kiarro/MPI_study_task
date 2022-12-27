@@ -8,6 +8,8 @@ public class UserGroup {
     
     @Id
     private Long id;
+
+    private String description;
     
     public UserGroup(Long id) {
         this.id = id;

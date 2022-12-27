@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +26,7 @@ import com.mpi.alienresearch.model.Report;
 import com.mpi.alienresearch.model.UserGroup;
 import com.mpi.alienresearch.model.enums.ExperimentStatus;
 import com.mpi.alienresearch.service.ExperimentService;
-import com.mpi.alienresearch.state.State;
+import com.mpi.alienresearch.service.UserService;
 
 import java.util.logging.Logger;
 
@@ -38,14 +39,19 @@ public class ExperimentController {
     private static Logger _log = Logger.getLogger(ExperimentController.class.getName());
 
     private final ExperimentService experimentService;
+    private final UserService userService;
 
-    public ExperimentController(ExperimentService experimentService) {
+
+    public ExperimentController(ExperimentService experimentService, UserService userService) {
         this.experimentService = experimentService;
+        this.userService = userService;
     }
 
     @PostMapping
-    public ResponseEntity<String> addExperiment(@RequestBody Experiment experiment) {
-        experiment.setResearchGroup(State.getCurrentUser().getUserGroup());
+    public ResponseEntity<String> addExperiment(@RequestBody Experiment experiment,
+                                                    Authentication auth) {
+        String username = auth.getName();
+        experiment.setResearchGroup(userService.loadUserByUsername(username).getUserGroup());
         Optional<Long> id = Optional.ofNullable(experimentService.add(experiment));
         if (id.isPresent()) {
             URI uri = URI.create("/experiments/" + id.get());
@@ -113,9 +119,11 @@ public class ExperimentController {
     public Collection<Experiment> getForCurrent(@RequestParam(name = "offset", defaultValue = "0") Long offset,
             @RequestParam(name = "limit", defaultValue = "10") Long limit,
             @RequestParam(name = "sort", required = false) String[] sortvalues,
-            Experiment filter) {
-
-        Optional<UserGroup> ug = Optional.ofNullable(State.getCurrentUser().getUserGroup());
+            Experiment filter,
+            Authentication auth) {
+            
+        String username = auth.getName();
+        Optional<UserGroup> ug = Optional.ofNullable(userService.loadUserByUsername(username).getUserGroup());
         filter.setResearchGroup(ug.orElse(new UserGroup(null)));
         Collection<Experiment> experiments = experimentService.getPage(offset, limit, sortvalues, filter);
 

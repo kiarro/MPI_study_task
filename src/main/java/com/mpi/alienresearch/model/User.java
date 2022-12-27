@@ -1,6 +1,8 @@
 package com.mpi.alienresearch.model;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,10 +16,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+// import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mpi.alienresearch.model.enums.UserRole;
@@ -27,11 +33,19 @@ import com.mpi.alienresearch.model.enums.UserRole;
  */
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
+
+    private String username;
+    private String password;
+    @Transient
+    private String passwordConfirm;
+    // @ManyToMany(fetch = FetchType.EAGER)
+    @Enumerated(value = EnumType.STRING)
+    private UserRole role;
     
     private String firstName;
     private String lastName;
@@ -40,8 +54,6 @@ public class User {
     private LocalDate birthDate;
 
     private String jobAgreementNumber = null;
-    @Enumerated(EnumType.STRING)
-    private UserRole role;
     
     private String phoneNumber = null;
     private String email = null;
@@ -49,30 +61,16 @@ public class User {
     
     @ManyToOne
     // @JsonIgnore
-    @JsonIncludeProperties({"id"})
+    // @JsonIncludeProperties({"id"})
     private UserGroup userGroup;
 
-    // @JsonProperty("userGroup")
-    // private Long getUserGroupId() {
-    //     if (userGroup == null) {
-    //         return null;
-    //     } else {
-    //         return userGroup.getId();
-    //     }
-    // }
-
-    @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "user")
-    @JsonIncludeProperties({"id", "username"})
-    private Credentials credentials;
-
     public User(Long id, String firstName, String lastName, LocalDate birthDate, String jobAgreementNumber,
-            UserRole role, String phoneNumber, String email, String aboutYourself, UserGroup userGroup) {
+            String phoneNumber, String email, String aboutYourself, UserGroup userGroup) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
         this.jobAgreementNumber = jobAgreementNumber;
-        this.role = role;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.aboutYourself = aboutYourself;
@@ -122,14 +120,6 @@ public class User {
         this.jobAgreementNumber = jobAgreementNumber;
     }
 
-    public UserRole getRole() {
-        return role;
-    }
-
-    public void setRole(UserRole role) {
-        this.role = role;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -162,12 +152,63 @@ public class User {
         this.userGroup = userGroup;
     }
 
-    public Credentials getCredentials() {
-        return credentials;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton(getRole());
     }
 
-    public void setCredentials(Credentials credentials) {
-        this.credentials = credentials;
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
     
 }

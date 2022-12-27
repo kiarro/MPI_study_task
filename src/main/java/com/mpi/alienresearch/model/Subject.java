@@ -24,12 +24,10 @@ public class Subject {
     private Long id;
     
     private String name;
-    
     private String hairColor;
     private String eyesColor;
     private String skinColor;
     private String specials;
-
     private Double weight;
     private Double height;
     

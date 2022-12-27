@@ -15,5 +15,6 @@ import org.springframework.data.repository.query.Param;
 public interface UserDao extends JpaRepository<User, Long> {
 
     Optional<User> findById(long id);
-
+    Optional<User> findByUsername(String username);
+    
 }

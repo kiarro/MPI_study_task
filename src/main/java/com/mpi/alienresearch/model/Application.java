@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+// import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -60,7 +60,7 @@ public class Application {
 
     @ManyToOne
     // @JsonIgnore
-    @JsonIncludeProperties({"id"})
+    // @JsonIncludeProperties({"id"})
     private Experiment experiment;
 
     @JsonProperty("experiment")
