@@ -20,6 +20,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
+import com.mpi.alienresearch.model.User;
 import com.mpi.alienresearch.service.UserService;
 
 @Configuration
@@ -61,7 +62,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           @Override
           public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
             httpServletResponse.getWriter().append(
-                authentication.getAuthorities().toArray()[0].toString()
+                "{"+
+                "\"role\" : "+authentication.getAuthorities().toArray()[0].toString()+
+                ",\"id\" : "+((User)(authentication.getPrincipal())).getId()+
+                "}"
             );
             httpServletResponse.setStatus(200);
           }
