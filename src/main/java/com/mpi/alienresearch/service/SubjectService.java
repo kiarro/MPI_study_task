@@ -33,8 +33,7 @@ public class SubjectService {
 
     
     public Long add(Subject subject) {
-        // TODO Auto-generated method stub
-        return null;
+        return subjectRepository.save(subject).getId();
     }
 
     

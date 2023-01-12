@@ -10,14 +10,18 @@ import org.springframework.stereotype.Service;
 
 import com.mpi.alienresearch.dao.ApplicationDao;
 import com.mpi.alienresearch.dao.ExperimentDao;
+import com.mpi.alienresearch.dao.LandingPointDao;
 import com.mpi.alienresearch.dao.ReportDao;
 import com.mpi.alienresearch.filters.ExperimentFilter;
 import com.mpi.alienresearch.model.AppAnalysis;
+import com.mpi.alienresearch.model.AppLanding;
 import com.mpi.alienresearch.model.AppTechnic;
 import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Experiment;
+import com.mpi.alienresearch.model.LandingPoint;
 import com.mpi.alienresearch.model.Report;
 import com.mpi.alienresearch.model.UserGroup;
+import com.mpi.alienresearch.model.enums.AppStatus;
 import com.mpi.alienresearch.model.enums.AppType;
 import com.mpi.alienresearch.model.enums.ExperimentStatus;
 
@@ -29,13 +33,17 @@ public class ExperimentService {
     final ReportDao reportDao;
     
     final ApplicationDao applicationDao;
+    
+    final LandingPointDao landingPointDao;
 
     public ExperimentService(ExperimentDao experimentDao, 
                                 ReportDao reportDao,
-                                ApplicationDao appTechnicDao) {
+                                ApplicationDao appTechnicDao,
+                                LandingPointDao landingPointDao) {
         this.experimentDao = experimentDao;
         this.reportDao = reportDao;
         this.applicationDao = appTechnicDao;
+        this.landingPointDao = landingPointDao;
     }
 
     
@@ -73,7 +81,19 @@ public class ExperimentService {
 
     
     public Long addApplication(long id, Application app) {
+        app.setCreationDate(java.time.LocalDateTime.now());
+        app.setLastStatusTransitionDate(java.time.LocalDateTime.now());
+        app.setStatus(AppStatus.CREATED);
+        app.setExperiment(experimentDao.getOne(id));
+        
         app = applicationDao.save(app);
+
+        if (app.getType() == AppType.LANDING){
+            for (LandingPoint lp : ((AppLanding)app).getLandingPoints()) {
+                landingPointDao.save(lp);
+            }
+        }
+
         return app.getId();
     }
 

@@ -24,6 +24,7 @@ import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Experiment;
 import com.mpi.alienresearch.model.Report;
 import com.mpi.alienresearch.model.UserGroup;
+import com.mpi.alienresearch.model.enums.AppStatus;
 import com.mpi.alienresearch.model.enums.ExperimentStatus;
 import com.mpi.alienresearch.service.ExperimentService;
 import com.mpi.alienresearch.service.UserService;
@@ -89,10 +90,15 @@ public class ExperimentController {
     }
 
     @PostMapping("/{id}/applications")
-    public ResponseEntity<String> addApplication(@PathVariable("id") Long id, @RequestBody Application app) {
+    public ResponseEntity<String> addApplication(@PathVariable("id") Long id, @RequestBody Application app,
+                                            Authentication auth) {
         // _log.info(String.valueOf(app instanceof AppTechnic));
         // _log.info(String.valueOf(app instanceof AppAnalysis));
         // _log.info(String.valueOf(app instanceof AppLanding));
+        // _log.info(id.toString());
+        String username = auth.getName();
+        app.setCreator(userService.loadUserByUsername(username)); 
+        
         Optional<Long> appId = Optional.ofNullable(experimentService.addApplication(id, app));
         if (appId.isPresent()) {
             URI uri = URI.create("/applications/" + appId.get());

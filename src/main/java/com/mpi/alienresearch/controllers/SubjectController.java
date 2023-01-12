@@ -1,11 +1,14 @@
 package com.mpi.alienresearch.controllers;
 
+import java.net.URI;
 import java.util.Collection;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +37,18 @@ public class SubjectController {
         Collection<Subject> reports = subjectService.getPage(offset, limit, sortvalues);
 
         return reports;
+    }
+
+    @PostMapping
+    public ResponseEntity<String> addSubject(@RequestBody Subject subject) {
+        Optional<Long> id = Optional.ofNullable(subjectService.add(subject));
+        if (id.isPresent()) {
+            URI uri = URI.create("/subjects/" + id.get());
+            // System.out.println(uri.toString());
+            return ResponseEntity.accepted().location(uri).build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("/{id}")

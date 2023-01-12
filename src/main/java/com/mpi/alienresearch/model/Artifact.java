@@ -22,10 +22,19 @@ public class Artifact {
 
     private Double radiation;
     
-    public Artifact(Long id, String name, String description) {
+    public Double getRadiation() {
+        return radiation;
+    }
+
+    public void setRadiation(Double radiation) {
+        this.radiation = radiation;
+    }
+
+    public Artifact(Long id, String name, String description, Double radiation) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.radiation = radiation;
     }
     
     public Artifact() {
