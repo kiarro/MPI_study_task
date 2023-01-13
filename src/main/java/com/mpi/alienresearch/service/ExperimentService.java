@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.mpi.alienresearch.dao.ApplicationDao;
@@ -56,8 +57,14 @@ public class ExperimentService {
      */
     
     public Collection<Experiment> getPage(Long offset, Long limit, String[] sortvalues, Experiment filter) {
+        Sort s = Sort.unsorted();
+        for (int i = 0; i < sortvalues.length; i++) {
+            String sort_ = sortvalues[i];
+            Sort.Direction direction = sort_.charAt(0)=='-'?Sort.Direction.DESC:Sort.Direction.ASC;
+            s = s.and(Sort.by(direction, sort_.substring(1)));
+        }
         Example<Experiment> example = Example.of(filter);
-        return experimentDao.findAll(example);
+        return experimentDao.findAll(example, s);
     }
 
     

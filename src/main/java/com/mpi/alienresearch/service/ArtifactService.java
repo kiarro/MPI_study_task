@@ -1,5 +1,9 @@
 package com.mpi.alienresearch.service;
 
+import java.util.Collection;
+
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.mpi.alienresearch.dao.ArtifactDao;
@@ -7,29 +11,40 @@ import com.mpi.alienresearch.model.Artifact;
 
 @Service
 public class ArtifactService {
-    final ArtifactDao artifactRepository;
+    final ArtifactDao artifactDao;
     
     public ArtifactService(ArtifactDao artifactRepository) {
-        this.artifactRepository = artifactRepository;
+        this.artifactDao = artifactRepository;
     }
 
     public Artifact get(Long id) {
-        return artifactRepository.findById(id).get();
+        return artifactDao.findById(id).get();
+    }
+
+    public Collection<Artifact> getPage(Long offset, Long limit, String[] sortvalues, Artifact filter){
+        Sort s = Sort.unsorted();
+        for (int i = 0; i < sortvalues.length; i++) {
+            String sort_ = sortvalues[i];
+            Sort.Direction direction = sort_.charAt(0)=='-'?Sort.Direction.DESC:Sort.Direction.ASC;
+            s = s.and(Sort.by(direction, sort_.substring(1)));
+        }
+        Example<Artifact> example = Example.of(filter);
+        return artifactDao.findAll(example, s);
     }
 
     
     public boolean exists(Long id) {
-        return artifactRepository.findById(id).isPresent();
+        return artifactDao.findById(id).isPresent();
     }
 
     
     public Long add(Artifact subject) {
-        return artifactRepository.save(subject).getId();
+        return artifactDao.save(subject).getId();
     }
 
     
     public void update(Long id, Artifact subject) {
         subject.setId(id);
-        artifactRepository.save(subject);
+        artifactDao.save(subject);
     }
 }

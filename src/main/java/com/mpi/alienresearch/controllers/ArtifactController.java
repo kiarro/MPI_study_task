@@ -1,6 +1,7 @@
 package com.mpi.alienresearch.controllers;
 
 import java.net.URI;
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,15 @@ public class ArtifactController {
         } else {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @GetMapping
+    public Collection<Artifact> getAll(@RequestParam(name = "offset", defaultValue = "0") Long offset,
+            @RequestParam(name = "limit", defaultValue = "10") Long limit,
+            @RequestParam(name = "sort", required = false, defaultValue = "") String[] sortvalues,
+            Artifact filter) {
+        
+        return artifactService.getPage(offset, limit, sortvalues, filter);
     }
 
     @GetMapping("/{id}")
