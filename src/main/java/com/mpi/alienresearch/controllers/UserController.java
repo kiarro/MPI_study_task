@@ -70,14 +70,14 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/current")
-    public User getCurrentUser(Authentication auth) {
-        return userService.get(userService.loadUserByUsername(auth.getName()).getId());
-    }
+    // @GetMapping("/current")
+    // public User getCurrentUser(Authentication auth) {
+    //     return userService.get(userService.loadUserByUsername(auth.getName()).getId());
+    // }
 
-    @PutMapping("/current")
-    public void updateCurrentInfo(@RequestBody User user, Authentication auth) {
-        user.setId(userService.loadUserByUsername(auth.getName()).getId());
-        userService.updateUser(user);
-    }
+    // @PutMapping("/current")
+    // public void updateCurrentInfo(@RequestBody User user, Authentication auth) {
+    //     user.setId(userService.loadUserByUsername(auth.getName()).getId());
+    //     userService.updateUser(user);
+    // }
 }

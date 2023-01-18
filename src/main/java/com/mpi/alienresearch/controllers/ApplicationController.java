@@ -22,6 +22,7 @@ import com.mpi.alienresearch.filters.ApplicationFilter;
 import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Report;
 import com.mpi.alienresearch.model.User;
+import com.mpi.alienresearch.model.UserGroup;
 import com.mpi.alienresearch.model.enums.AppStatus;
 import com.mpi.alienresearch.model.enums.Decision;
 import com.mpi.alienresearch.service.ApplicationService;
@@ -45,14 +46,8 @@ public class ApplicationController {
     public Collection<Application> getAll(@RequestParam(name = "offset", defaultValue = "0") Long offset,
             @RequestParam(name = "limit", defaultValue = "10") Long limit,
             @RequestParam(name = "sort", required = false) String[] sortvalues,
-            Application filter,
-            Authentication auth) {
+            Application filter) {
 
-        if (filter.getStatus() == AppStatus.ACCEPTED) {
-            String username = auth.getName();
-            User user = userService.loadUserByUsername(username);
-            filter.setExecutionGroup(user.getUserGroup());
-        }
         Collection<Application> applications = applicationService.getPage(offset, limit, sortvalues, filter);
 
         return applications;
@@ -80,12 +75,9 @@ public class ApplicationController {
     }
 
     @PostMapping("/{id}/accept")
-    public void acceptApplication(@PathVariable("id") Long id,
-                                    Authentication auth) {
+    public void acceptApplication(@PathVariable("id") Long id, @RequestBody UserGroup ug) {
         applicationService.setStatus(id, AppStatus.ACCEPTED);
-        String username = auth.getName();
-        User user = userService.loadUserByUsername(username);
-        applicationService.setExecutionGroup(id, user);
+        applicationService.setExecutionGroup(id, ug);
     }
 
     @PostMapping("/{id}/reports")

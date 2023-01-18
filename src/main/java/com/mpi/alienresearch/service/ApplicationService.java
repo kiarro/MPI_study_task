@@ -10,12 +10,14 @@ import org.springframework.stereotype.Service;
 
 import com.mpi.alienresearch.dao.ApplicationDao;
 import com.mpi.alienresearch.dao.ReportDao;
+import com.mpi.alienresearch.dao.UserGroupDao;
 import com.mpi.alienresearch.dao.ApplicationDao;
 import com.mpi.alienresearch.filters.ApplicationFilter;
 import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Experiment;
 import com.mpi.alienresearch.model.Report;
 import com.mpi.alienresearch.model.User;
+import com.mpi.alienresearch.model.UserGroup;
 import com.mpi.alienresearch.model.enums.AppStatus;
 import com.mpi.alienresearch.model.enums.Decision;
 
@@ -24,10 +26,14 @@ public class ApplicationService {
 
     final ApplicationDao applicationDao;
     final ReportDao reportDao;
+    final UserGroupDao userGroupDao;
 
-    public ApplicationService(ApplicationDao applicationRepository, ReportDao reportRepository) {
+    public ApplicationService(ApplicationDao applicationRepository, 
+                                ReportDao reportRepository,
+                                UserGroupDao userGroupDao) {
         this.applicationDao = applicationRepository;
         this.reportDao = reportRepository;
+        this.userGroupDao = userGroupDao;
     }
 
     
@@ -70,15 +76,14 @@ public class ApplicationService {
     }
 
     
-    public void setExecutionGroup(Long id, User user) {
+    public void setExecutionGroup(Long id, UserGroup group) {
         Application app = applicationDao.findById(id).get();
-        app.setExecutionGroup(user.getUserGroup());
+        app.setExecutionGroup(group);
         applicationDao.save(app);
     }
 
     
     public Long addReport(long id, Report report) {
-        // report.setId(id);
         report.setCreationDate(LocalDateTime.now());
         report = reportDao.save(report);
         return report.getId();

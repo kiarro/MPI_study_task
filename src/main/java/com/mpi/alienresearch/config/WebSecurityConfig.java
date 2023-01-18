@@ -51,57 +51,57 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     //Доступ разрешен всем пользователей
                     .antMatchers("/**").permitAll()
                 //Все остальные страницы требуют аутентификации
-                .anyRequest().permitAll()
-                .and()
-                    //Настройка для входа в систему
-                    .formLogin()
-                    .loginPage("/login")
-                    .successHandler(successHandler())
-                    .failureHandler(failureHandler())
-                    .permitAll()
-                .and()
-                    .logout()
-                    .logoutSuccessHandler(logoutSuccessHandler())
-                    .permitAll();
+                .anyRequest().permitAll();
+                // .and()
+                //     //Настройка для входа в систему
+                //     .formLogin()
+                //     .loginPage("/login")
+                //     .successHandler(successHandler())
+                //     .failureHandler(failureHandler())
+                //     .permitAll()
+                // .and()
+                //     .logout()
+                //     .logoutSuccessHandler(logoutSuccessHandler())
+                //     .permitAll();
     }
 
-    private AuthenticationSuccessHandler successHandler() {
-        return new AuthenticationSuccessHandler() {
-          @Override
-          public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-            httpServletResponse.getWriter().append(
-                "{"+
-                "\"role\" : \""+authentication.getAuthorities().toArray()[0].toString()+"\""+
-                ",\"id\" : "+((User)(authentication.getPrincipal())).getId()+
-                "}"
-            );
-            httpServletResponse.setStatus(200);
-            httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
-          }
-        };
-      }
+    // private AuthenticationSuccessHandler successHandler() {
+    //     return new AuthenticationSuccessHandler() {
+    //       @Override
+    //       public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+    //         httpServletResponse.getWriter().append(
+    //             "{"+
+    //             "\"role\" : \""+authentication.getAuthorities().toArray()[0].toString()+"\""+
+    //             ",\"id\" : "+((User)(authentication.getPrincipal())).getId()+
+    //             "}"
+    //         );
+    //         httpServletResponse.setStatus(200);
+    //         httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
+    //       }
+    //     };
+    //   }
     
-      private AuthenticationFailureHandler failureHandler() {
-        return new AuthenticationFailureHandler() {
-          @Override
-          public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-            httpServletResponse.getWriter().append("Authentication failure");
-            httpServletResponse.setStatus(401);
-          }
-        };
-      }
+    //   private AuthenticationFailureHandler failureHandler() {
+    //     return new AuthenticationFailureHandler() {
+    //       @Override
+    //       public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+    //         httpServletResponse.getWriter().append("Authentication failure");
+    //         httpServletResponse.setStatus(401);
+    //       }
+    //     };
+    //   }
 
-      private LogoutSuccessHandler logoutSuccessHandler() {
-        return new LogoutSuccessHandler() {
+    //   private LogoutSuccessHandler logoutSuccessHandler() {
+    //     return new LogoutSuccessHandler() {
 
-          @Override
-          public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
-              Authentication authentication) throws IOException, ServletException {
-            response.setStatus(200);
-          }
+    //       @Override
+    //       public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
+    //           Authentication authentication) throws IOException, ServletException {
+    //         response.setStatus(200);
+    //       }
           
-        };
-      }
+    //     };
+    //   }
 
     @Autowired
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

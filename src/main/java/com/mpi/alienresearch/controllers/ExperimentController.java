@@ -49,10 +49,7 @@ public class ExperimentController {
     }
 
     @PostMapping
-    public ResponseEntity<String> addExperiment(@RequestBody Experiment experiment,
-                                                    Authentication auth) {
-        String username = auth.getName();
-        experiment.setResearchGroup(userService.loadUserByUsername(username).getUserGroup());
+    public ResponseEntity<String> addExperiment(@RequestBody Experiment experiment) {
         Optional<Long> id = Optional.ofNullable(experimentService.add(experiment));
         if (id.isPresent()) {
             URI uri = URI.create("/experiments/" + id.get());
@@ -90,15 +87,11 @@ public class ExperimentController {
     }
 
     @PostMapping("/{id}/applications")
-    public ResponseEntity<String> addApplication(@PathVariable("id") Long id, @RequestBody Application app,
-                                            Authentication auth) {
+    public ResponseEntity<String> addApplication(@PathVariable("id") Long id, @RequestBody Application app) {
         // _log.info(String.valueOf(app instanceof AppTechnic));
         // _log.info(String.valueOf(app instanceof AppAnalysis));
         // _log.info(String.valueOf(app instanceof AppLanding));
         // _log.info(id.toString());
-        String username = auth.getName();
-        app.setCreator(userService.loadUserByUsername(username)); 
-        
         Optional<Long> appId = Optional.ofNullable(experimentService.addApplication(id, app));
         if (appId.isPresent()) {
             URI uri = URI.create("/applications/" + appId.get());
@@ -121,20 +114,19 @@ public class ExperimentController {
         }
     }
 
-    @GetMapping("/current")
-    public Collection<Experiment> getForCurrent(@RequestParam(name = "offset", defaultValue = "0") Long offset,
-            @RequestParam(name = "limit", defaultValue = "10") Long limit,
-            @RequestParam(name = "sort", required = false) String[] sortvalues,
-            Experiment filter,
-            Authentication auth) {
+    // @GetMapping("/current")
+    // public Collection<Experiment> getForCurrent(@RequestParam(name = "offset", defaultValue = "0") Long offset,
+    //         @RequestParam(name = "limit", defaultValue = "10") Long limit,
+    //         @RequestParam(name = "sort", required = false) String[] sortvalues,
+    //         Experiment filter) {
             
-        String username = auth.getName();
-        Optional<UserGroup> ug = Optional.ofNullable(userService.loadUserByUsername(username).getUserGroup());
-        filter.setResearchGroup(ug.orElse(new UserGroup(null)));
-        Collection<Experiment> experiments = experimentService.getPage(offset, limit, sortvalues, filter);
+    //     String username = auth.getName();
+    //     Optional<UserGroup> ug = Optional.ofNullable(userService.loadUserByUsername(username).getUserGroup());
+    //     filter.setResearchGroup(ug.orElse(new UserGroup(null)));
+    //     Collection<Experiment> experiments = experimentService.getPage(offset, limit, sortvalues, filter);
 
-        return experiments;
-    }
+    //     return experiments;
+    // }
 
     @PostMapping("/{id}/approve")
     public void accept(@PathVariable("id") Long id) {
