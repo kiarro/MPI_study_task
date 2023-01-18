@@ -50,7 +50,7 @@ public class User implements UserDetails {
     private String firstName;
     private String lastName;
     @Column(columnDefinition = "DATE")
-    @JsonFormat(pattern = "dd.MM.yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     private String jobAgreementNumber = null;

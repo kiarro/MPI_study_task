@@ -65,7 +65,7 @@ public class ExperimentController {
     @GetMapping
     public Collection<Experiment> getAll(@RequestParam(name = "offset", defaultValue = "0") Long offset,
             @RequestParam(name = "limit", defaultValue = "10") Long limit,
-            @RequestParam(name = "sort", required = false) String[] sortvalues,
+            @RequestParam(name = "sort", required = false, defaultValue = "") String[] sortvalues,
             Experiment filter) {
 
         Collection<Experiment> experiments = experimentService.getPage(offset, limit, sortvalues, filter);

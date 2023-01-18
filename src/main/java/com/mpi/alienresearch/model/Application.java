@@ -51,7 +51,7 @@ public class Application {
     private User creator;
     
     @Column(columnDefinition = "DATE")
-    @JsonFormat(pattern = "dd.MM.yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime creationDate;
 
     @JsonProperty("creator")
@@ -70,6 +70,7 @@ public class Application {
     }
 
     @Column(columnDefinition = "DATE")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastStatusTransitionDate;
     
     @Enumerated(EnumType.STRING)

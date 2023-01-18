@@ -11,6 +11,14 @@ public class UserGroup {
 
     private String description;
     
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public UserGroup(Long id) {
         this.id = id;
     }

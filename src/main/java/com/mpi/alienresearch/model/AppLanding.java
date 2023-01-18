@@ -3,10 +3,14 @@ package com.mpi.alienresearch.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mpi.alienresearch.model.enums.AppStatus;
 import com.mpi.alienresearch.model.enums.AppType;
 
@@ -15,7 +19,10 @@ import com.mpi.alienresearch.model.enums.AppType;
 @Table(name = "apps_landing")
 public class AppLanding extends Application {
 
-    @Transient
+    // @Transient
+    @OneToMany(
+                mappedBy = "application")
+    @JsonManagedReference
     private List<LandingPoint> landingPoints;
 
     public List<LandingPoint> getLandingPoints() {

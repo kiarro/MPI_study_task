@@ -19,7 +19,7 @@ public class Report {
     private String content;
     
     @Column(columnDefinition = "DATE")
-    @JsonFormat(pattern = "dd.MM.yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime creationDate;
 
     @ManyToOne

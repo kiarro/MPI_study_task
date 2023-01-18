@@ -32,9 +32,10 @@ public class SubjectController {
     @GetMapping
     public Collection<Subject> getAll(@RequestParam(name = "offset", defaultValue = "0") Long offset,
             @RequestParam(name = "limit", defaultValue = "10") Long limit,
-            @RequestParam(name = "sort", required = false) String[] sortvalues) {
+            @RequestParam(name = "sort", required = false, defaultValue = "") String[] sortvalues,
+            Subject filter) {
 
-        Collection<Subject> reports = subjectService.getPage(offset, limit, sortvalues);
+        Collection<Subject> reports = subjectService.getPage(offset, limit, sortvalues, filter);
 
         return reports;
     }

@@ -63,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
             httpServletResponse.getWriter().append(
                 "{"+
-                "\"role\" : "+authentication.getAuthorities().toArray()[0].toString()+
+                "\"role\" : \""+authentication.getAuthorities().toArray()[0].toString()+"\""+
                 ",\"id\" : "+((User)(authentication.getPrincipal())).getId()+
                 "}"
             );

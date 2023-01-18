@@ -32,7 +32,7 @@ public class Subject {
     private Double height;
     
     @Column(columnDefinition = "DATE")
-    @JsonFormat(pattern = "dd.MM.yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     public Subject(Long id, String name, String hairColor, String eyesColor, String skinColor, String specials,

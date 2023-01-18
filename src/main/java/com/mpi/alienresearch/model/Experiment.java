@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mpi.alienresearch.model.enums.ExperimentStatus;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class Experiment {
     private String description;
 
     @Column(columnDefinition = "DATE")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime creationTime;
 
     @ManyToOne

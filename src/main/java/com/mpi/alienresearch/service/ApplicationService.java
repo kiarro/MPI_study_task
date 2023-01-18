@@ -13,6 +13,7 @@ import com.mpi.alienresearch.dao.ReportDao;
 import com.mpi.alienresearch.dao.ApplicationDao;
 import com.mpi.alienresearch.filters.ApplicationFilter;
 import com.mpi.alienresearch.model.Application;
+import com.mpi.alienresearch.model.Experiment;
 import com.mpi.alienresearch.model.Report;
 import com.mpi.alienresearch.model.User;
 import com.mpi.alienresearch.model.enums.AppStatus;
@@ -50,8 +51,8 @@ public class ApplicationService {
 
     
     public void update(Long id, Application application) {
-        // TODO Auto-generated method stub
-
+        application.setId(id);
+        applicationDao.save(application);
     }
 
     
@@ -63,8 +64,9 @@ public class ApplicationService {
 
     
     public List<Application> getByExperiment(Long experimentId) {
-        // return applicationRepository.findByExperimentId(experimentId);
-        return null;
+        Experiment e = new Experiment(); e.setId(experimentId);
+        return applicationDao.findByExperiment(e);
+        // return null;
     }
 
     
