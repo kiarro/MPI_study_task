@@ -54,20 +54,20 @@ public class Application {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime creationDate;
 
-    @JsonProperty("creator")
-    private Long getCreatorId(){
-        return creator.getId();
-    }
+    // @JsonProperty("creator")
+    // private Long getCreatorId(){
+    //     return creator.getId();
+    // }
 
     @ManyToOne
     // @JsonIgnore
     // @JsonIncludeProperties({"id"})
     private Experiment experiment;
 
-    @JsonProperty("experiment")
-    private Long getExperimentId(){
-        return experiment.getId();
-    }
+    // @JsonProperty("experiment")
+    // private Long getExperimentId(){
+    //     return experiment.getId();
+    // }
 
     @Column(columnDefinition = "DATE")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
