@@ -106,7 +106,9 @@ public class ExperimentService {
 
     
     public Long addReport(long id, Report report) {
-        // report.setId(id);
+        Experiment a = new Experiment();
+        a.setId(id);
+        report.setExperiment(a);
         report.setCreationDate(LocalDateTime.now());
         report = reportDao.save(report);
         return report.getId();

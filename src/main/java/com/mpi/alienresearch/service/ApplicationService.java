@@ -80,6 +80,9 @@ public class ApplicationService {
 
     
     public Long addReport(long id, Report report) {
+        Application a = new Application();
+        a.setId(id);
+        report.setApplication(a);
         report.setCreationDate(LocalDateTime.now());
         report = reportDao.save(report);
         return report.getId();
