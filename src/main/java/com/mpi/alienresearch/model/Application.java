@@ -47,7 +47,7 @@ public class Application {
     private String description;
 
     @ManyToOne
-    @JsonIgnore
+    // @JsonIgnore
     private User creator;
     
     @Column(columnDefinition = "DATE")
