@@ -22,7 +22,7 @@ import com.mpi.alienresearch.filters.ApplicationFilter;
 import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Report;
 import com.mpi.alienresearch.model.User;
-import com.mpi.alienresearch.model.UserGroup;
+// import com.mpi.alienresearch.model.UserGroup;
 import com.mpi.alienresearch.model.enums.AppStatus;
 import com.mpi.alienresearch.model.enums.Decision;
 import com.mpi.alienresearch.service.ApplicationService;
@@ -75,7 +75,7 @@ public class ApplicationController {
     }
 
     @PostMapping("/{id}/accept")
-    public void acceptApplication(@PathVariable("id") Long id, @RequestBody UserGroup ug) {
+    public void acceptApplication(@PathVariable("id") Long id, @RequestBody String ug) {
         applicationService.setStatus(id, AppStatus.ACCEPTED);
         applicationService.setExecutionGroup(id, ug);
     }

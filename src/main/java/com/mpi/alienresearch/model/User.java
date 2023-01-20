@@ -59,13 +59,13 @@ public class User implements UserDetails {
     private String email = null;
     private String aboutYourself = null;
     
-    @ManyToOne
+    // @ManyToOne
     // @JsonIgnore
     // @JsonIncludeProperties({"id"})
-    private UserGroup userGroup;
+    private String userGroup;
 
     public User(Long id, String firstName, String lastName, LocalDate birthDate, String jobAgreementNumber,
-            String phoneNumber, String email, String aboutYourself, UserGroup userGroup) {
+            String phoneNumber, String email, String aboutYourself, String userGroup) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -144,11 +144,11 @@ public class User implements UserDetails {
         this.aboutYourself = aboutYourself;
     }
 
-    public UserGroup getUserGroup() {
+    public String getUserGroup() {
         return userGroup;
     }
 
-    public void setUserGroup(UserGroup userGroup) {
+    public void setUserGroup(String userGroup) {
         this.userGroup = userGroup;
     }
 

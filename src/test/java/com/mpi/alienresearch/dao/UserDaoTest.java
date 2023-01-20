@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mpi.alienresearch.model.User;
-import com.mpi.alienresearch.model.UserGroup;
+// import com.mpi.alienresearch.model.UserGroup;
 import com.mpi.alienresearch.model.enums.UserRole;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,8 +23,8 @@ import com.mpi.alienresearch.model.enums.UserRole;
 public class UserDaoTest {
     @Autowired
     private UserDao userDao;
-    @Autowired
-    private UserGroupDao userGroupDao;
+    // @Autowired
+    // private UserGroupDao userGroupDao;
 
     @Test
     @Transactional
@@ -79,15 +79,15 @@ public class UserDaoTest {
         assertEquals(u1.getAboutYourself(), u.getAboutYourself());
     }
 
-    @Test
-    @Transactional
-    @Rollback(true)
-    public void testAddUserGroup() {
-        UserGroup ug = new UserGroup();
-        ug.setDescription("group new");
-        ug.setId(5l);
+    // @Test
+    // @Transactional
+    // @Rollback(true)
+    // public void testAddUserGroup() {
+    //     UserGroup ug = new UserGroup();
+    //     ug.setDescription("group new");
+    //     ug.setId(5l);
 
-        ug = userGroupDao.save(ug);
-        assertNotNull(ug.getId());
-    }
+    //     ug = userGroupDao.save(ug);
+    //     assertNotNull(ug.getId());
+    // }
 }

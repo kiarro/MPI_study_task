@@ -21,7 +21,7 @@ import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Experiment;
 import com.mpi.alienresearch.model.LandingPoint;
 import com.mpi.alienresearch.model.Report;
-import com.mpi.alienresearch.model.UserGroup;
+// import com.mpi.alienresearch.model.UserGroup;
 import com.mpi.alienresearch.model.enums.AppStatus;
 import com.mpi.alienresearch.model.enums.AppType;
 import com.mpi.alienresearch.model.enums.ExperimentStatus;
@@ -82,7 +82,7 @@ public class ExperimentService {
     }
 
     
-    public List<Experiment> getByGroup(UserGroup group) {
+    public List<Experiment> getByGroup(String group) {
         return experimentDao.findByResearchGroup(group);
     }
 

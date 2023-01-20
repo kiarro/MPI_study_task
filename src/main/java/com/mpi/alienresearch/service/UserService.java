@@ -13,23 +13,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.mpi.alienresearch.dao.UserDao;
-import com.mpi.alienresearch.dao.UserGroupDao;
 import com.mpi.alienresearch.model.User;
-import com.mpi.alienresearch.model.UserGroup;
 
 @Service
 public class UserService implements UserDetailsService {
 
     final UserDao userDao;
-    final UserGroupDao userGroupDao;
     
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserService(UserDao userDao,
-            UserGroupDao userGroupDao) {
+    public UserService(UserDao userDao) {
         this.userDao = userDao;
-        this.userGroupDao = userGroupDao;
     }
 
     
@@ -69,23 +64,10 @@ public class UserService implements UserDetailsService {
     }
 
     
-    public void updateGroup(long id, Optional<Long> group) {
+    public void updateGroup(long id, Optional<String> group) {
         User u = this.get(id);
         // if group is not null
-        if (group.isPresent()) { // set it to user
-            Optional<UserGroup> ug = userGroupDao.findById(group.get());
-            // if user group exists
-            if (ug.isPresent()) {
-                // set it to user
-                u.setUserGroup(ug.get());
-            } else {
-                // create user group with id and set it to user
-                u.setUserGroup(
-                        userGroupDao.save(new UserGroup(group.get())));
-            }
-        } else { // set null group to user
-            u.setUserGroup(null);
-        }
+        u.setUserGroup(group.get());
         userDao.save(u);
     }
     

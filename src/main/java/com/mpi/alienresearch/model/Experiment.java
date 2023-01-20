@@ -28,13 +28,13 @@ public class Experiment {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime creationTime;
 
-    @ManyToOne
-    private UserGroup researchGroup;
+    // @ManyToOne
+    private String researchGroup;
 
     @Enumerated(EnumType.STRING)
     private ExperimentStatus status;
 
-    public Experiment(Long id, String title, String description, LocalDateTime creationTime, UserGroup researchGroup,
+    public Experiment(Long id, String title, String description, LocalDateTime creationTime, String researchGroup,
             ExperimentStatus status) {
         this.id = id;
         this.title = title;
@@ -79,11 +79,11 @@ public class Experiment {
         this.creationTime = creationTime;
     }
 
-    public UserGroup getResearchGroup() {
+    public String getResearchGroup() {
         return researchGroup;
     }
 
-    public void setResearchGroup(UserGroup researchGroup) {
+    public void setResearchGroup(String researchGroup) {
         this.researchGroup = researchGroup;
     }
 

@@ -1,37 +1,37 @@
-package com.mpi.alienresearch.model;
+// package com.mpi.alienresearch.model;
 
-import javax.persistence.*;
+// import javax.persistence.*;
 
-@Entity
-@Table(name = "user_groups")
-public class UserGroup {
+// @Entity
+// @Table(name = "user_groups")
+// public class UserGroup {
     
-    @Id
-    private Long id;
+//     @Id
+//     private Long id;
 
-    private String description;
+//     private String description;
     
-    public String getDescription() {
-        return description;
-    }
+//     public String getDescription() {
+//         return description;
+//     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+//     public void setDescription(String description) {
+//         this.description = description;
+//     }
 
-    public UserGroup(Long id) {
-        this.id = id;
-    }
+//     public UserGroup(Long id) {
+//         this.id = id;
+//     }
 
-    public UserGroup() {
-    }
+//     public UserGroup() {
+//     }
 
-    public Long getId() {
-        return id;
-    }
+//     public Long getId() {
+//         return id;
+//     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+//     public void setId(Long id) {
+//         this.id = id;
+//     }
 
-}
+// }

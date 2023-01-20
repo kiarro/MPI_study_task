@@ -23,7 +23,7 @@ import com.mpi.alienresearch.model.AppTechnic;
 import com.mpi.alienresearch.model.Application;
 import com.mpi.alienresearch.model.Experiment;
 import com.mpi.alienresearch.model.Report;
-import com.mpi.alienresearch.model.UserGroup;
+// import com.mpi.alienresearch.model.UserGroup;
 import com.mpi.alienresearch.model.enums.AppStatus;
 import com.mpi.alienresearch.model.enums.ExperimentStatus;
 import com.mpi.alienresearch.service.ExperimentService;

@@ -1,7 +1,7 @@
 package com.mpi.alienresearch.dao;
 
 import com.mpi.alienresearch.model.Experiment;
-import com.mpi.alienresearch.model.UserGroup;
+// import com.mpi.alienresearch.model.UserGroup;
 
 import java.util.List;
 
@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository 
 public interface ExperimentDao extends JpaRepository<Experiment, Long>  {
-    List<Experiment> findByResearchGroup(UserGroup researchGroup);
+    List<Experiment> findByResearchGroup(String researchGroup);
 }

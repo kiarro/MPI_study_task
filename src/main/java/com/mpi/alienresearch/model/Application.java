@@ -76,17 +76,16 @@ public class Application {
     @Enumerated(EnumType.STRING)
     private AppStatus status;
 
-    @ManyToOne
-    @JsonIgnore
-    private UserGroup executionGroup;
+    // @ManyToOne
+    private String executionGroup;
     
-    @JsonProperty("executionGroup")
-    private Long getExecutionGroupId(){
-        return executionGroup == null ? null : executionGroup.getId();
-    }
+    // @JsonProperty("executionGroup")
+    // private String getExecutionGroupId(){
+    //     return executionGroup;
+    // }
 
     public Application(Long id, AppType type, String description, User creator, Experiment experiment, LocalDateTime creationDate,
-            LocalDateTime lastStatusTransitionDate, AppStatus status, UserGroup executionGroup) {
+            LocalDateTime lastStatusTransitionDate, AppStatus status, String executionGroup) {
         this.id = id;
         this.type = type;
         this.description = description;
@@ -169,11 +168,11 @@ public class Application {
         this.status = status;
     }
 
-    public UserGroup getExecutionGroup() {
+    public String getExecutionGroup() {
         return executionGroup;
     }
 
-    public void setExecutionGroup(UserGroup executionGroup) {
+    public void setExecutionGroup(String executionGroup) {
         this.executionGroup = executionGroup;
     }
 

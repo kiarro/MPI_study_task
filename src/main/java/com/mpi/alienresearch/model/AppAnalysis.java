@@ -21,7 +21,7 @@ public class AppAnalysis extends Application {
     private String analysisDescription;
 
     public AppAnalysis(Long id, String description, User creator, Experiment experiment, LocalDateTime creationDate,
-            LocalDateTime lastStatusTransitionDate, AppStatus status, UserGroup executionGroup, Subject subject,
+            LocalDateTime lastStatusTransitionDate, AppStatus status, String executionGroup, Subject subject,
             String analysisDescription) {
         super(id, AppType.ANALYSIS, description, creator, experiment, creationDate, lastStatusTransitionDate, status, executionGroup);
         this.subject = subject;

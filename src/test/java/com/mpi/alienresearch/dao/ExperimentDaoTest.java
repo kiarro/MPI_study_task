@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mpi.alienresearch.model.Experiment;
-import com.mpi.alienresearch.model.UserGroup;
+// import com.mpi.alienresearch.model.UserGroup;
 import com.mpi.alienresearch.model.enums.ExperimentStatus;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,7 +30,7 @@ public class ExperimentDaoTest {
     @Transactional
     @Rollback(true)
     public void testFindByResearchGroup() {
-        List<Experiment> lista = experimentDao.findByResearchGroup(new UserGroup(2l));
+        List<Experiment> lista = experimentDao.findByResearchGroup("2");
         assertEquals(lista.size(), 3);
     }
     

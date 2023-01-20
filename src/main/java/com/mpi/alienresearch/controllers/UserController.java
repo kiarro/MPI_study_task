@@ -64,9 +64,9 @@ public class UserController {
 
     @PutMapping("/{id}/update_group")
     public ResponseEntity<Void> updateUserGroup(@PathVariable("id") long id,
-                @RequestParam(name = "group") Optional<Long> groupId) {
+                @RequestParam(name = "group") Optional<String> group) {
         
-        userService.updateGroup(id, groupId);
+        userService.updateGroup(id, group);
         return ResponseEntity.noContent().build();
     }
 
