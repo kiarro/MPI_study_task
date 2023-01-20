@@ -75,7 +75,7 @@ public class ApplicationController {
     }
 
     @PostMapping("/{id}/accept")
-    public void acceptApplication(@PathVariable("id") Long id, @RequestBody String ug) {
+    public void acceptApplication(@PathVariable("id") Long id, @RequestParam(name = "ug") String ug) {
         applicationService.setStatus(id, AppStatus.ACCEPTED);
         applicationService.setExecutionGroup(id, ug);
     }
