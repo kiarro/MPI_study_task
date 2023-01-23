@@ -58,7 +58,8 @@ public class UserService implements UserDetailsService {
             return false;
         }
 
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(userFromDB.get().getPassword());
+        // user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDao.save(user);
         return true;
     }
