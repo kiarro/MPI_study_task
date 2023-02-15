@@ -1,9 +1,9 @@
 package com.mpi.alienresearch.controllers;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.junit.Before;
-import org.junit.Test;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MvcResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,21 +19,20 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mpi.alienresearch.DemoApplication;
-import com.mpi.alienresearch.model.Artifact;
+import com.mpi.alienresearch.model.Subject;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.util.List;
 
 @SpringBootTest(
   webEnvironment = SpringBootTest.WebEnvironment.MOCK,
   classes = DemoApplication.class)
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
-public class ArtifactControllerTest {
+public class SubjectControllerTest {
 
     @Autowired
     private MockMvc mvc;
@@ -44,12 +43,12 @@ public class ArtifactControllerTest {
     public void init() {
         mapper.registerModule(new JavaTimeModule());
     }
-
+    
     @Test
     @Transactional
     @Rollback(true)
-    public void testAddArtifact() throws Exception {
-        MvcResult result = mvc.perform(get("/artifacts")
+    public void testAddSubject() throws Exception {
+        MvcResult result = mvc.perform(get("/subjects")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content()
@@ -57,41 +56,43 @@ public class ArtifactControllerTest {
             .andReturn();
         
         String res = result.getResponse().getContentAsString();
-        List<Artifact> artifacts = mapper.readValue(res, mapper.getTypeFactory().constructCollectionType(List.class, Artifact.class));
-        assertEquals(3, artifacts.size());
+        List<Subject> subjects = mapper.readValue(res, mapper.getTypeFactory().constructCollectionType(List.class, Subject.class));
+        assertEquals(3, subjects.size());
 
-        Artifact u = new Artifact();
-        u.setName("Extra");
-        u.setDescription("desc4");
-        u.setRadiation(15.2);
-        
-        mvc.perform(post("/artifacts")
+        Subject u = new Subject();
+        u.setBirthDate(LocalDate.of(1983, 4, 25));
+        u.setEyesColor("bright0");
+        u.setHairColor("red0");
+        u.setHeight(1.6);
+        u.setWeight(65.0);
+        u.setName("New");
+
+        mvc.perform(post("/subjects")
             .content(mapper.writeValueAsString(u))
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
 
-        result = mvc.perform(get("/artifacts")
+        result = mvc.perform(get("/subjects")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content()
             .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
             .andReturn();
-
+        
         res = result.getResponse().getContentAsString();
-        artifacts = mapper.readValue(res, mapper.getTypeFactory().constructCollectionType(List.class, Artifact.class));
-        assertEquals(4, artifacts.size());
-
-        u = artifacts.get(3);
-        assertEquals("Extra", u.getName());
-        assertEquals("desc4", u.getDescription());
-        assertEquals(15.2, u.getRadiation().doubleValue(), 0.01);
+        subjects = mapper.readValue(res, mapper.getTypeFactory().constructCollectionType(List.class, Subject.class));
+        assertEquals(4, subjects.size());
+        u = subjects.get(3);
+        assertEquals("red0", u.getHairColor());
+        assertEquals(1.6, u.getHeight().doubleValue(), 0.001);
+        assertEquals(LocalDate.of(1983, 4, 25), u.getBirthDate());
     }
 
     @Test
     @Transactional
     @Rollback(true)
     public void testGetAll() throws Exception {
-        MvcResult result = mvc.perform(get("/artifacts")
+        MvcResult result = mvc.perform(get("/subjects")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content()
@@ -99,19 +100,19 @@ public class ArtifactControllerTest {
             .andReturn();
         
         String res = result.getResponse().getContentAsString();
-        List<Artifact> users = mapper.readValue(res, mapper.getTypeFactory().constructCollectionType(List.class, Artifact.class));
+        List<Subject> users = mapper.readValue(res, mapper.getTypeFactory().constructCollectionType(List.class, Subject.class));
         assertEquals(3, users.size());
-        Artifact u = users.stream().filter(o -> o.getId().longValue() == 3).findFirst().get();
-        assertEquals("Bread", u.getName());
-        assertEquals("desc3", u.getDescription());
-        assertEquals(0.0, u.getRadiation().doubleValue(), 0.01);
+        Subject u = users.stream().filter(o -> o.getId().longValue() == 2).findFirst().get();
+        assertEquals("black", u.getHairColor());
+        assertEquals(1.7, u.getHeight().doubleValue(), 0.001);
+        assertEquals(LocalDate.of(1985, 8, 15), u.getBirthDate());
     }
 
     @Test
     @Transactional
     @Rollback(true)
-    public void testGetArtifactById() throws Exception {
-        MvcResult result = mvc.perform(get("/artifacts/1")
+    public void testGetSubjectById() throws Exception {
+        MvcResult result = mvc.perform(get("/subjects/2")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content()
@@ -119,17 +120,17 @@ public class ArtifactControllerTest {
             .andReturn();
         
         String res = result.getResponse().getContentAsString();
-        Artifact u = mapper.readValue(res, Artifact.class);
-        assertEquals("Empty", u.getName());
-        assertEquals("desc1", u.getDescription());
-        assertEquals(10.0, u.getRadiation().doubleValue(), 0.01);
+        Subject u = mapper.readValue(res, Subject.class);
+        assertEquals("black", u.getHairColor());
+        assertEquals(1.7, u.getHeight().doubleValue(), 0.001);
+        assertEquals(LocalDate.of(1985, 8, 15), u.getBirthDate());
     }
 
     @Test
     @Transactional
     @Rollback(true)
-    public void testUpdateArtifact() throws Exception {
-        MvcResult result = mvc.perform(get("/artifacts/1")
+    public void testUpdateSubject() throws Exception {
+        MvcResult result = mvc.perform(get("/subjects/2")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content()
@@ -137,21 +138,21 @@ public class ArtifactControllerTest {
             .andReturn();
         
         String res = result.getResponse().getContentAsString();
-        Artifact u = mapper.readValue(res, Artifact.class);
-        assertEquals("Empty", u.getName());
-        assertEquals("desc1", u.getDescription());
-        assertEquals(10.0, u.getRadiation().doubleValue(), 0.01);
+        Subject u = mapper.readValue(res, Subject.class);
+        assertEquals("black", u.getHairColor());
+        assertNull(u.getSkinColor());
+        assertEquals(1.7, u.getHeight().doubleValue(), 0.001);
 
-        u.setRadiation(55.66);
-        u.setDescription("new desc");
+        u.setHairColor("pale");
+        u.setSkinColor("brown");
 
-        mvc.perform(put("/artifacts/1")
+        mvc.perform(put("/subjects/2")
             .content(mapper.writeValueAsString(u))
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent())
             .andReturn();
 
-        result = mvc.perform(get("/artifacts/1")
+        result = mvc.perform(get("/subjects/2")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content()
@@ -159,9 +160,9 @@ public class ArtifactControllerTest {
             .andReturn();
 
         res = result.getResponse().getContentAsString();
-        u = mapper.readValue(res, Artifact.class);
-        assertEquals("Empty", u.getName());
-        assertEquals("new desc", u.getDescription());
-        assertEquals(55.66, u.getRadiation().doubleValue(), 0.01);
+        u = mapper.readValue(res, Subject.class);
+        assertEquals("pale", u.getHairColor());
+        assertEquals("brown", u.getSkinColor());
+        assertEquals(1.7, u.getHeight().doubleValue(), 0.001);
     }
 }

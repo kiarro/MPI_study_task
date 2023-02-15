@@ -3,7 +3,9 @@ package com.mpi.alienresearch.service;
 import java.util.Collection;
 
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 
 import com.mpi.alienresearch.dao.ArtifactDao;
@@ -28,7 +30,7 @@ public class ArtifactService {
             Sort.Direction direction = sort_.charAt(0)=='-'?Sort.Direction.DESC:Sort.Direction.ASC;
             s = s.and(Sort.by(direction, sort_.substring(1)));
         }
-        Example<Artifact> example = Example.of(filter);
+        Example<Artifact> example = Example.of(filter, ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING));
         return artifactDao.findAll(example, s);
     }
 

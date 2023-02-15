@@ -50,7 +50,7 @@ public class Application {
     // @JsonIgnore
     private User creator;
     
-    @Column(columnDefinition = "DATE")
+    @Column(columnDefinition = "TIME")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime creationDate;
 

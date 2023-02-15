@@ -33,9 +33,9 @@ public class ArtifactController {
     public ResponseEntity<String> addArtifact(@RequestBody Artifact Artifact) {
         Optional<Long> id = Optional.ofNullable(artifactService.add(Artifact));
         if (id.isPresent()) {
-            URI uri = URI.create("/artifacts/" + id.get());
+            // URI uri = URI.create("/artifacts/" + id.get());
             // System.out.println(uri.toString());
-            return ResponseEntity.accepted().location(uri).build();
+            return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.badRequest().build();
         }

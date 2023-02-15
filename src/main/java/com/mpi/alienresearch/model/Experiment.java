@@ -24,7 +24,7 @@ public class Experiment {
     private String title;
     private String description;
 
-    @Column(columnDefinition = "DATE")
+    @Column(columnDefinition = "TIME")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime creationTime;
 

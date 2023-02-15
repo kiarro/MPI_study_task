@@ -54,12 +54,12 @@ public class ApplicationController {
     }
 
     @GetMapping("/{id}")
-    public Application getExperiment(@PathVariable("id") Long id) {
+    public Application getApplicationById(@PathVariable("id") Long id) {
         return applicationService.get(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> putExperiment(@PathVariable("id") Long id, @RequestBody Application experiment) {
+    public ResponseEntity<Void> updateApplication(@PathVariable("id") Long id, @RequestBody Application experiment) {
         Application currentApplication = applicationService.get(id);
         if (currentApplication == null) { // experiment not found
             return ResponseEntity.notFound().build();

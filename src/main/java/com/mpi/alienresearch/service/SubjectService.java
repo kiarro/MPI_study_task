@@ -4,7 +4,9 @@ import java.util.Collection;
 
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 
 import com.mpi.alienresearch.dao.SubjectDao;
 import com.mpi.alienresearch.model.Subject;
@@ -35,7 +37,7 @@ public class SubjectService {
             Sort.Direction direction = sort_.charAt(0)=='-'?Sort.Direction.DESC:Sort.Direction.ASC;
             s = s.and(Sort.by(direction, sort_.substring(1)));
         }
-        Example<Subject> example = Example.of(filter); 
+        Example<Subject> example = Example.of(filter, ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING)); 
         return subjectRepository.findAll(example, s);
     }
 

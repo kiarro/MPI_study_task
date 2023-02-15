@@ -1,9 +1,7 @@
 package com.mpi.alienresearch.controllers;
 
 import org.junit.Before;
-import org.junit.Test;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MvcResult;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,27 +14,37 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mpi.alienresearch.DemoApplication;
-import com.mpi.alienresearch.model.Artifact;
+import com.mpi.alienresearch.dao.UserDao;
+import com.mpi.alienresearch.model.Credentials;
+import com.mpi.alienresearch.model.User;
+import com.mpi.alienresearch.model.enums.UserRole;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.time.LocalDate;
 import java.util.List;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
 @SpringBootTest(
   webEnvironment = SpringBootTest.WebEnvironment.MOCK,
   classes = DemoApplication.class)
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
-public class ArtifactControllerTest {
+public class UserControllerTest {
 
     @Autowired
     private MockMvc mvc;
+
+    @Autowired
+    private UserDao userDao;
 
     ObjectMapper mapper = new ObjectMapper();
     
@@ -48,50 +56,49 @@ public class ArtifactControllerTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void testAddArtifact() throws Exception {
-        MvcResult result = mvc.perform(get("/artifacts")
+    public void testAddUser() throws Exception {
+        Credentials cr = new Credentials("lander_test", "lander_test");
+        mvc.perform(post("/login")
+            .content(mapper.writeValueAsString(cr))
             .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(content()
-            .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-            .andReturn();
-        
-        String res = result.getResponse().getContentAsString();
-        List<Artifact> artifacts = mapper.readValue(res, mapper.getTypeFactory().constructCollectionType(List.class, Artifact.class));
-        assertEquals(3, artifacts.size());
+            .andExpect(status().isUnauthorized());
 
-        Artifact u = new Artifact();
-        u.setName("Extra");
-        u.setDescription("desc4");
-        u.setRadiation(15.2);
+        User u = new User();
+        u.setPassword("lander_test");
+        u.setUsername("lander_test");
+        u.setRole(UserRole.LANDER);
+        u.setJobAgreementNumber("1000020");
+        u.setFirstName("LanderT");
+        u.setLastName("Down");
+        u.setPhoneNumber("0-040-40-01");
+        u.setBirthDate(LocalDate.of(2003, 5, 15));
         
-        mvc.perform(post("/artifacts")
+        mvc.perform(post("/users")
             .content(mapper.writeValueAsString(u))
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
 
-        result = mvc.perform(get("/artifacts")
+        MvcResult result = mvc.perform(post("/login")
+            .content(mapper.writeValueAsString(cr))
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content()
             .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
             .andReturn();
 
-        res = result.getResponse().getContentAsString();
-        artifacts = mapper.readValue(res, mapper.getTypeFactory().constructCollectionType(List.class, Artifact.class));
-        assertEquals(4, artifacts.size());
-
-        u = artifacts.get(3);
-        assertEquals("Extra", u.getName());
-        assertEquals("desc4", u.getDescription());
-        assertEquals(15.2, u.getRadiation().doubleValue(), 0.01);
+        String res = result.getResponse().getContentAsString();
+        User u_res = mapper.readValue(res, User.class);
+        assertEquals(UserRole.LANDER, u_res.getRole());
+        assertEquals("LanderT", u_res.getFirstName());
+        assertEquals("lander_test", u_res.getUsername());
+        assertEquals(LocalDate.of(2003, 5, 15), u_res.getBirthDate());
     }
 
     @Test
     @Transactional
     @Rollback(true)
-    public void testGetAll() throws Exception {
-        MvcResult result = mvc.perform(get("/artifacts")
+    public void testGetById() throws Exception {
+        MvcResult result = mvc.perform(get("/users/5")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content()
@@ -99,19 +106,18 @@ public class ArtifactControllerTest {
             .andReturn();
         
         String res = result.getResponse().getContentAsString();
-        List<Artifact> users = mapper.readValue(res, mapper.getTypeFactory().constructCollectionType(List.class, Artifact.class));
-        assertEquals(3, users.size());
-        Artifact u = users.stream().filter(o -> o.getId().longValue() == 3).findFirst().get();
-        assertEquals("Bread", u.getName());
-        assertEquals("desc3", u.getDescription());
-        assertEquals(0.0, u.getRadiation().doubleValue(), 0.01);
+        User u = mapper.readValue(res, User.class);
+        assertEquals(UserRole.LANDER, u.getRole());
+        assertEquals("Lander", u.getFirstName());
+        assertEquals("lander", u.getUsername());
+        assertEquals(LocalDate.of(2003, 4, 15), u.getBirthDate());
     }
 
     @Test
     @Transactional
     @Rollback(true)
-    public void testGetArtifactById() throws Exception {
-        MvcResult result = mvc.perform(get("/artifacts/1")
+    public void testGetUsers() throws Exception {
+        MvcResult result = mvc.perform(get("/users")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content()
@@ -119,17 +125,20 @@ public class ArtifactControllerTest {
             .andReturn();
         
         String res = result.getResponse().getContentAsString();
-        Artifact u = mapper.readValue(res, Artifact.class);
-        assertEquals("Empty", u.getName());
-        assertEquals("desc1", u.getDescription());
-        assertEquals(10.0, u.getRadiation().doubleValue(), 0.01);
+        List<User> users = mapper.readValue(res, mapper.getTypeFactory().constructCollectionType(List.class, User.class));
+        assertEquals(7, users.size());
+        User u = users.stream().filter(o -> o.getId().longValue() == 3).findFirst().get();
+        assertEquals(UserRole.ADMIN, u.getRole());
+        assertEquals("Admin", u.getFirstName());
+        assertEquals("admin", u.getUsername());
+        assertEquals(LocalDate.of(1999, 6, 25), u.getBirthDate());
     }
 
     @Test
     @Transactional
     @Rollback(true)
-    public void testUpdateArtifact() throws Exception {
-        MvcResult result = mvc.perform(get("/artifacts/1")
+    public void testUpdateUser() throws Exception {
+        MvcResult result = mvc.perform(get("/users/5")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content()
@@ -137,31 +146,33 @@ public class ArtifactControllerTest {
             .andReturn();
         
         String res = result.getResponse().getContentAsString();
-        Artifact u = mapper.readValue(res, Artifact.class);
-        assertEquals("Empty", u.getName());
-        assertEquals("desc1", u.getDescription());
-        assertEquals(10.0, u.getRadiation().doubleValue(), 0.01);
+        User u = mapper.readValue(res, User.class);
+        assertEquals(UserRole.LANDER, u.getRole());
+        assertEquals("lander", u.getUsername());
+        assertEquals("0-000-00-01", u.getPhoneNumber());
+        assertNull(u.getEmail());
 
-        u.setRadiation(55.66);
-        u.setDescription("new desc");
+        u.setEmail("example@r.com");
+        u.setPhoneNumber("552-22-333");
 
-        mvc.perform(put("/artifacts/1")
+        mvc.perform(put("/users/5")
             .content(mapper.writeValueAsString(u))
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent())
             .andReturn();
 
-        result = mvc.perform(get("/artifacts/1")
+        result = mvc.perform(get("/users/5")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content()
             .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
             .andReturn();
-
+        
         res = result.getResponse().getContentAsString();
-        u = mapper.readValue(res, Artifact.class);
-        assertEquals("Empty", u.getName());
-        assertEquals("new desc", u.getDescription());
-        assertEquals(55.66, u.getRadiation().doubleValue(), 0.01);
+        u = mapper.readValue(res, User.class);
+        assertEquals(UserRole.LANDER, u.getRole());
+        assertEquals("lander", u.getUsername());
+        assertEquals("552-22-333", u.getPhoneNumber());
+        assertEquals("example@r.com", u.getEmail());
     }
 }

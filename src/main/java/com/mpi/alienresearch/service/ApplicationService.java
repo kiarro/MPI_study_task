@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 
 import com.mpi.alienresearch.dao.ApplicationDao;
@@ -42,7 +44,7 @@ public class ApplicationService {
      */
     
     public <T extends Application> List<T> getPage(Long offset, Long limit, String[] sortvalues, Application filter) {
-        Example<Application> example = Example.of(filter); 
+        Example<Application> example = Example.of(filter, ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING)); 
         return (List<T>)(List<?>)applicationDao.findAll(example);
     }
 

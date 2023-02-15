@@ -44,9 +44,9 @@ public class SubjectController {
     public ResponseEntity<String> addSubject(@RequestBody Subject subject) {
         Optional<Long> id = Optional.ofNullable(subjectService.add(subject));
         if (id.isPresent()) {
-            URI uri = URI.create("/subjects/" + id.get());
+            // URI uri = URI.create("/subjects/" + id.get());
             // System.out.println(uri.toString());
-            return ResponseEntity.accepted().location(uri).build();
+            return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.badRequest().build();
         }
