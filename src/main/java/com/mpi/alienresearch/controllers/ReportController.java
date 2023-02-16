@@ -2,6 +2,7 @@ package com.mpi.alienresearch.controllers;
 
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,9 @@ import com.mpi.alienresearch.service.ReportService;
 public class ReportController {
     
     private final ReportService reportService;
+
+    @Autowired
+    WebSocketController webSocketController;
 
     public ReportController(ReportService reportService) {
         this.reportService = reportService;

@@ -2,12 +2,14 @@ package com.mpi.alienresearch.service;
 
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 
+import com.mpi.alienresearch.controllers.WebSocketController;
 import com.mpi.alienresearch.dao.ArtifactDao;
 import com.mpi.alienresearch.model.Artifact;
 
@@ -18,6 +20,9 @@ public class ArtifactService {
     public ArtifactService(ArtifactDao artifactRepository) {
         this.artifactDao = artifactRepository;
     }
+    
+    @Autowired
+    WebSocketController webSocketController;
 
     public Artifact get(Long id) {
         return artifactDao.findById(id).get();

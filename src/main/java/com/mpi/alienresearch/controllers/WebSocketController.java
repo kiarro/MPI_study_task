@@ -15,8 +15,15 @@ public class WebSocketController {
     @Autowired
     private SimpMessagingTemplate template;
 
-	public void greeting(String message) throws Exception {
-		Thread.sleep(1000); // simulated delay
-		 this.template.convertAndSend("/topic/messages", new WebSocketMessage(message));
+	public void sendDirector(String message) {
+		this.template.convertAndSend("/topic/director", new WebSocketMessage(message));
+	}
+
+	public void sendGroup(String message, String group) {
+		this.template.convertAndSend("/topic/group/"+group, new WebSocketMessage(message));
+	}
+	
+	public void sendUser(String message, String user) {
+		this.template.convertAndSend("/topic/user"+user, new WebSocketMessage(message));
 	}
 }

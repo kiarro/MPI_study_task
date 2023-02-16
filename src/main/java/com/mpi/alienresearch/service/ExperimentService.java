@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 
+import com.mpi.alienresearch.controllers.WebSocketController;
 import com.mpi.alienresearch.dao.ApplicationDao;
 import com.mpi.alienresearch.dao.ExperimentDao;
 import com.mpi.alienresearch.dao.LandingPointDao;
@@ -48,7 +49,9 @@ public class ExperimentService {
         this.applicationDao = appTechnicDao;
         this.landingPointDao = landingPointDao;
     }
-
+    
+    @Autowired
+    WebSocketController webSocketController;
     
     public Experiment get(long id) {
         return experimentDao.findById(id).get();
@@ -74,6 +77,8 @@ public class ExperimentService {
         experiment.setCreationTime(LocalDateTime.now());
         experiment.setStatus(ExperimentStatus.CREATED);
         experiment = experimentDao.save(experiment);
+
+        webSocketController.sendDirector("New experiment was created");
         return experiment.getId();
     }
 
@@ -103,6 +108,8 @@ public class ExperimentService {
             }
         }
 
+        webSocketController.sendDirector("New application for experiment "+app.getExperiment().getId().toString());
+
         return app.getId();
     }
 
@@ -121,6 +128,12 @@ public class ExperimentService {
         Experiment experiment = experimentDao.findById(id).get();
         experiment.setStatus(status);
         experimentDao.save(experiment);
+        if (status == ExperimentStatus.CREATED 
+            || status == ExperimentStatus.FINISHING) {
+            webSocketController.sendDirector("Experiment "+id+" now in state "+status.name());
+        } else {
+            webSocketController.sendGroup("Experiment "+id+" now in state "+status.name(), experiment.getResearchGroup());
+        }
     }
     
 }

@@ -9,6 +9,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 
+import com.mpi.alienresearch.controllers.WebSocketController;
 import com.mpi.alienresearch.dao.ReportDao;
 import com.mpi.alienresearch.filters.ReportFilter;
 import com.mpi.alienresearch.model.Application;
@@ -24,6 +25,8 @@ public class ReportService {
         this.reportRepository = reportRepository;
     }
     
+    @Autowired
+    WebSocketController webSocketController;
     
     public Report get(Long id) {
         return reportRepository.findById(id).get();

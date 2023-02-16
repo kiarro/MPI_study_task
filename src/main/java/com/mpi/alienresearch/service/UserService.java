@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.mpi.alienresearch.controllers.WebSocketController;
 import com.mpi.alienresearch.dao.UserDao;
 import com.mpi.alienresearch.model.User;
 
@@ -27,6 +28,8 @@ public class UserService implements UserDetailsService {
         this.userDao = userDao;
     }
 
+    @Autowired
+    WebSocketController webSocketController;
     
     public User get(long id) {
         Optional<User> user = userDao.findById(id);
@@ -61,6 +64,8 @@ public class UserService implements UserDetailsService {
         user.setPassword(userFromDB.get().getPassword());
         // user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDao.save(user);
+
+        webSocketController.sendUser("Your user was updated", user.getId().toString());
         return true;
     }
 
@@ -70,6 +75,8 @@ public class UserService implements UserDetailsService {
         // if group is not null
         u.setUserGroup(group.get());
         userDao.save(u);
+
+        webSocketController.sendUser("Your user was updated", String.valueOf(id));
     }
     
     public List<User> getPage(Long offset, Long limit, String[] sortvalues) {

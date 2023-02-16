@@ -35,6 +35,9 @@ public class ApplicationController {
     
     private final ApplicationService applicationService;
     private final UserService userService;
+    
+    @Autowired
+    WebSocketController webSocketController;
 
     public ApplicationController(ApplicationService applicationService,
                                     UserService userService) {
@@ -72,6 +75,7 @@ public class ApplicationController {
     @PostMapping("/{id}/set-status")
     public void decisionApplication(@PathVariable("id") Long id, @RequestParam(name = "status") AppStatus status) {
         applicationService.setStatus(id, status);
+        webSocketController.sendGroup(null, null);
     }
 
     @PostMapping("/{id}/accept")

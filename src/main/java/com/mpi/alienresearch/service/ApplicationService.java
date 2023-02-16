@@ -10,6 +10,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 
+import com.mpi.alienresearch.controllers.WebSocketController;
 import com.mpi.alienresearch.dao.ApplicationDao;
 import com.mpi.alienresearch.dao.ReportDao;
 import com.mpi.alienresearch.dao.ApplicationDao;
@@ -34,6 +35,8 @@ public class ApplicationService {
         this.reportDao = reportRepository;
     }
 
+    @Autowired
+    WebSocketController webSocketController;
     
     public Application get(Long id) {
         return applicationDao.findById(id).get();
@@ -64,6 +67,7 @@ public class ApplicationService {
         Application app = applicationDao.findById(id).get();
         app.setStatus(status);
         applicationDao.save(app);
+        webSocketController.sendGroup("Application "+id.toString()+" now in state "+status.name(), app.getCreator().getUserGroup());
     }
 
     
@@ -87,6 +91,9 @@ public class ApplicationService {
         report.setApplication(a);
         report.setCreationDate(LocalDateTime.now());
         report = reportDao.save(report);
+
+        a = applicationDao.getOne(id);
+        webSocketController.sendGroup("Report was created for application "+String.valueOf(id), a.getExecutionGroup());
         return report.getId();
     }
 

@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Collection;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -41,7 +42,9 @@ public class ExperimentController {
 
     private final ExperimentService experimentService;
     private final UserService userService;
-
+    
+    @Autowired
+    WebSocketController webSocketController;
 
     public ExperimentController(ExperimentService experimentService, UserService userService) {
         this.experimentService = experimentService;

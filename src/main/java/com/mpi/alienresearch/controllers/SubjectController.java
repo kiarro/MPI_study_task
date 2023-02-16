@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Collection;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,9 @@ import com.mpi.alienresearch.service.SubjectService;
 @RequestMapping("/subjects")
 public class SubjectController {
     private final SubjectService subjectService;
+
+    @Autowired
+    WebSocketController webSocketController;
 
     public SubjectController(SubjectService subjectService) {
         this.subjectService = subjectService;

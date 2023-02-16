@@ -3,11 +3,13 @@ package com.mpi.alienresearch.service;
 import java.util.Collection;
 
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 
+import com.mpi.alienresearch.controllers.WebSocketController;
 import com.mpi.alienresearch.dao.SubjectDao;
 import com.mpi.alienresearch.model.Subject;
 
@@ -19,6 +21,8 @@ public class SubjectService {
         this.subjectRepository = subjectRepository;
     }
 
+    @Autowired
+    WebSocketController webSocketController;
     
     public Subject get(Long id) {
         return subjectRepository.findById(id).get();
